@@ -2,4 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/home/kavan/Projects/SolxiomMediaCenter/src/GUI/MainFrame.java</file>
+        <file>file:/home/kavan/Projects/SolxiomMediaCenter/src/filesystem/FTPFileManager.java</file>
+        <file>file:/home/kavan/Projects/SolxiomMediaCenter/src/filesystem/FtpConnector.java</file>
+        <file>file:/home/kavan/Projects/SolxiomMediaCenter/src/filesystem/Main2.java</file>
+        <file>file:/home/kavan/Projects/SolxiomMediaCenter/test/imdb/service/DataServiceTest.java</file>
+    </open-files>
 </project-private>
