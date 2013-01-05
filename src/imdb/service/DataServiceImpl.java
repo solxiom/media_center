@@ -76,8 +76,7 @@ public class DataServiceImpl implements DataService {
         } catch (Exception e) {
             System.out.println("DataService  error:" + e);
         }
-        System.out.println("" + requestString);
-        System.out.println("out: " + jsonResponse);
+
         return jsonResponse;
     }
 

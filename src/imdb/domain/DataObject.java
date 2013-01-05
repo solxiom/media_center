@@ -23,8 +23,8 @@ public class DataObject {
     List<String> directors;
 //episodes	List	The TV series's episodes(only TV series). Fields: date season episode title.
     List<Episode> episodes;
-//film_locations	List	The movie's locations.
-    List<String> film_locations;
+//filming_locations	String	The movie's locations.
+   String filming_locations;
 //genres	List	The movie's genres.(e.g. Drama, War)
     List<String> genres;
 //imdb_id	String	The movie's ID on IMDb.com.
@@ -73,6 +73,14 @@ public class DataObject {
     public DataObject() {
     }
 
+    public String getFilming_locations() {
+        return filming_locations;
+    }
+
+    public void setFilming_locations(String filming_locations) {
+        this.filming_locations = filming_locations;
+    }   
+
     public List<String> getActors() {
         return actors;
     }
@@ -113,13 +121,6 @@ public class DataObject {
         this.episodes = episodes;
     }
 
-    public List<String> getFilm_locations() {
-        return film_locations;
-    }
-
-    public void setFilm_locations(List<String> film_locations) {
-        this.film_locations = film_locations;
-    }
 
     public List<String> getGenres() {
         return genres;
@@ -269,7 +270,7 @@ public class DataObject {
     public String toString() {
         return "DataObject{" + "actors=" + actors + ", also_known_as=" + also_known_as
                 + ", country=" + country + ", directors=" + directors + ", episodes=" + episodes
-                + ", film_locations=" + film_locations + ", genres=" + genres + ", imdb_id=" + imdb_id
+                + ", filming_locations=" + filming_locations + ", genres=" + genres + ", imdb_id=" + imdb_id
                 + ", imdb_url=" + imdb_url + ", language=" + language + ", plot=" + plot
                 + ", plot_simple=" + plot_simple + ", poster=" + poster + ", rated=" + rated
                 + ", rating=" + rating + ", rating_count=" + rating_count + ", release_date=" + release_date

@@ -71,4 +71,21 @@ public class DataServiceImplTest {
         assertEquals(expResultStr, result.getActors().toString());
       
     }
+    //Benton, Louisiana, USA
+    /**
+     * Test of getDataByTitle method, of class DataService.
+     */
+    @Test
+    public void testGetDataByTitle2() {
+
+        System.out.println("getDataByTitle");
+        String serverURL = "http://imdbapi.org";
+        String expResultStr = "Benton, Louisiana, USA";
+        TitleSearchOptions options = new TitleSearchOptions("Beyond a Reasonable Doubt");
+        options.setOffset("0");
+        DataService instance = new DataServiceImpl();
+        DataObject result = instance.getDataByTitle(serverURL, options);
+        assertEquals(expResultStr, result.getFilming_locations().toString());
+      
+    }
 }
