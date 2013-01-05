@@ -8,7 +8,9 @@ import imdb.domain.DataObject;
 import imdb.domain.IdSearchOptions;
 import imdb.domain.TitleSearchOptions;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,10 +18,10 @@ import static org.junit.Assert.*;
  *
  * @author kavan
  */
-public class DataServiceTest {
+public class DataServiceImplTest {
     
-    public DataServiceTest() {
-    }   
+    public DataServiceImplTest() {
+    }
     
     @Before
     public void setUp() {
@@ -69,6 +71,4 @@ public class DataServiceTest {
         assertEquals(expResultStr, result.getActors().toString());
       
     }
-
-   
 }

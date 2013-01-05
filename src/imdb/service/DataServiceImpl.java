@@ -4,15 +4,15 @@
  */
 package imdb.service;
 
-import imdb.domain.TitleSearchOptions;
-import imdb.domain.IdSearchOptions;
-import imdb.domain.DataObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import imdb.domain.DataObject;
+import imdb.domain.IdSearchOptions;
+import imdb.domain.TitleSearchOptions;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import org.apache.http.HttpResponse;
@@ -93,7 +93,7 @@ public class DataServiceImpl implements DataService {
         JsonElement element;
         JsonArray jarr = null;
         JsonObject resultObj = null, jobj = null;
-        String total_found = null;//if the result is an object it will have this property
+        String total_found = null;//if the serach has offset then response will have this property
         String error = null;//property for result coms with an error message 
         boolean singleResultObject = false;//when search is made by id
         try {
@@ -123,9 +123,14 @@ public class DataServiceImpl implements DataService {
 
                 throw new Exception("The element is not a JsonArray nor a JsonObject - method [jsonToDataObject]");
             }
-            if (singleResultObject && jobj != null) {
+           
+        } catch (Exception e) {
+
+            throw new JsonSyntaxException("Throwed after an Exception in method[jsonToDataObject]" + e.getMessage(), e.getCause());
+        }
+         if (singleResultObject && jobj != null) {
                 resultObj = jobj;
-            } else if (jarr != null) {
+            } else if (jarr != null && jarr.get(0).isJsonObject()) {
                 resultObj = jarr.get(0).getAsJsonObject();
             } else {
                 resultObj = new JsonObject();
@@ -136,10 +141,6 @@ public class DataServiceImpl implements DataService {
             if (error != null) {
                 resultObj.addProperty("error", error);
             }
-        } catch (Exception e) {
-            System.out.println("täällä ollaan edelleen" + e.toString());
-            throw new JsonSyntaxException("Throwed after an Exception in method[jsonToDataObject]" + e.getMessage(), e.getCause());
-        }
 
         return resultObj;
     }
