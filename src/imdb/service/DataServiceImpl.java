@@ -4,7 +4,6 @@
  */
 package imdb.service;
 
-import imdb.service.DataService;
 import imdb.domain.TitleSearchOptions;
 import imdb.domain.IdSearchOptions;
 import imdb.domain.DataObject;
@@ -77,6 +76,8 @@ public class DataServiceImpl implements DataService {
         } catch (Exception e) {
             System.out.println("DataService  error:" + e);
         }
+        System.out.println("" + requestString);
+        System.out.println("out: " + jsonResponse);
         return jsonResponse;
     }
 
@@ -91,9 +92,10 @@ public class DataServiceImpl implements DataService {
         JsonParser parser = new JsonParser();
         JsonElement element;
         JsonArray jarr = null;
-        JsonObject resultObj = null;
+        JsonObject resultObj = null, jobj = null;
         String total_found = null;//if the result is an object it will have this property
         String error = null;//property for result coms with an error message 
+        boolean singleResultObject = false;//when search is made by id
         try {
 
             element = parser.parse(jsonstr);
@@ -103,7 +105,7 @@ public class DataServiceImpl implements DataService {
 
             } else if (element.isJsonObject()) {
 
-                JsonObject jobj = element.getAsJsonObject();
+                jobj = element.getAsJsonObject();
                 if (jobj.has("result")) {
                     jarr = (JsonArray) jobj.get("result");
                 }
@@ -113,12 +115,17 @@ public class DataServiceImpl implements DataService {
                 if (jobj.has("error")) {
                     error = jobj.get("error").getAsString();
                 }
+                if (jobj.has("imdb_id")) {
+                    singleResultObject = true;
+                }
 
             } else {
 
                 throw new Exception("The element is not a JsonArray nor a JsonObject - method [jsonToDataObject]");
             }
-            if (jarr != null) {
+            if (singleResultObject && jobj != null) {
+                resultObj = jobj;
+            } else if (jarr != null) {
                 resultObj = jarr.get(0).getAsJsonObject();
             } else {
                 resultObj = new JsonObject();
