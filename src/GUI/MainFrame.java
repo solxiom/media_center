@@ -183,7 +183,7 @@ public class MainFrame extends JFrame {
               for(String key :moviesMap.keySet())
               {
                   
-//&& md.dirContainsType(TypeX.VIDEO)
+//&& md.isDirContainsType(TypeX.VIDEO)
                   FTPMediaFile md = moviesMap.get(key);
                   
                      if((md.isMediaType(TypeX.MEDIA_DIR)
@@ -394,7 +394,7 @@ public class MainFrame extends JFrame {
                                if(file != null)
                                {
                                    //if(file.isMediaType(TypeX.MEDIA_DIR))
-                                   if(file.isDirectory() && (file.isDirEmpty() || !file.dirContainsType(TypeX.VIDEO)))
+                                   if(file.isDirectory() && (file.isDirEmpty() || !file.isDirContainsType(TypeX.VIDEO)))
                                    {
                                        JPanel px = (JPanel)jb.getParent();
                                        px.removeAll();

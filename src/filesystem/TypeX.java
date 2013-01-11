@@ -10,7 +10,7 @@ package filesystem;
  */
 public enum TypeX {
 
-    CATEGORY_DIR, VIDEO, AUDIO, DOCUMENT, OPTIONS_DIR, MEDIA_DIR, UNKNOWN, IMAGE;
+    CATEGORY_DIR, VIDEO, AUDIO, DOCUMENT, OPTIONS_DIR, MEDIA_DIR, UNKNOWN, IMAGE,DOCUMENT_DIR;
 
     @Override
     public String toString() {

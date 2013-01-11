@@ -19,7 +19,7 @@ public class FTPFileManager {
     private String user, pass, ftpServ;
     private FtpConnector fc;
     private FTPFile[] root;
-    private String[] categories = {"TvShows", "Movies", "Books&AudioBooks", "Documentaries", "Audio&Music", "Pictures&Videos"};
+    private String[] categories = {"TvShows", "Movies", "Books&AudioBooks", "Documentaries", "Audio&Music", "Pictures&Videos", "Movies-Persian"};
     private FTPMediaFile[] cateFolders;
     private FTPMediaFile homeFolder;
 
@@ -116,7 +116,7 @@ public class FTPFileManager {
 
     }
 
-    private boolean isCategoryFolder(String fileName) {
+    public boolean isCategoryFolder(String fileName) {
 
         for (int i = 0; i < categories.length; i++) {
             if (categories[i].equalsIgnoreCase(fileName)) {
@@ -130,4 +130,6 @@ public class FTPFileManager {
 
         return this.cateFolders;
     }
+
+    
 }

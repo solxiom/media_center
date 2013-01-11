@@ -24,13 +24,14 @@ public class Main {
         FTPMediaFile[] fold = setup.listCategories();
         int luku = 0;
         FTPMediaFile currentFolder = null;
+        boolean infoAsked = false;
         //System.out.println(new LocalFileManager().makeDir("Downloads"));
         //System.out.println(System.getProperty("user.dir")+"/Tools/VLC/vlc.exe");
-        new MainFrame();
+//        new MainFrame();
         Process p = null;
 
         while (true) {
-
+            infoAsked = false;
             if (currentFolder != null && currentFolder.getParentFolder() != null) {
                 System.out.println(" path: " + currentFolder.getFilePath());
                 System.out.println(-1 + "  \\..");
@@ -42,10 +43,17 @@ public class Main {
 //            System.out.println("folder length " + fold.length);
             for (FTPMediaFile mf : fold) {
                 //System.out.println(""+fold.length);
-                if (mf.isMediaType(TypeX.VIDEO)) {
-                    System.out.println(" " + i + " - " + mf.getMediaType() + " : " + mf.getMediaName() + "..............[" + mf.getName() + "]");
-                } else {
-                    System.out.println(" " + i + " - " + mf.getMediaType() + " : " + mf.getMediaName());
+                if ((mf.isMediaType(TypeX.CATEGORY_DIR))
+                        && setup.isCategoryFolder(mf.getName())
+                        || (mf.isMediaType(TypeX.MEDIA_DIR) || !mf.isDirectory())) {
+                    if (mf.isMediaType(TypeX.VIDEO)) {
+                        System.out.println(" " + i + " - " + mf.getMediaType() + " : " + mf.getMediaName() + "..............[" + mf.getName() + "]");
+                    } else {
+                        System.out.println(" " + i + " - " + mf.getMediaType() + " : " + mf.getMediaName());
+
+                    }
+
+
                 }
                 i++;
             }
@@ -59,11 +67,25 @@ public class Main {
             if (par.equalsIgnoreCase("c") && p != null) {
                 p.destroy();
             } else {
+
+                if (par.endsWith("-i")) {
+                    String[] argsx = par.split(" ");
+                    par = argsx[0];
+                    infoAsked = true;
+
+                }
+
                 try {
 
                     luku = Integer.parseInt(par);
+                } catch (Exception e) {
+                    System.out.println("Bad input: ");
+                    luku = -2;
+                    
+                }
+                try {
 
-                    if (luku != -1 && fold[luku].getFTPFile().isDirectory()) {
+                    if (luku != -1 && fold[luku].getFTPFile().isDirectory() && fold[luku].getMediaType().equals(TypeX.CATEGORY_DIR)) {
 
                         //System.out.println(fold[luku].getFilePath());
 
@@ -86,24 +108,39 @@ public class Main {
                         }
 
 
-                    } else {
-                        System.out.println("Opening " + fold[luku].getMediaType() + " file...");
-
-                        p = new Controller().openMediaFile(fold[luku]);
-
+                    } else if (fold[luku].getMediaType().equals(TypeX.MEDIA_DIR)
+                            || fold[luku].getMediaType().equals(TypeX.VIDEO)
+                            || fold[luku].getMediaType().equals(TypeX.AUDIO)
+                            || fold[luku].getMediaType().equals(TypeX.IMAGE)) {
+                        
+                        if (infoAsked) {
+                            System.out.println(""+ new Controller().getMovieInfo(fold[luku]));
+                        } else {
+                            if (p != null) {
+                                p.destroy();
+                            }
+                            System.out.println("Opening " + fold[luku].getMediaType() + " file...");
+                            p = new Controller().openMediaFile(fold[luku]);
+                        }
+                        currentFolder = fold[luku];
+                        fold = new FTPMediaFile[]{fold[luku]};
                         // p.destroy();
+                    } else {
+                        System.out.println("ttt " + fold[luku].getMediaType() + " " + fold[luku].getMediaName());
+                        System.out.println("Sorry Can't open the requested item!");
                     }
-                } catch (Exception e) {
-                    System.out.println(e);
-                    break;
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("No such File or Directory");
                 }
+
             }
+
 
 
         }
 
-        Controller co = new Controller();
-        System.out.println("Opening " + System.getProperty("user.dir"));
+//        Controller co = new Controller();
+//        System.out.println("Opening " + System.getProperty("user.dir"));
 
 
 

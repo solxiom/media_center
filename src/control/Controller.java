@@ -6,6 +6,10 @@ package control;
 
 import java.io.*;
 import filesystem.*;
+import imdb.domain.DataObject;
+import imdb.domain.TitleSearchOptions;
+import imdb.service.DataService;
+import imdb.service.DataServiceImpl;
 import java.util.*;
 
 /**
@@ -34,12 +38,76 @@ public class Controller {
         }
     }
 
+    public String getMovieInfo(MediaFile mf) {
+
+        String year = getMovieYear(mf.getName());
+        DataObject info;
+        TitleSearchOptions options;
+        DataService service = new DataServiceImpl();
+        if (year != null) {
+            options = new TitleSearchOptions(mf.getMediaName(), year);
+        } else {
+            options = new TitleSearchOptions(mf.getName());
+        }
+//        options.setPlot("simple");
+        info = service.getDataByTitle("http://imdbapi.org", options);
+        return parseMovieInfo(info);
+    }
+
+    private String parseMovieInfo(DataObject info) {
+        String str = "\n**************   *I**N**F**O*   *****************\n\n";
+        str += "\n Name: " + info.getTitle() + " [" + info.getYear() + "]";
+        str += "\n Duration: " + info.getRuntime() + " Rating: [" + info.getRating() + "/10] from " + info.getRating_count() +" users";
+        str += "\n Language: " + info.getLanguage();
+        str += "\n Genres: " + info.getGenres();
+        str += "\n Plot: " + parseMoviePlot(info.getPlot());
+        str += "\n Directors: " + info.getDirectors();
+        str += "\n Actores: " + trimMovieActors(info.getActors(), 5);
+        str += "\n \n \n**************   ******   **********************";
+
+        return str;
+    }
+
+    private List<String> trimMovieActors(List<String> acts, int trim) {
+
+        if (trim >= acts.size()) {
+            return acts;
+        }
+
+        return acts.subList(0, trim);
+
+    }
+
+    private String parseMoviePlot(String plot) {
+        String str = "";
+        if (plot != null) {
+            String[] ar = plot.split(" ");
+            for (int i = 0; i < ar.length; i++) {
+                str += ar[i] + " ";
+                if (i > 10 && (i % 14 == 0)) {
+                    str += "\n       ";
+                }
+            }
+        }
+        return str;
+    }
+
+    private String getMovieYear(String name) {
+        String year = null;
+        if (name.contains("(y")) {
+
+            year = name.substring(name.indexOf("(y") + 2, name.indexOf("(y") + 6);
+        }
+
+        return year;
+    }
+
     private Process openMediaFile_inLinux(MediaFile mf) {
         ProcessBuilder p;
         List<String> path = new ArrayList<String>();
         path.add("vlc");
 
-        if (mf.isMediaType(TypeX.MEDIA_DIR) && mf.dirContainsType(TypeX.VIDEO))//open videos in queue
+        if (mf.isMediaType(TypeX.MEDIA_DIR) && mf.isDirContainsType(TypeX.VIDEO))//open videos in queue
         {
             MediaFile[] medFold = mf.listMediaFiles();
 
@@ -50,11 +118,27 @@ public class Controller {
                 }
 
             }
-        } else {
+        } else if (mf.isMediaType(TypeX.VIDEO)) {
             path.add(mf.getAbsoluteFilePath());
         }
 
-       
+        if (mf.isMediaType(TypeX.MEDIA_DIR)
+                && !mf.isDirContainsType(TypeX.VIDEO)) {
+            System.out.println("******Can't open none video files****");
+            for (MediaFile f : mf.listMediaFiles()) {
+
+                System.out.println("" + f.getName());
+
+            }
+            return null;
+        } else if (!mf.isMediaType(TypeX.MEDIA_DIR) && !mf.isMediaType(TypeX.VIDEO)) {
+            System.out.println("******Can't open none video files****");
+            System.out.println("" + mf.getName());
+            return null;
+        }
+
+
+
         p = new ProcessBuilder(path);
 
         try {
@@ -64,6 +148,7 @@ public class Controller {
             System.out.println("Runtime error : " + e);
             return null;
         }
+
     }
 
     private Process openMediaFile_inWindos(MediaFile mf) {
@@ -85,7 +170,7 @@ public class Controller {
                 return null;
             }
         }
-        if (mf.isMediaType(TypeX.MEDIA_DIR) && mf.dirContainsType(TypeX.VIDEO))//open videos in queue
+        if (mf.isMediaType(TypeX.MEDIA_DIR) && mf.isDirContainsType(TypeX.VIDEO))//open videos in queue
         {
             MediaFile[] medFold = mf.listMediaFiles();
 

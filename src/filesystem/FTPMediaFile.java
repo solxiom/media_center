@@ -185,19 +185,19 @@ public class FTPMediaFile implements MediaFile {
 
         }
 //        System.out.println("====== ." + fileFormat);
-        settingFilesFolder = System.getProperty("user.dir")+"/files/"; //if this not works try this one + "\\files\\";
+        settingFilesFolder = System.getProperty("user.dir") + "/files/"; //if this not works try this one + "\\files\\";
         vf = new File(settingFilesFolder + "videoFormats.txt");
         af = new File(settingFilesFolder + "audioFormats.txt");;
         df = new File(settingFilesFolder + "documentFormats.txt");;
         imagef = new File(settingFilesFolder + "imageFormats.txt");;
-      
+
         try {
 
             if (!this.file.isDirectory()) {
-               
+
                 sc = new Scanner(vf);
-                
-                
+
+
                 while (sc.hasNextLine()) {
                     String line = sc.nextLine();
 //                    System.out.println("-"+ line);
@@ -254,10 +254,12 @@ public class FTPMediaFile implements MediaFile {
                         || this.file.getName().equalsIgnoreCase("Other")
                         || this.file.getName().equalsIgnoreCase("Tutorials")
                         || this.file.getName().equalsIgnoreCase("Movies")
-                        || this.file.getName().equalsIgnoreCase("Music")) {
+                        || this.file.getName().equalsIgnoreCase("Music")
+                        || this.file.getName().equalsIgnoreCase("Movies-Persian")) {
                     this.type = TypeX.CATEGORY_DIR;
                 } else {
-                    this.type = TypeX.MEDIA_DIR;
+                        this.type = TypeX.MEDIA_DIR;
+
                 }
 
             }
@@ -267,7 +269,9 @@ public class FTPMediaFile implements MediaFile {
 
     }
 
-    public boolean dirContainsType(TypeX contentType) {
+    
+
+    public boolean isDirContainsType(TypeX contentType) {
         if (this.isDirectory()) {
             MediaFile[] files = this.listMediaFiles();
             for (MediaFile f : files) {

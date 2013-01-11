@@ -30,7 +30,7 @@ public interface MediaFile {
     QualityX getQuality();
 
 
-    boolean dirContainsType(TypeX contentType);
+    boolean isDirContainsType(TypeX contentType);
     boolean isDirectory();
     boolean isDirEmpty();
     boolean isMediaType(TypeX t);
