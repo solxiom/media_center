@@ -46,19 +46,17 @@ public class Main {
                 if ((mf.isMediaType(TypeX.CATEGORY_DIR))
                         && setup.isCategoryFolder(mf.getName())
                         || (mf.isMediaType(TypeX.MEDIA_DIR) || !mf.isDirectory())) {
-                    if (mf.isMediaType(TypeX.VIDEO)) {
-                        System.out.println(" " + i + " - " + mf.getMediaType() + " : " + mf.getMediaName() + "..............[" + mf.getName() + "]");
-                    } else {
+                  
                         System.out.println(" " + i + " - " + mf.getMediaType() + " : " + mf.getMediaName());
 
-                    }
+                    
 
 
                 }
                 i++;
             }
 
-            System.out.println("anna numero : ");
+            System.out.println("use a number as input for files and folders : ");
             String par = sc.nextLine();
             if (par.equalsIgnoreCase("exit")) {
                 System.out.println("bye..");
