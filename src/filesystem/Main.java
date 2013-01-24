@@ -25,6 +25,7 @@ public class Main {
         int luku = 0;
         FTPMediaFile currentFolder = null;
         boolean infoAsked = false;
+      
         //System.out.println(new LocalFileManager().makeDir("Downloads"));
         //System.out.println(System.getProperty("user.dir")+"/Tools/VLC/vlc.exe");
 //        new MainFrame();
@@ -38,23 +39,10 @@ public class Main {
             } else {
                 System.out.println(" path: disk1/Media");
             }
-            int i = 0;
-
-//            System.out.println("folder length " + fold.length);
-            for (FTPMediaFile mf : fold) {
-                //System.out.println(""+fold.length);
-                if ((mf.isMediaType(TypeX.CATEGORY_DIR))
-                        && setup.isCategoryFolder(mf.getName())
-                        || (mf.isMediaType(TypeX.MEDIA_DIR) || !mf.isDirectory())) {
-                  
-                        System.out.println(" " + i + " - " + mf.getMediaType() + " : " + mf.getMediaName());
-
-                    
-
-
-                }
-                i++;
+            if (currentFolder != null && currentFolder.getParentFolder() == null) {
+                fold = setup.removeProhibitedFoldersFromRoot(fold);
             }
+            printItems(fold, setup);
 
             System.out.println("use a number as input for files and folders : ");
             String par = sc.nextLine();
@@ -79,7 +67,7 @@ public class Main {
                 } catch (Exception e) {
                     System.out.println("Bad input: ");
                     luku = -2;
-                    
+
                 }
                 try {
 
@@ -89,6 +77,7 @@ public class Main {
 
 
                         currentFolder = fold[luku];
+                     
                         fold = fold[luku].listFTPMediaFiles();
 
 
@@ -100,8 +89,10 @@ public class Main {
 
                             fold = currentFolder.getParentFolder().listFTPMediaFiles();
                             currentFolder = currentFolder.getParentFolder();
+                        
                             //System.out.println(" parent " + currentFolder.getParentFolder().getMediaName() );
                         } else {
+                          
                             System.out.println(" This is your root folder!!");
                         }
 
@@ -110,9 +101,9 @@ public class Main {
                             || fold[luku].getMediaType().equals(TypeX.VIDEO)
                             || fold[luku].getMediaType().equals(TypeX.AUDIO)
                             || fold[luku].getMediaType().equals(TypeX.IMAGE)) {
-                        
+
                         if (infoAsked) {
-                            System.out.println(""+ new Controller().getMovieInfo(fold[luku]));
+                            System.out.println("" + new Controller().getMovieInfo(fold[luku]));
                         } else {
                             if (p != null) {
                                 p.destroy();
@@ -137,12 +128,25 @@ public class Main {
 
         }
 
-//        Controller co = new Controller();
-//        System.out.println("Opening " + System.getProperty("user.dir"));
+    }
+
+    private static void printItems(FTPMediaFile[] fold, FTPFileManager setup) {
+        int i = 0;
+
+//            System.out.println("folder length " + fold.length);
+        for (FTPMediaFile mf : fold) {
+            //System.out.println(""+fold.length);
+            if ((mf.isMediaType(TypeX.CATEGORY_DIR))
+                    && setup.isCategoryFolder(mf.getName())
+                    || (mf.isMediaType(TypeX.MEDIA_DIR) || !mf.isDirectory())) {
+
+                System.out.println(" " + i + " - " + mf.getMediaType() + " : " + mf.getMediaName());
 
 
 
 
-        // TODO code application logic here
+            }
+            i++;
+        }
     }
 }
