@@ -51,6 +51,8 @@ public class Controller {
         }
 //        options.setPlot("simple");
         info = service.getDataByTitle("http://imdbapi.org", options);
+        if(info == null || info.getError() != null)
+            return "No Infromation Found for item [" + mf.getMediaName()+"] ";
         return parseMovieInfo(info);
     }
 
@@ -58,7 +60,7 @@ public class Controller {
         String str = "\n**************   *I**N**F**O*   *****************\n\n";
         str += "\n Name: " + info.getTitle() + " [" + info.getYear() + "]";
         str += "\n Duration: " + info.getRuntime() + " Rating: [" + info.getRating() + "/10] from " + info.getRating_count() +" users";
-        str += "\n Language: " + info.getLanguage();
+        str += "\n Language: " + info.getLanguage() + " Type: " + info.getType();
         str += "\n Genres: " + info.getGenres();
         str += "\n Plot: " + parseMoviePlot(info.getPlot());
         str += "\n Directors: " + info.getDirectors();

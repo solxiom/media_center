@@ -19,7 +19,7 @@ public class FTPFileManager {
     private String user, pass, ftpServ;
     private FtpConnector fc;
     private FTPFile[] root;
-    private String[] categories = {"TvShows", "Movies", "Books&AudioBooks", "Documentaries", "Audio&Music", "Pictures&Videos", "Movies-Persian"};
+    private String[] categories = {"TvShows", "Movies", "Documentaries", "Movies-Persian"};
     private FTPMediaFile[] cateFolders;
     private FTPMediaFile homeFolder;
 

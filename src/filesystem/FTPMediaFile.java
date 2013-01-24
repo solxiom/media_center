@@ -257,12 +257,18 @@ public class FTPMediaFile implements MediaFile {
                         || this.file.getName().equalsIgnoreCase("Music")
                         || this.file.getName().equalsIgnoreCase("Movies-Persian")) {
                     this.type = TypeX.CATEGORY_DIR;
+                   
                 } else {
                         this.type = TypeX.MEDIA_DIR;
 
                 }
+                if(parent.getName().equalsIgnoreCase("TvShows") )
+                    this.type = TypeX.TVS_DIR;
+                if(parent.getMediaType() != null && parent.getMediaType() == TypeX.TVS_DIR)
+                    this.type = TypeX.SEASON_DIR;
 
             }
+            
         } catch (Exception e) {
             // System.out.println(e);
         }
