@@ -29,11 +29,11 @@ public class Main {
 
         //System.out.println(new LocalFileManager().makeDir("Downloads"));
         //System.out.println(System.getProperty("user.dir")+"/Tools/VLC/vlc.exe");
-        //new MainFrame();
+//        new MainFrame();
         Process p = null;
 
         while (true) {
-            infoAsked = false;
+            infoAsked = false; 
             if (currentFolder != null && currentFolder.getParentFolder() != null) {
                 System.out.println(" path: " + currentFolder.getFilePath());
                 System.out.println(-1 + "  \\..");
@@ -71,7 +71,8 @@ public class Main {
 
                 }
                 try {
-                    if (infoAsked && luku > 0 && luku < fold.length) {
+                    
+                    if (infoAsked && luku >= 0 && luku < fold.length) {
                         printInfoForItem(controller, fold[luku], fold[luku].getParentFolder());
                     }
                     if (luku != -1 && fold[luku].getFTPFile().isDirectory()
