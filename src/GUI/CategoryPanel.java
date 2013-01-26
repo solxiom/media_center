@@ -4,9 +4,11 @@
  */
 package GUI;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -50,11 +52,27 @@ public class CategoryPanel extends JPanel {
         mvIconLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().change((JLabel)evt.getSource(),"/img/xmv_128_sw.png");
+                new IconChanger().change((JLabel) evt.getSource(), "/img/xmv_128_sw.png");
             }
+
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().change((JLabel)evt.getSource(),"/img/xmv_128.png");
+                new IconChanger().change((JLabel) evt.getSource(), "/img/xmv_128.png");
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (mvLb.getForeground().getRGB() != Color.RED.getRGB()) {
+                    mvLb.setForeground(Color.red);
+                    tvsLb.setForeground(Color.BLACK);
+                    perLb.setForeground(Color.BLACK);
+                    docLb.setForeground(Color.BLACK);
+
+
+                } else {
+                    mvLb.setForeground(Color.BLACK);
+                }
+
             }
         });
 
@@ -66,11 +84,26 @@ public class CategoryPanel extends JPanel {
         perIconLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().change((JLabel)evt.getSource(),"/img/xayatollah_sw.png");
+                new IconChanger().change((JLabel) evt.getSource(), "/img/xayatollah_sw.png");
             }
+
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().change((JLabel)evt.getSource(),"/img/xayatollah.png");
+                new IconChanger().change((JLabel) evt.getSource(), "/img/xayatollah.png");
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (perLb.getForeground().getRGB() != Color.RED.getRGB()) {
+                    perLb.setForeground(Color.red);
+                    mvLb.setForeground(Color.BLACK);
+                    tvsLb.setForeground(Color.BLACK);
+                    docLb.setForeground(Color.BLACK);
+
+
+                } else {
+                    perLb.setForeground(Color.BLACK);
+                }
             }
         });
 
@@ -81,11 +114,27 @@ public class CategoryPanel extends JPanel {
         docIconLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().change((JLabel)evt.getSource(),"/img/xdocu_128_sw.png");
+                new IconChanger().change((JLabel) evt.getSource(), "/img/xdocu_128_sw.png");
             }
+
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().change((JLabel)evt.getSource(),"/img/xdocu_128.png");
+                new IconChanger().change((JLabel) evt.getSource(), "/img/xdocu_128.png");
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+
+                if (docLb.getForeground().getRGB() != Color.RED.getRGB()) {
+                    docLb.setForeground(Color.red);
+                    mvLb.setForeground(Color.BLACK);
+                    perLb.setForeground(Color.BLACK);
+                    tvsLb.setForeground(Color.BLACK);
+
+
+                } else {
+                    docLb.setForeground(Color.BLACK);
+                }
             }
         });
 
@@ -96,11 +145,26 @@ public class CategoryPanel extends JPanel {
         tvsIconLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().change((JLabel)evt.getSource(),"/img/xtvs_128_sw.png");
+                new IconChanger().change((JLabel) evt.getSource(), "/img/xtvs_128_sw.png");
             }
+
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().change((JLabel)evt.getSource(),"/img/xtvs_128.png");
+                new IconChanger().change((JLabel) evt.getSource(), "/img/xtvs_128.png");
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (tvsLb.getForeground().getRGB() != Color.RED.getRGB()) {
+                    tvsLb.setForeground(Color.red);
+                    mvLb.setForeground(Color.BLACK);
+                    perLb.setForeground(Color.BLACK);
+                    docLb.setForeground(Color.BLACK);
+
+
+                } else {
+                    tvsLb.setForeground(Color.BLACK);
+                }
             }
         });
 

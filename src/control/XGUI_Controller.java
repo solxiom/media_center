@@ -4,6 +4,9 @@
  */
 package control;
 
+import GUI.beans.XGUI_Item;
+import java.util.List;
+
 /**
  *
  * @author kavan
@@ -15,4 +18,6 @@ public interface XGUI_Controller {
     public String[] getSearchCategories();
 
     public String[] getSearchYears();
+    
+    public List<XGUI_Item> listMovies();
 }

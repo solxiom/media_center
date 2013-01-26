@@ -4,6 +4,7 @@
  */
 package control;
 
+import GUI.beans.XGUI_Item;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.List;
  * @author kavan
  */
 public class XGUI_ControllerImpl implements XGUI_Controller{
+
+  
 
     public String[] getSearchGeneres() {
         String[] genres = {"<--All-->","Action","Drama","Romance","Thriller","SciFi","Horror","Comedy","Biography","History","Crime"};
@@ -32,6 +35,10 @@ public class XGUI_ControllerImpl implements XGUI_Controller{
             years.add(i+"");
         }
         return years.toArray(new String[]{});
+    }
+    
+      public List<XGUI_Item> listMovies() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }
