@@ -40,21 +40,54 @@ public class FtpService implements HostService {
     }
 
     public List<MediaFile> listTvShows() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<MediaFile> tvs = new LinkedList<MediaFile>();
+        FTPMediaFile[] fileSystem = manager.listCategories();
+        for (FTPMediaFile fold : fileSystem) {
+            if (fold.getName().equalsIgnoreCase("TvShows") && fold.getFTPFile().isDirectory()) {
+                fileSystem = fold.listFTPMediaFiles();
+                System.out.println("size "+ fileSystem.length);
+                break;
+            }
+        }
+        tvs.addAll(Arrays.asList(fileSystem)); 
+        
+        return removeNoneVideoFiles(tvs);
     }
 
     public List<MediaFile> listDocumentaries() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<MediaFile> docs = new LinkedList<MediaFile>();
+        FTPMediaFile[] fileSystem = manager.listCategories();
+        for (FTPMediaFile fold : fileSystem) {
+            if (fold.getName().equalsIgnoreCase("Documentaries") && fold.getFTPFile().isDirectory()) {
+                fileSystem = fold.listFTPMediaFiles();
+                break;
+            }
+        }
+        docs.addAll(Arrays.asList(fileSystem)); 
+        
+        return removeNoneVideoFiles(docs);
     }
 
     public List<MediaFile> listPersianItems() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<MediaFile> peritems = new LinkedList<MediaFile>();
+        FTPMediaFile[] fileSystem = manager.listCategories();
+        for (FTPMediaFile fold : fileSystem) {
+            if (fold.getName().equalsIgnoreCase("Movies-Persian") && fold.getFTPFile().isDirectory()) {
+                fileSystem = fold.listFTPMediaFiles();
+                break;
+            }
+        }
+        peritems.addAll(Arrays.asList(fileSystem)); 
+        
+        return removeNoneVideoFiles(peritems);
     }
     private List<MediaFile> removeNoneVideoFiles(List<MediaFile> list){
         List<MediaFile> list2 = new LinkedList<MediaFile>();
         list2.addAll(list);
         for(MediaFile f:list){
-            if(!(f.isMediaType(TypeX.VIDEO)|| f.isMediaType(TypeX.MEDIA_DIR) ) ){
+            if(!(f.isMediaType(TypeX.VIDEO)|| f.isMediaType(TypeX.MEDIA_DIR)
+                    || f.isMediaType(TypeX.SEASON_DIR)
+                    || f.isMediaType(TypeX.TVS_DIR)) ){
                 list2.remove(f);
             }
         }

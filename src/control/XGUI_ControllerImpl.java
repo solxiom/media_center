@@ -82,20 +82,23 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     }
 
     public void listTvShows() {
-        List<XGUI_Item> tvs = new LinkedList<XGUI_Item>();
-
+        List<MediaFile> files = hostService.listTvShows();
+        List<XGUI_Item> tvs = converter.convertAll(files);
+        updateActiveResultMap(files);
         notifyObserversWithResults(tvs);
     }
 
     public void listPersianMedia() {
-        List<XGUI_Item> perItems = new LinkedList<XGUI_Item>();
-
+        List<MediaFile> files = hostService.listPersianItems();
+        List<XGUI_Item> perItems = converter.convertAll(files);
+        updateActiveResultMap(files);
         notifyObserversWithResults(perItems);
     }
 
     public void listDocumentaries() {
-        List<XGUI_Item> docs = new LinkedList<XGUI_Item>();
-
+        List<MediaFile> files = hostService.listDocumentaries();
+        List<XGUI_Item> docs = converter.convertAll(files);
+        updateActiveResultMap(files);
         notifyObserversWithResults(docs);
     }
 

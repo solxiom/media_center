@@ -33,10 +33,7 @@ public class Main {
         //System.out.println(new LocalFileManager().makeDir("Downloads"));
         //System.out.println(System.getProperty("user.dir")+"/Tools/VLC/vlc.exe");
 //        new MainFrame();
-        new XGUI_Frame().setVisible(true);
-        if (1 == 1) {
-            return;
-        }
+       
         Process p = null;
 
         while (true) {

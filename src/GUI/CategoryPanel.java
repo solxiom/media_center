@@ -101,6 +101,7 @@ public class CategoryPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 iconChanger.changeLabelFontColor(getComponents(),perLb , Color.red, Color.BLACK);
+                controller.listPersianMedia();
             }
             @Override
             public void mouseEntered(MouseEvent evt){
@@ -131,6 +132,7 @@ public class CategoryPanel extends JPanel {
             public void mouseClicked(MouseEvent evt) {
 
                 iconChanger.changeLabelFontColor(getComponents(),docLb , Color.red, Color.BLACK);
+                controller.listDocumentaries();
             }
             @Override
             public void mouseEntered(MouseEvent evt){
@@ -160,6 +162,7 @@ public class CategoryPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 iconChanger.changeLabelFontColor(getComponents(),tvsLb , Color.red, Color.BLACK);
+                controller.listTvShows();
             }
             @Override
             public void mouseEntered(MouseEvent evt){
@@ -188,6 +191,7 @@ public class CategoryPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 iconChanger.changeLabelFontColor(getComponents(),tvsLb , Color.red, Color.BLACK);
+                controller.listTvShows();
             }
             @Override
             public void mouseEntered(MouseEvent evt){
@@ -247,6 +251,7 @@ public class CategoryPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 iconChanger.changeLabelFontColor(getComponents(),perLb , Color.red, Color.BLACK);
+                controller.listPersianMedia();
             }
             @Override
             public void mouseEntered(MouseEvent evt){
@@ -276,6 +281,7 @@ public class CategoryPanel extends JPanel {
             public void mouseClicked(MouseEvent evt) {
 
                 iconChanger.changeLabelFontColor(getComponents(),docLb , Color.red, Color.BLACK);
+                controller.listDocumentaries();
             }
             @Override
             public void mouseEntered(MouseEvent evt){
