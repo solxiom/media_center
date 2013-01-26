@@ -5,8 +5,8 @@
 
 package GUI;
 
-import service.ftp.filesystem.FTPMediaFile;
-import service.ftp.filesystem.TypeX;
+import service.ftp.domain.FTPMediaFile;
+import service.filesystem.TypeX;
 import service.ftp.FTPFileManager;
 import javax.swing.*;
 import java.awt.*;
@@ -96,7 +96,7 @@ public class MainFrame extends JFrame {
         innerCp.setLayout(new GridLayout(2,3));
 
         for(FTPMediaFile cat: fold){
-            if(cat.isMediaType(service.ftp.filesystem.TypeX.CATEGORY_DIR))
+            if(cat.isMediaType(service.filesystem.TypeX.CATEGORY_DIR))
             {
                     JLabel cb = new JLabel( "");
                    
@@ -263,13 +263,13 @@ public class MainFrame extends JFrame {
    
 
     class MouseActions implements MouseListener{
-        service.ftp.filesystem.MediaFile file;
+        service.filesystem.MediaFile file;
         MouseActions(){
             file =null;
         }
         MouseActions(Object ob){
             try{
-                file = (service.ftp.filesystem.MediaFile)ob;
+                file = (service.filesystem.MediaFile)ob;
             }
             catch(Exception ex)
             {

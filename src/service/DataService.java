@@ -6,7 +6,7 @@ package service;
 
 import service.imdb.domain.TitleSearchOptions;
 import service.imdb.domain.IdSearchOptions;
-import service.imdb.domain.DataObject;
+import service.imdb.domain.ImdbDataObject;
 
 /**
  *
@@ -14,8 +14,8 @@ import service.imdb.domain.DataObject;
  */
 public interface DataService {
 
-   public DataObject getDataById(String serverURL, IdSearchOptions options);
+   public ImdbDataObject getDataById(String serverURL, IdSearchOptions options);
 
-   public DataObject getDataByTitle(String serverURL, TitleSearchOptions options);
+   public ImdbDataObject getDataByTitle(String serverURL, TitleSearchOptions options);
     
 }

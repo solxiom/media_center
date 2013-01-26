@@ -4,10 +4,20 @@
  */
 package service;
 
+import java.util.List;
+import service.filesystem.MediaFile;
+
 /**
  *
  * @author kavan
  */
 public interface HostService {
-    
+
+    public List<MediaFile> listMovies();
+
+    public List<MediaFile> listTvShows();
+
+    public List<MediaFile> listDocumentaries();
+
+    public List<MediaFile> listPersianItems();
 }

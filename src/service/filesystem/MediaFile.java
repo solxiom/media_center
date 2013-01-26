@@ -3,7 +3,9 @@
  * and open the template in the editor.
  */
 
-package service.ftp.filesystem;
+package service.filesystem;
+
+import service.ftp.domain.FTPMediaFile;
 
 /**
  *

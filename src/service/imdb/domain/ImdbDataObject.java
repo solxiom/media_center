@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author kavan
  */
-public class DataObject {
+public class ImdbDataObject {
 
 //Field	Type	Description
 //actors	List	The movie's cast list.
@@ -70,7 +70,7 @@ public class DataObject {
 //error messae example film not found
     String error;
 
-    public DataObject() {
+    public ImdbDataObject() {
     }
 
     public String getFilming_locations() {

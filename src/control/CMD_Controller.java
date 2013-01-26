@@ -4,10 +4,10 @@
  */
 package control;
 
-import service.ftp.filesystem.TypeX;
-import service.ftp.filesystem.MediaFile;
+import service.filesystem.TypeX;
+import service.filesystem.MediaFile;
 import java.io.*;
-import service.imdb.domain.DataObject;
+import service.imdb.domain.ImdbDataObject;
 import service.imdb.domain.TitleSearchOptions;
 import service.DataService;
 import service.imdb.dataService.ImdbDataService;
@@ -42,7 +42,7 @@ public class CMD_Controller {
     public String getMovieInfo(MediaFile mf) {
 
         String year = getMovieYear(mf.getName());
-        DataObject info;
+        ImdbDataObject info;
         TitleSearchOptions options;
         DataService service = new ImdbDataService();
         if (year != null) {
@@ -57,7 +57,7 @@ public class CMD_Controller {
         return parseMovieInfo(info);
     }
 
-    private String parseMovieInfo(DataObject info) {
+    private String parseMovieInfo(ImdbDataObject info) {
         String str = "\n**************   *I**N**F**O*   *****************\n\n";
         str += "\n Name: " + info.getTitle() + " [" + info.getYear() + "]";
         str += "\n Duration: " + info.getRuntime() + " Rating: [" + info.getRating() + "/10] from " + info.getRating_count() +" users";

@@ -36,11 +36,11 @@ public class IconChanger {
                   
               
             if (c.equals(target)) {
-                if (target.getForeground() != col) {
+//                if (target.getForeground() != col) {
                     target.setForeground(col);
-                } else {
-                    target.setForeground(defaultCol);
-                }
+//                } else {
+//                    target.setForeground(defaultCol);
+//                }
 
             } else if(l != null && !l.equals(target)) {
                 l.setForeground(defaultCol);

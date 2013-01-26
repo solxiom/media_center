@@ -16,7 +16,7 @@ import javax.swing.*;
  *
  * @author kavan
  */
-public class XFrame extends JFrame implements XGUI_Observer {
+public class XGUI_Frame extends JFrame implements XGUI_Observer {
 
     // Variables declaration - do not modify
     //tools
@@ -28,7 +28,7 @@ public class XFrame extends JFrame implements XGUI_Observer {
     BottomPanel bottomPanel;
     // End of variables declaration
 
-    public XFrame() {
+    public XGUI_Frame() {
         super("Media Center v1.0");
         controller = new XGUI_ControllerImpl();
         controller.registerObserver(this);
@@ -38,7 +38,7 @@ public class XFrame extends JFrame implements XGUI_Observer {
 
     public void updateResults(List<XGUI_Item> results) {
         List<ListItem> items = new LinkedList<ListItem>();
-        for (XGUI_Item bean : results) {           
+        for (XGUI_Item bean : results) {
             ListItem item = new ListItem(bean);
             items.add(item);
         }
@@ -103,7 +103,7 @@ public class XFrame extends JFrame implements XGUI_Observer {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new XFrame().setVisible(true);
+                new XGUI_Frame().setVisible(true);
             }
         });
     }

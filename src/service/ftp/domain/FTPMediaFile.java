@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package service.ftp.filesystem;
+package service.ftp.domain;
 
+import service.filesystem.TypeX;
+import service.filesystem.QualityX;
+import service.filesystem.MediaFile;
 import service.ftp.FtpConnector;
 import java.io.*;
 import java.util.*;
@@ -15,8 +18,8 @@ import org.apache.commons.net.ftp.FTPFile;
  */
 public class FTPMediaFile implements MediaFile {
 
-    private service.ftp.filesystem.TypeX type = TypeX.UNKNOWN;
-    private service.ftp.filesystem.QualityX quality = QualityX.UNKNOWN;
+    private service.filesystem.TypeX type = TypeX.UNKNOWN;
+    private service.filesystem.QualityX quality = QualityX.UNKNOWN;
     String videoTypes = "";
     String settingFilesFolder;
     private String fileFormat = "";

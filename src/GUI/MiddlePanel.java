@@ -34,6 +34,7 @@ public class MiddlePanel extends JPanel {
     }
 
     public void setResults(List<ListItem> items) {
+        leftSP_Panel.removeAll();
         boolean binary = true;
         for (ListItem item : items) {
             item.setOpaque(true);

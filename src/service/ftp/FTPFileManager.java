@@ -4,8 +4,8 @@
  */
 package service.ftp;
 
-import service.ftp.filesystem.FTPMediaFile;
-import service.ftp.filesystem.TypeX;
+import service.ftp.domain.FTPMediaFile;
+import service.filesystem.TypeX;
 import service.ftp.FtpConnector;
 import java.io.*;
 import java.util.*;

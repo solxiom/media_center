@@ -4,7 +4,7 @@
  */
 package main;
 
-import service.imdb.domain.DataObject;
+import service.imdb.domain.ImdbDataObject;
 import service.imdb.domain.IdSearchOptions;
 import service.imdb.dataService.ImdbDataService;
 import service.imdb.domain.TitleSearchOptions;
@@ -27,7 +27,7 @@ public class Main_imdb_service {
         TitleSearchOptions options = new TitleSearchOptions("amelia","2009");
         
         options.setOffset("0");
-        DataObject data = service.getDataByTitle("http://imdbapi.org", options);
+        ImdbDataObject data = service.getDataByTitle("http://imdbapi.org", options);
 
         if (data != null) {
             if (data.getError() != null) {

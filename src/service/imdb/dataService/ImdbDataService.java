@@ -11,7 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-import service.imdb.domain.DataObject;
+import service.imdb.domain.ImdbDataObject;
 import service.imdb.domain.IdSearchOptions;
 import service.imdb.domain.TitleSearchOptions;
 import java.io.BufferedReader;
@@ -30,24 +30,24 @@ public class ImdbDataService implements DataService {
     HttpClient client_globe;
     HttpGet req_globe;
     String jsonstr_globe = "";
-    DataObject dataObject_globe;
+    ImdbDataObject dataObject_globe;
 
     public ImdbDataService() {
     }
 
     @Override
-    public DataObject getDataByTitle(String serverURL, TitleSearchOptions options) {
+    public ImdbDataObject getDataByTitle(String serverURL, TitleSearchOptions options) {
         return getData(serverURL, options.toString());
     }
 
     @Override
-    public DataObject getDataById(String serverURL, IdSearchOptions options) {
+    public ImdbDataObject getDataById(String serverURL, IdSearchOptions options) {
         return getData(serverURL, options.toString());
     }
 
-    private DataObject getData(String serverURL, String options) {
+    private ImdbDataObject getData(String serverURL, String options) {
         String jsonstr = "";
-        DataObject dataObject;
+        ImdbDataObject dataObject;
         String requestString = serverURL + "/" + options;
         jsonstr = connectToServer(requestString);
         try {
@@ -81,10 +81,10 @@ public class ImdbDataService implements DataService {
         return jsonResponse;
     }
 
-    private DataObject jsonToDataObject(String jsonstr) throws Exception {
-        DataObject dataObject;
+    private ImdbDataObject jsonToDataObject(String jsonstr) throws Exception {
+        ImdbDataObject dataObject;
         JsonObject resultObj = getResultAsJsonObject(jsonstr);
-        dataObject = new Gson().fromJson(resultObj, DataObject.class);
+        dataObject = new Gson().fromJson(resultObj, ImdbDataObject.class);
         return dataObject;
     }
 

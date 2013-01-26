@@ -4,11 +4,11 @@
  */
 package main;
 
-import GUI.XFrame;
+import GUI.XGUI_Frame;
 import control.CMD_Controller;
 import service.ftp.FTPFileManager;
-import service.ftp.filesystem.FTPMediaFile;
-import service.ftp.filesystem.TypeX;
+import service.ftp.domain.FTPMediaFile;
+import service.filesystem.TypeX;
 import java.util.Scanner;
 
 /**
@@ -33,7 +33,7 @@ public class Main {
         //System.out.println(new LocalFileManager().makeDir("Downloads"));
         //System.out.println(System.getProperty("user.dir")+"/Tools/VLC/vlc.exe");
 //        new MainFrame();
-        new XFrame().setVisible(true);
+        new XGUI_Frame().setVisible(true);
         if (1 == 1) {
             return;
         }
