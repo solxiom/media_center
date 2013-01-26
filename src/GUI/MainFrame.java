@@ -24,8 +24,6 @@ public class MainFrame extends JFrame {
         private JPanel cp; // categoryPanel
         private JPanel bp; // bottomPanel
         private TreeMap<String,FTPMediaFile> moviesMap;
-        
-
         private FTPFileManager setup;
         private FTPMediaFile[] fold;
        
@@ -407,7 +405,7 @@ public class MainFrame extends JFrame {
                                        px.updateUI();
                                    }
                                    else
-                                          new control.Controller().openMediaFile(file);
+                                          new control.CMD_Controller().openMediaFile(file);
                                }
                          }
                  }

@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import control.XGUI_Controller;
+import control.XGUI_ControllerImpl;
 import javax.swing.*;
 
 /**
@@ -11,8 +13,10 @@ import javax.swing.*;
  * @author kavan
  */
 public class XFrame extends JFrame {
-
+    //tools
+    XGUI_Controller controller;
     public XFrame() {
+        controller = new XGUI_ControllerImpl();
         initXFrame();
     }
 
@@ -30,7 +34,7 @@ public class XFrame extends JFrame {
         
         middlePanel = new MiddlePanel();//initMiddlePanel();
         bottomPanel = new BottomPanel();//initBottomPanel();
-        searchPanel = new SearchPanel();//initSearchPanel();
+        searchPanel = new SearchPanel(controller);//initSearchPanel();
 
         setXFrameLayout();
 

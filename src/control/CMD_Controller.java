@@ -16,12 +16,12 @@ import java.util.*;
  *
  * @author kavan
  */
-public class Controller {
+public class CMD_Controller {
 
     private File[] roots;
     private Runtime rt;
 
-    public Controller() {
+    public CMD_Controller() {
         roots = File.listRoots();
         rt = Runtime.getRuntime();
     }

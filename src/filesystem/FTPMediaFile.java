@@ -79,7 +79,7 @@ public class FTPMediaFile implements MediaFile {
     }
 
     public String getMediaName() {
-        return new control.Controller().getFixedString(this.getFixedName());
+        return new control.CMD_Controller().getFixedString(this.getFixedName());
     }
 
     private String fixName() {

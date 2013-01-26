@@ -2,10 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package filesystem;
+package main;
 
 import GUI.XFrame;
-import control.Controller;
+import control.CMD_Controller;
+import filesystem.FTPFileManager;
+import filesystem.FTPMediaFile;
+import filesystem.TypeX;
 import java.util.Scanner;
 
 /**
@@ -22,7 +25,7 @@ public class Main {
         FTPFileManager setup = new FTPFileManager();
         Scanner sc = new Scanner(System.in);
         FTPMediaFile[] fold = setup.listCategories();
-        Controller controller = new Controller();
+        CMD_Controller controller = new CMD_Controller();
         int luku = 0;
         FTPMediaFile currentFolder = null;
         boolean infoAsked = false;
@@ -162,7 +165,7 @@ public class Main {
         }
     }
 
-    private static void printInfoForItem(Controller controller, FTPMediaFile item, FTPMediaFile parent) {
+    private static void printInfoForItem(CMD_Controller controller, FTPMediaFile item, FTPMediaFile parent) {
         String infoStr = "";
         TypeX type = item.getMediaType();
         if (item == null) {
