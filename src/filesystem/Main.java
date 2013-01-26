@@ -4,7 +4,7 @@
  */
 package filesystem;
 
-import GUI.MainFrame;
+import GUI.XFrame;
 import control.Controller;
 import java.util.Scanner;
 
@@ -30,10 +30,14 @@ public class Main {
         //System.out.println(new LocalFileManager().makeDir("Downloads"));
         //System.out.println(System.getProperty("user.dir")+"/Tools/VLC/vlc.exe");
 //        new MainFrame();
+        new XFrame().setVisible(true);
+        if (1 == 1) {
+            return;
+        }
         Process p = null;
 
         while (true) {
-            infoAsked = false; 
+            infoAsked = false;
             if (currentFolder != null && currentFolder.getParentFolder() != null) {
                 System.out.println(" path: " + currentFolder.getFilePath());
                 System.out.println(-1 + "  \\..");
@@ -71,7 +75,7 @@ public class Main {
 
                 }
                 try {
-                    
+
                     if (infoAsked && luku >= 0 && luku < fold.length) {
                         printInfoForItem(controller, fold[luku], fold[luku].getParentFolder());
                     }
