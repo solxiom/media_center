@@ -2,17 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package imdb.service;
+package service.imdb.dataService;
 
+import service.DataService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-import imdb.domain.DataObject;
-import imdb.domain.IdSearchOptions;
-import imdb.domain.TitleSearchOptions;
+import service.imdb.domain.DataObject;
+import service.imdb.domain.IdSearchOptions;
+import service.imdb.domain.TitleSearchOptions;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import org.apache.http.HttpResponse;
@@ -24,14 +25,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *
  * @author kavan
  */
-public class DataServiceImpl implements DataService {
+public class ImdbDataService implements DataService {
 
     HttpClient client_globe;
     HttpGet req_globe;
     String jsonstr_globe = "";
     DataObject dataObject_globe;
 
-    public DataServiceImpl() {
+    public ImdbDataService() {
     }
 
     @Override

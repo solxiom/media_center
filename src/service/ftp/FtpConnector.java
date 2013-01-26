@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package filesystem;
+package service.ftp;
 
 import org.apache.commons.net.ftp.*;
 import org.apache.commons.io.*;

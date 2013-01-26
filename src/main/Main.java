@@ -6,9 +6,9 @@ package main;
 
 import GUI.XFrame;
 import control.CMD_Controller;
-import filesystem.FTPFileManager;
-import filesystem.FTPMediaFile;
-import filesystem.TypeX;
+import service.ftp.FTPFileManager;
+import service.ftp.filesystem.FTPMediaFile;
+import service.ftp.filesystem.TypeX;
 import java.util.Scanner;
 
 /**

@@ -4,16 +4,13 @@
  */
 package GUI;
 
-import com.sun.org.apache.bcel.internal.generic.FCONST;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Event;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -56,13 +53,12 @@ public class MiddlePanel extends JPanel {
     }
 
     private void setItemHandlers(final ListItem item) {
-        
+
         MouseAdapter adapter = new ItemMouseAdapter(item, itemStyleCach);
         item.addMouseListener(adapter);
         item.getNameLabel().addMouseListener(adapter);
         item.getYearLabel().addMouseListener(adapter);
     }
-   
 
     private void initMiddlePanel() {
 
@@ -112,43 +108,47 @@ public class MiddlePanel extends JPanel {
                 .addGap(0, 521, Short.MAX_VALUE));
     }
 }
-class ItemMouseAdapter extends MouseAdapter{
+
+class ItemMouseAdapter extends MouseAdapter {
+
     final ListItem item;
-    final HashMap<Integer,Color> colorCach;
-    ItemMouseAdapter(ListItem item,HashMap<Integer,Color> colorCach){
-        this.item =item;
+    final HashMap<Integer, Color> colorCach;
+
+    ItemMouseAdapter(ListItem item, HashMap<Integer, Color> colorCach) {
+        this.item = item;
         this.colorCach = colorCach;
-        
+
     }
-     @Override
-            public void mousePressed(MouseEvent evt) {
-                item.getNameLabel().setFont(new Font("serif", 1, 16));
-                item.getYearLabel().setFont(new Font("serif", 0, 12));
-            }
 
-            @Override
-            public void mouseReleased(MouseEvent evt) {
-                item.getNameLabel().setFont(new Font("serif", 2, 16));
-                item.getYearLabel().setFont(new Font("serif", 1, 12));
-            }
+    @Override
+    public void mousePressed(MouseEvent evt) {
+        item.getNameLabel().setFont(new Font("serif", 1, 16));
+        item.getYearLabel().setFont(new Font("serif", 0, 12));
+    }
 
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-            }
+    @Override
+    public void mouseReleased(MouseEvent evt) {
+        item.getNameLabel().setFont(new Font("serif", 2, 16));
+        item.getYearLabel().setFont(new Font("serif", 1, 12));
+    }
 
-            @Override
-            public void mouseEntered(MouseEvent evt) {
-                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
-                item.setBackground(Color.YELLOW);
-                item.getNameLabel().setForeground(Color.red);
-                item.getYearLabel().setForeground(Color.red);
-            }
+    @Override
+    public void mouseClicked(MouseEvent evt) {
+    }
 
-            @Override
-            public void mouseExited(MouseEvent evt) {
-                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                item.setBackground(colorCach.get(item.getXGUI_Item().getKey()));
-                item.getNameLabel().setForeground(Color.black);
-                item.getYearLabel().setForeground(Color.black);
-            }
+    @Override
+    public void mouseEntered(MouseEvent evt) {
+        evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        item.setBackground(Color.YELLOW);
+        item.getNameLabel().setForeground(Color.red);
+        item.getYearLabel().setForeground(Color.red);
+    }
+
+    @Override
+    public void mouseExited(MouseEvent evt) {
+        evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        item.setBackground(colorCach.get(item.getXGUI_Item().getKey()));
+        item.getNameLabel().setForeground(Color.black);
+        item.getYearLabel().setForeground(Color.black);
+    }
 }

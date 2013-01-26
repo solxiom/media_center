@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package imdb.domain;
+package service.imdb.domain;
 
 import java.util.List;
 

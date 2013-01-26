@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package filesystem;
+package service.ftp.filesystem;
 
 import java.io.*;
 import java.util.*;

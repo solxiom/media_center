@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package imdb.service;
+package service;
 
-import imdb.domain.TitleSearchOptions;
-import imdb.domain.IdSearchOptions;
-import imdb.domain.DataObject;
+import service.imdb.domain.TitleSearchOptions;
+import service.imdb.domain.IdSearchOptions;
+import service.imdb.domain.DataObject;
 
 /**
  *

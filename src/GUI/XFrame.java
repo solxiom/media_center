@@ -38,8 +38,7 @@ public class XFrame extends JFrame implements XGUI_Observer {
 
     public void updateResults(List<XGUI_Item> results) {
         List<ListItem> items = new LinkedList<ListItem>();
-        for (int i = 0; i < 100; i++) {
-            XGUI_Item bean = new XGUI_Item(i, i + " skjd nvm ", "2012");
+        for (XGUI_Item bean : results) {           
             ListItem item = new ListItem(bean);
             items.add(item);
         }

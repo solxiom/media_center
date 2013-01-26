@@ -4,12 +4,13 @@
  */
 package control;
 
+import service.ftp.filesystem.TypeX;
+import service.ftp.filesystem.MediaFile;
 import java.io.*;
-import filesystem.*;
-import imdb.domain.DataObject;
-import imdb.domain.TitleSearchOptions;
-import imdb.service.DataService;
-import imdb.service.DataServiceImpl;
+import service.imdb.domain.DataObject;
+import service.imdb.domain.TitleSearchOptions;
+import service.DataService;
+import service.imdb.dataService.ImdbDataService;
 import java.util.*;
 
 /**
@@ -43,7 +44,7 @@ public class CMD_Controller {
         String year = getMovieYear(mf.getName());
         DataObject info;
         TitleSearchOptions options;
-        DataService service = new DataServiceImpl();
+        DataService service = new ImdbDataService();
         if (year != null) {
             options = new TitleSearchOptions(mf.getMediaName(), year);
         } else {

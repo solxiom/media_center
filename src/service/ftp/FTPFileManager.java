@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package filesystem;
+package service.ftp;
 
+import service.ftp.filesystem.FTPMediaFile;
+import service.ftp.filesystem.TypeX;
+import service.ftp.FtpConnector;
 import java.io.*;
 import java.util.*;
 import java.net.*;

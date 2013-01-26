@@ -4,11 +4,11 @@
  */
 package main;
 
-import imdb.domain.DataObject;
-import imdb.domain.IdSearchOptions;
-import imdb.service.DataServiceImpl;
-import imdb.domain.TitleSearchOptions;
-import imdb.service.DataService;
+import service.imdb.domain.DataObject;
+import service.imdb.domain.IdSearchOptions;
+import service.imdb.dataService.ImdbDataService;
+import service.imdb.domain.TitleSearchOptions;
+import service.DataService;
 
 /**
  *
@@ -23,7 +23,7 @@ public class Main_imdb_service {
 //http://imdbapi.org/
 //?title=amelia+&type=json&plot=full&episode=1&limit=1&yg=1&mt=none&lang=en-US&offset=&aka=simple&release=simple&year=2009
 //tt1129445
-        DataService service = new DataServiceImpl();
+        DataService service = new ImdbDataService();
         TitleSearchOptions options = new TitleSearchOptions("amelia","2009");
         
         options.setOffset("0");

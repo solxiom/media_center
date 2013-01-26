@@ -2,11 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package imdb.service;
+package service.imdb.dataService;
 
-import imdb.domain.DataObject;
-import imdb.domain.IdSearchOptions;
-import imdb.domain.TitleSearchOptions;
+import service.imdb.dataService.ImdbDataService;
+import service.DataService;
+import service.imdb.domain.DataObject;
+import service.imdb.domain.IdSearchOptions;
+import service.imdb.domain.TitleSearchOptions;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,9 +20,9 @@ import static org.junit.Assert.*;
  *
  * @author kavan
  */
-public class DataServiceImplTest {
+public class ImdbDataServiceTest {
     
-    public DataServiceImplTest() {
+    public ImdbDataServiceTest() {
     }
     
     @Before
@@ -46,7 +48,7 @@ public class DataServiceImplTest {
                 + "Richard Donat]";
         IdSearchOptions options = new IdSearchOptions("tt1129445");
       
-        DataService instance = new DataServiceImpl();
+        DataService instance = new ImdbDataService();
         DataObject result = instance.getDataById(serverURL, options);
         assertEquals(expResultStr, result.getActors().toString());
     }
@@ -66,7 +68,7 @@ public class DataServiceImplTest {
                 + "Richard Donat]";
         TitleSearchOptions options = new TitleSearchOptions("amelia","2009");
         options.setOffset("0");
-        DataService instance = new DataServiceImpl();
+        DataService instance = new ImdbDataService();
         DataObject result = instance.getDataByTitle(serverURL, options);
         assertEquals(expResultStr, result.getActors().toString());
       
@@ -83,7 +85,7 @@ public class DataServiceImplTest {
         String expResultStr = "Benton, Louisiana, USA";
         TitleSearchOptions options = new TitleSearchOptions("Beyond a Reasonable Doubt");
         options.setOffset("0");
-        DataService instance = new DataServiceImpl();
+        DataService instance = new ImdbDataService();
         DataObject result = instance.getDataByTitle(serverURL, options);
         assertEquals(expResultStr, result.getFilming_locations().toString());
       
