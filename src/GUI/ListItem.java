@@ -5,6 +5,7 @@
 package GUI;
 
 import GUI.beans.XGUI_Item;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -56,7 +57,7 @@ public class ListItem extends JPanel {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(nameLb, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nameLb, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(yearLb, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE)));
@@ -68,24 +69,15 @@ public class ListItem extends JPanel {
                 .addComponent(yearLb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(nameLb, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
                 .addContainerGap()));
-    }// </editor-fold>
-
-    public String getItemName() {
-        return itemName;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public JLabel getNameLabel() {
+        return nameLb;
     }
 
-    public String getItemYear() {
-        return itemYear;
+    public JLabel getYearLabel() {
+        return yearLb;
     }
-
-    public void setItemYear(String itemYear) {
-        this.itemYear = itemYear;
-    }
-
     public XGUI_Item getXGUI_Item() {
 
         return item;

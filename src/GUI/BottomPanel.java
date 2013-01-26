@@ -1,9 +1,10 @@
 /*
- * To change this template, choose Tools | Templates
+ * To changeLabelIcon this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package GUI;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
@@ -31,11 +32,19 @@ public class BottomPanel extends JPanel {
         settingsLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().change((JLabel)evt.getSource(),"/img/xsettings_64_sw.png");
+                new IconChanger().changeLabelIcon((JLabel)evt.getSource(),"/img/xsettings_64_sw.png");
             }
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().change((JLabel)evt.getSource(),"/img/xsettings_64.png");
+                new IconChanger().changeLabelIcon((JLabel)evt.getSource(),"/img/xsettings_64.png");
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
         setBottomPanelLayout();

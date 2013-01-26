@@ -4,20 +4,48 @@
  */
 package GUI;
 
+import GUI.beans.XGUI_Item;
 import control.XGUI_Controller;
 import control.XGUI_ControllerImpl;
+import control.XGUI_Observer;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.*;
 
 /**
  *
  * @author kavan
  */
-public class XFrame extends JFrame {
+public class XFrame extends JFrame implements XGUI_Observer {
+
+    // Variables declaration - do not modify
     //tools
     XGUI_Controller controller;
+    //components
+    CategoryPanel categoryPanel;
+    SearchPanel searchPanel;
+    MiddlePanel middlePanel;
+    BottomPanel bottomPanel;
+    // End of variables declaration
+
     public XFrame() {
+        super("Media Center v1.0");
         controller = new XGUI_ControllerImpl();
+        controller.registerObserver(this);
         initXFrame();
+
+    }
+
+    public void updateResults(List<XGUI_Item> results) {
+        List<ListItem> items = new LinkedList<ListItem>();
+        for (int i = 0; i < 100; i++) {
+            XGUI_Item bean = new XGUI_Item(i, i + " skjd nvm ", "2012");
+            ListItem item = new ListItem(bean);
+            items.add(item);
+        }
+        if (middlePanel != null) {
+            middlePanel.setResults(items);
+        }
     }
 
     /**
@@ -30,8 +58,8 @@ public class XFrame extends JFrame {
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        categoryPanel = new CategoryPanel();//initCategoryPanel();
-        
+        categoryPanel = new CategoryPanel(controller);//initCategoryPanel();
+
         middlePanel = new MiddlePanel();//initMiddlePanel();
         bottomPanel = new BottomPanel();//initBottomPanel();
         searchPanel = new SearchPanel(controller);//initSearchPanel();
@@ -80,16 +108,7 @@ public class XFrame extends JFrame {
             }
         });
     }
-    
-    // Variables declaration - do not modify
-    CategoryPanel categoryPanel;
-    SearchPanel searchPanel;
-    MiddlePanel middlePanel;
-    BottomPanel bottomPanel;
-    
-  
 
-    // End of variables declaration
     private void setXFrameLayout() {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,6 +138,4 @@ public class XFrame extends JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(bottomPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
     }
-
-
 }

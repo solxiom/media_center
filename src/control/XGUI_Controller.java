@@ -11,13 +11,19 @@ import java.util.List;
  *
  * @author kavan
  */
-public interface XGUI_Controller {
+public interface XGUI_Controller extends XGUI_Subjet {
 
     public String[] getSearchGeneres();
 
     public String[] getSearchCategories();
 
     public String[] getSearchYears();
-    
-    public List<XGUI_Item> listMovies();
+
+    public void listMovies();
+
+    public void listTvShows();
+
+    public void listPersianMedia();
+
+    public void listDocumentaries();
 }

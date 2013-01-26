@@ -1,11 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
+ * To changeLabelIcon this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package GUI;
 
 import control.XGUI_Controller;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -134,12 +135,20 @@ public class SearchPanel extends JPanel {
         searchBt.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().change((JLabel) evt.getSource(), "/img/xsearch4_64_sw.png");
+                new IconChanger().changeLabelIcon((JLabel) evt.getSource(), "/img/xsearch4_64_sw.png");
             }
 
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().change((JLabel) evt.getSource(), "/img/xsearch4_64.png");
+                new IconChanger().changeLabelIcon((JLabel) evt.getSource(), "/img/xsearch4_64.png");
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
 

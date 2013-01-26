@@ -1,14 +1,15 @@
 /*
- * To change this template, choose Tools | Templates
+ * To changeLabelIcon this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package GUI;
 
+import control.XGUI_Controller;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,6 +19,8 @@ import javax.swing.JPanel;
  */
 public class CategoryPanel extends JPanel {
 
+      //toole
+     XGUI_Controller controller;
     // Variables declaration - do not modify
     private javax.swing.JLabel docIconLb;
     private javax.swing.JLabel docLb;
@@ -27,15 +30,18 @@ public class CategoryPanel extends JPanel {
     private javax.swing.JLabel perLb;
     private javax.swing.JLabel tvsIconLb;
     private javax.swing.JLabel tvsLb;
+    private JLabel[] labels;
 
-    public CategoryPanel() {
+    public CategoryPanel(XGUI_Controller controller) {
+        this.controller = controller;
         initCategoryPanel();
-
+        
 
     }
 
     private void initCategoryPanel() {
-
+        
+        final IconChanger iconChanger = new IconChanger();
         mvIconLb = new javax.swing.JLabel();
         perIconLb = new javax.swing.JLabel();
         docIconLb = new javax.swing.JLabel();
@@ -52,30 +58,30 @@ public class CategoryPanel extends JPanel {
         mvIconLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().change((JLabel) evt.getSource(), "/img/xmv_128_sw.png");
+                iconChanger.changeLabelIcon((JLabel) evt.getSource(), "/img/xmv_128_sw.png");
             }
 
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().change((JLabel) evt.getSource(), "/img/xmv_128.png");
+                iconChanger.changeLabelIcon((JLabel) evt.getSource(), "/img/xmv_128.png");
             }
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                if (mvLb.getForeground().getRGB() != Color.RED.getRGB()) {
-                    mvLb.setForeground(Color.red);
-                    tvsLb.setForeground(Color.BLACK);
-                    perLb.setForeground(Color.BLACK);
-                    docLb.setForeground(Color.BLACK);
-
-
-                } else {
-                    mvLb.setForeground(Color.BLACK);
-                }
-
+                
+                iconChanger.changeLabelFontColor(getComponents(),mvLb , Color.red, Color.BLACK);
+                controller.listMovies();
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
-
+        
 
         perIconLb.setBackground(new java.awt.Color(204, 204, 204));
         perIconLb.setForeground(new java.awt.Color(255, 102, 102));
@@ -84,26 +90,25 @@ public class CategoryPanel extends JPanel {
         perIconLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().change((JLabel) evt.getSource(), "/img/xayatollah_sw.png");
+                iconChanger.changeLabelIcon((JLabel) evt.getSource(), "/img/xayatollah_sw.png");
             }
 
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().change((JLabel) evt.getSource(), "/img/xayatollah.png");
+                iconChanger.changeLabelIcon((JLabel) evt.getSource(), "/img/xayatollah.png");
             }
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                if (perLb.getForeground().getRGB() != Color.RED.getRGB()) {
-                    perLb.setForeground(Color.red);
-                    mvLb.setForeground(Color.BLACK);
-                    tvsLb.setForeground(Color.BLACK);
-                    docLb.setForeground(Color.BLACK);
-
-
-                } else {
-                    perLb.setForeground(Color.BLACK);
-                }
+                iconChanger.changeLabelFontColor(getComponents(),perLb , Color.red, Color.BLACK);
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
 
@@ -114,27 +119,26 @@ public class CategoryPanel extends JPanel {
         docIconLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().change((JLabel) evt.getSource(), "/img/xdocu_128_sw.png");
+                iconChanger.changeLabelIcon((JLabel) evt.getSource(), "/img/xdocu_128_sw.png");
             }
 
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().change((JLabel) evt.getSource(), "/img/xdocu_128.png");
+                iconChanger.changeLabelIcon((JLabel) evt.getSource(), "/img/xdocu_128.png");
             }
 
             @Override
             public void mouseClicked(MouseEvent evt) {
 
-                if (docLb.getForeground().getRGB() != Color.RED.getRGB()) {
-                    docLb.setForeground(Color.red);
-                    mvLb.setForeground(Color.BLACK);
-                    perLb.setForeground(Color.BLACK);
-                    tvsLb.setForeground(Color.BLACK);
-
-
-                } else {
-                    docLb.setForeground(Color.BLACK);
-                }
+                iconChanger.changeLabelFontColor(getComponents(),docLb , Color.red, Color.BLACK);
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
 
@@ -145,44 +149,143 @@ public class CategoryPanel extends JPanel {
         tvsIconLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().change((JLabel) evt.getSource(), "/img/xtvs_128_sw.png");
+                iconChanger.changeLabelIcon((JLabel) evt.getSource(), "/img/xtvs_128_sw.png");
             }
 
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().change((JLabel) evt.getSource(), "/img/xtvs_128.png");
+                iconChanger.changeLabelIcon((JLabel) evt.getSource(), "/img/xtvs_128.png");
             }
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                if (tvsLb.getForeground().getRGB() != Color.RED.getRGB()) {
-                    tvsLb.setForeground(Color.red);
-                    mvLb.setForeground(Color.BLACK);
-                    perLb.setForeground(Color.BLACK);
-                    docLb.setForeground(Color.BLACK);
-
-
-                } else {
-                    tvsLb.setForeground(Color.BLACK);
-                }
+                iconChanger.changeLabelFontColor(getComponents(),tvsLb , Color.red, Color.BLACK);
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
 
         tvsLb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tvsLb.setText("Tv Shows");
         tvsLb.setFont(new Font("Serif", Font.BOLD, 14));
+        tvsLb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                iconChanger.changeLabelIcon(tvsIconLb, "/img/xtvs_128_sw.png");
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent evt) {
+                iconChanger.changeLabelIcon(tvsIconLb, "/img/xtvs_128.png");
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                iconChanger.changeLabelFontColor(getComponents(),tvsLb , Color.red, Color.BLACK);
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
 
         mvLb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mvLb.setText("Movies");
         mvLb.setFont(new Font("Serif", Font.BOLD, 14));
+        mvLb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                iconChanger.changeLabelIcon(mvIconLb, "/img/xmv_128_sw.png");
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent evt) {
+                iconChanger.changeLabelIcon(mvIconLb, "/img/xmv_128.png");
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                
+                iconChanger.changeLabelFontColor(getComponents(),mvLb , Color.red, Color.BLACK);
+                controller.listMovies();
+              
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
 
         perLb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         perLb.setText("Persian Media");
         perLb.setFont(new Font("Serif", Font.BOLD, 14));
+        perLb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                iconChanger.changeLabelIcon(perIconLb, "/img/xayatollah_sw.png");
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent evt) {
+                iconChanger.changeLabelIcon(perIconLb, "/img/xayatollah.png");
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                iconChanger.changeLabelFontColor(getComponents(),perLb , Color.red, Color.BLACK);
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
 
         docLb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         docLb.setText("Documentaries");
         docLb.setFont(new Font("Serif", Font.BOLD, 14));
+        docLb.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                iconChanger.changeLabelIcon(docIconLb, "/img/xdocu_128_sw.png");
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent evt) {
+                iconChanger.changeLabelIcon(docIconLb, "/img/xdocu_128.png");
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+
+                iconChanger.changeLabelFontColor(getComponents(),docLb , Color.red, Color.BLACK);
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
 
         setCategoryPanelLayout();
     }
