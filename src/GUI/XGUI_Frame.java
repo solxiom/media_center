@@ -11,6 +11,7 @@ import control.XGUI_Observer;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
+import service.imdb.domain.ImdbDataObject;
 
 /**
  *
@@ -20,12 +21,13 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
 
     // Variables declaration - do not modify
     //tools
-    XGUI_Controller controller;
+    private XGUI_Controller controller;
     //components
-    CategoryPanel categoryPanel;
-    SearchPanel searchPanel;
-    MiddlePanel middlePanel;
-    BottomPanel bottomPanel;
+    private CategoryPanel categoryPanel;
+    private SearchPanel searchPanel;
+    private MiddlePanel middlePanel;
+    private BottomPanel bottomPanel;
+
     // End of variables declaration
 
     public XGUI_Frame() {
@@ -46,6 +48,12 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
             middlePanel.setResults(items);
         }
     }
+    
+    public void updateInfo(ImdbDataObject info){
+        
+        middlePanel.getInfoPanel().setInfo(info);
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,20 +66,16 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         categoryPanel = new CategoryPanel(controller);//initCategoryPanel();
-
-        middlePanel = new MiddlePanel();//initMiddlePanel();
+        middlePanel = new MiddlePanel(controller);//initMiddlePanel();
         bottomPanel = new BottomPanel();//initBottomPanel();
         searchPanel = new SearchPanel(controller);//initSearchPanel();
+
 
         setXFrameLayout();
 
         pack();
 
-    }
-
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+    } 
 
     /**
      * @param args the command line arguments

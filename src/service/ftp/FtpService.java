@@ -8,10 +8,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import service.DataService;
 import service.HostService;
 import service.filesystem.MediaFile;
 import service.filesystem.TypeX;
 import service.ftp.domain.FTPMediaFile;
+import service.imdb.domain.ImdbDataObject;
 
 /**
  *
@@ -19,15 +21,18 @@ import service.ftp.domain.FTPMediaFile;
  */
 public class FtpService implements HostService {
 
-    private FTPFileManager manager;
+    private FTPFileManager fileManager;
+   
 
     public FtpService(FTPFileManager manager) {
-        this.manager = manager;
+        this.fileManager = manager;
     }
+    
+    
 
     public List<MediaFile> listMovies() {
         List<MediaFile> movies = new LinkedList<MediaFile>();
-        FTPMediaFile[] fileSystem = manager.listCategories();
+        FTPMediaFile[] fileSystem = fileManager.listCategories();
         for (FTPMediaFile fold : fileSystem) {
             if (fold.getName().equalsIgnoreCase("movies") && fold.getFTPFile().isDirectory()) {
                 fileSystem = fold.listFTPMediaFiles();
@@ -41,11 +46,10 @@ public class FtpService implements HostService {
 
     public List<MediaFile> listTvShows() {
         List<MediaFile> tvs = new LinkedList<MediaFile>();
-        FTPMediaFile[] fileSystem = manager.listCategories();
+        FTPMediaFile[] fileSystem = fileManager.listCategories();
         for (FTPMediaFile fold : fileSystem) {
             if (fold.getName().equalsIgnoreCase("TvShows") && fold.getFTPFile().isDirectory()) {
                 fileSystem = fold.listFTPMediaFiles();
-                System.out.println("size "+ fileSystem.length);
                 break;
             }
         }
@@ -56,7 +60,7 @@ public class FtpService implements HostService {
 
     public List<MediaFile> listDocumentaries() {
         List<MediaFile> docs = new LinkedList<MediaFile>();
-        FTPMediaFile[] fileSystem = manager.listCategories();
+        FTPMediaFile[] fileSystem = fileManager.listCategories();
         for (FTPMediaFile fold : fileSystem) {
             if (fold.getName().equalsIgnoreCase("Documentaries") && fold.getFTPFile().isDirectory()) {
                 fileSystem = fold.listFTPMediaFiles();
@@ -70,7 +74,7 @@ public class FtpService implements HostService {
 
     public List<MediaFile> listPersianItems() {
         List<MediaFile> peritems = new LinkedList<MediaFile>();
-        FTPMediaFile[] fileSystem = manager.listCategories();
+        FTPMediaFile[] fileSystem = fileManager.listCategories();
         for (FTPMediaFile fold : fileSystem) {
             if (fold.getName().equalsIgnoreCase("Movies-Persian") && fold.getFTPFile().isDirectory()) {
                 fileSystem = fold.listFTPMediaFiles();

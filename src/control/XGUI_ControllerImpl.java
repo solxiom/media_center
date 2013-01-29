@@ -4,16 +4,20 @@
  */
 package control;
 
+import GUI.ListItem;
 import GUI.beans.XGUI_Item;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import service.DataService;
 import service.HostService;
 import service.filesystem.MediaFile;
 import service.ftp.FTPFileManager;
 import service.ftp.FtpService;
+import service.imdb.dataService.ImdbDataService;
+import service.imdb.domain.ImdbDataObject;
 
 /**
  *
@@ -26,12 +30,14 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private HashMap<Integer, MediaFile> activeResultMap;
     XGUI_Item_Converter converter;
     HostService hostService;
+    DataService dataService;
 
     public XGUI_ControllerImpl() {
         this.observers = new LinkedList<XGUI_Observer>();
         activeResultMap = new HashMap<Integer, MediaFile>();
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
+        dataService = new ImdbDataService();
     }
 
     public void registerObserver(XGUI_Observer obs) {
@@ -48,8 +54,10 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         }
     }
 
-    public void notifyObserversWithItemInfo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void notifyObserversWithItemInfo(ImdbDataObject info) {
+        for (XGUI_Observer obs : observers) {
+            obs.updateInfo(info);
+        }
     }
 
     public String[] getSearchGeneres() {
@@ -70,6 +78,13 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
             years.add(i + "");
         }
         return years.toArray(new String[]{});
+    }
+
+    public void findItemInfo(int ItemCode) {
+        MediaFile item = activeResultMap.get(ItemCode);
+
+        notifyObserversWithItemInfo(null);
+
     }
 
     public void listMovies() {
@@ -113,30 +128,8 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
             activeResultMap.put(new Integer(f.getName().hashCode()), f);
         }
     }
-}
 
-class XGUI_Item_Converter {
-
-    XGUI_Item_Converter() {
-    }
-
-    XGUI_Item convert(MediaFile file) {
-        XGUI_Item item = new XGUI_Item();
-        item.setKey(file.getName().hashCode());
-        item.setName(file.getMediaName());
-        item.setYear(getMovieYear(file.getName()));
-        return item;
-    }
-
-    List<XGUI_Item> convertAll(List<MediaFile> files) {
-        List<XGUI_Item> items = new LinkedList<XGUI_Item>();
-        for (MediaFile f : files) {
-            items.add(convert(f));
-        }
-        return items;
-    }
-
-    String getMovieYear(String name) {
+    private String getMovieYear(String name) {
         String year = "Unknown";
         if (name.contains("(y")) {
 
@@ -144,5 +137,27 @@ class XGUI_Item_Converter {
         }
 
         return year;
+    }
+
+    class XGUI_Item_Converter {
+
+        XGUI_Item_Converter() {
+        }
+
+        XGUI_Item convert(MediaFile file) {
+            XGUI_Item item = new XGUI_Item();
+            item.setKey(file.getName().hashCode());
+            item.setName(file.getMediaName());
+            item.setYear(getMovieYear(file.getName()));
+            return item;
+        }
+
+        List<XGUI_Item> convertAll(List<MediaFile> files) {
+            List<XGUI_Item> items = new LinkedList<XGUI_Item>();
+            for (MediaFile f : files) {
+                items.add(convert(f));
+            }
+            return items;
+        }
     }
 }

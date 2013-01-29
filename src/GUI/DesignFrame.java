@@ -40,6 +40,7 @@ public class DesignFrame extends javax.swing.JFrame {
         middlePanel = new javax.swing.JPanel();
         leftScrollPane = new javax.swing.JScrollPane();
         rightInfoPanel = new javax.swing.JPanel();
+        infoDesign1 = new GUI.InfoDesign();
         bottomPanel = new javax.swing.JPanel();
         settingsLb = new javax.swing.JLabel();
         searchPanel = new javax.swing.JPanel();
@@ -145,11 +146,11 @@ public class DesignFrame extends javax.swing.JFrame {
         rightInfoPanel.setLayout(rightInfoPanelLayout);
         rightInfoPanelLayout.setHorizontalGroup(
             rightInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
+            .addComponent(infoDesign1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         rightInfoPanelLayout.setVerticalGroup(
             rightInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
+            .addComponent(infoDesign1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout middlePanelLayout = new javax.swing.GroupLayout(middlePanel);
@@ -157,6 +158,7 @@ public class DesignFrame extends javax.swing.JFrame {
         middlePanelLayout.setHorizontalGroup(
             middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(middlePanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(leftScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rightInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -180,7 +182,7 @@ public class DesignFrame extends javax.swing.JFrame {
             .addGroup(bottomPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(settingsLb, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(983, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bottomPanelLayout.setVerticalGroup(
             bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +278,7 @@ public class DesignFrame extends javax.swing.JFrame {
                 .addComponent(categoryPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(0, 194, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,6 +354,7 @@ public class DesignFrame extends javax.swing.JFrame {
     private javax.swing.JLabel docLb;
     private javax.swing.JComboBox genreCombo;
     private javax.swing.JLabel genreLb;
+    private GUI.InfoDesign infoDesign1;
     private javax.swing.JScrollPane leftScrollPane;
     private javax.swing.JPanel middlePanel;
     private javax.swing.JLabel mvIconLb;

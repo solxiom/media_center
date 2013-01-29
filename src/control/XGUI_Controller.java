@@ -4,8 +4,7 @@
  */
 package control;
 
-import GUI.beans.XGUI_Item;
-import java.util.List;
+import GUI.ListItem;
 
 /**
  *
@@ -26,4 +25,6 @@ public interface XGUI_Controller extends XGUI_Subjet {
     public void listPersianMedia();
 
     public void listDocumentaries();
+    
+    public void findItemInfo(int itemCode);
 }

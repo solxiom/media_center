@@ -6,6 +6,7 @@ package service;
 
 import java.util.List;
 import service.filesystem.MediaFile;
+import service.imdb.domain.ImdbDataObject;
 
 /**
  *
@@ -20,4 +21,6 @@ public interface HostService {
     public List<MediaFile> listDocumentaries();
 
     public List<MediaFile> listPersianItems();
+    
+  
 }

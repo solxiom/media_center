@@ -4,13 +4,18 @@
  */
 package GUI;
 
+import control.XGUI_Controller;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,16 +26,25 @@ import javax.swing.JScrollPane;
  */
 public class MiddlePanel extends JPanel {
 
+    //tools
+    private XGUI_Controller controller;
     // Variables declaration - do not modify
     private javax.swing.JScrollPane leftScrollPane;
     private JPanel leftSP_Panel;
     private HashMap<Integer, Color> itemStyleCach;
-    private javax.swing.JPanel rightInfoPanel;
+    private javax.swing.JPanel rightPanel;
+    private InfoPanel infoPanel;
+    private ListItem selectedItem;
 
-    public MiddlePanel() {
+    public MiddlePanel(XGUI_Controller controller) {
         itemStyleCach = new HashMap<Integer, Color>();
         initMiddlePanel();
+        this.controller = controller;
 
+    }
+
+    public InfoPanel getInfoPanel() {
+        return this.infoPanel;
     }
 
     public void setResults(List<ListItem> items) {
@@ -65,17 +79,16 @@ public class MiddlePanel extends JPanel {
 
         leftSP_Panel = new JPanel();
         leftScrollPane = new JScrollPane(leftSP_Panel);
-        rightInfoPanel = new JPanel();
+        rightPanel = new JPanel();
+        infoPanel = new InfoPanel();
 
         this.setBackground(new java.awt.Color(204, 204, 204));
 
         leftScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-        rightInfoPanel.setBackground(new java.awt.Color(204, 204, 255));
         leftSP_Panel.setLayout(new BoxLayout(leftSP_Panel, BoxLayout.Y_AXIS));
 
 
-        setRightInfoPanelLayout();
+        setRightPanelLayout();
         setMiddlePanelLayout();
     }
 
@@ -87,69 +100,79 @@ public class MiddlePanel extends JPanel {
                 .addGroup(middlePanelLayout.createSequentialGroup()
                 .addComponent(leftScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rightInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap()));
         middlePanelLayout.setVerticalGroup(
                 middlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(leftScrollPane)
                 .addGroup(middlePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(rightInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap()));
     }
 
-    private void setRightInfoPanelLayout() {
-        javax.swing.GroupLayout rightInfoPanelLayout = new javax.swing.GroupLayout(rightInfoPanel);
-        rightInfoPanel.setLayout(rightInfoPanelLayout);
-        rightInfoPanelLayout.setHorizontalGroup(
-                rightInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 511, Short.MAX_VALUE));
-        rightInfoPanelLayout.setVerticalGroup(
-                rightInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 521, Short.MAX_VALUE));
-    }
-}
+    private void setRightPanelLayout() {
+        BoxLayout boxLay = new BoxLayout(rightPanel, BoxLayout.LINE_AXIS);
+        rightPanel.setLayout(boxLay);
+        rightPanel.add(Box.createRigidArea(new Dimension(20, rightPanel.getHeight())));
 
-class ItemMouseAdapter extends MouseAdapter {
-
-    final ListItem item;
-    final HashMap<Integer, Color> colorCach;
-
-    ItemMouseAdapter(ListItem item, HashMap<Integer, Color> colorCach) {
-        this.item = item;
-        this.colorCach = colorCach;
-
+        rightPanel.add(infoPanel);
+        rightPanel.add(Box.createRigidArea(new Dimension(20, rightPanel.getHeight())));
     }
 
-    @Override
-    public void mousePressed(MouseEvent evt) {
-        item.getNameLabel().setFont(new Font("serif", 1, 16));
-        item.getYearLabel().setFont(new Font("serif", 0, 12));
-    }
+    class ItemMouseAdapter extends MouseAdapter {
 
-    @Override
-    public void mouseReleased(MouseEvent evt) {
-        item.getNameLabel().setFont(new Font("serif", 2, 16));
-        item.getYearLabel().setFont(new Font("serif", 1, 12));
-    }
+        final ListItem item;
+        final HashMap<Integer, Color> colorCach;
 
-    @Override
-    public void mouseClicked(MouseEvent evt) {
-    }
+        ItemMouseAdapter(ListItem item, HashMap<Integer, Color> colorCach) {
+            this.item = item;
+            this.colorCach = colorCach;
 
-    @Override
-    public void mouseEntered(MouseEvent evt) {
-        evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        item.setBackground(Color.YELLOW);
-        item.getNameLabel().setForeground(Color.red);
-        item.getYearLabel().setForeground(Color.red);
-    }
+        }
 
-    @Override
-    public void mouseExited(MouseEvent evt) {
-        evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        item.setBackground(colorCach.get(item.getXGUI_Item().getKey()));
-        item.getNameLabel().setForeground(Color.black);
-        item.getYearLabel().setForeground(Color.black);
+        @Override
+        public void mousePressed(MouseEvent evt) {
+            item.getNameLabel().setFont(new Font("serif", 1, 16));
+            item.getYearLabel().setFont(new Font("serif", 0, 12));
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent evt) {
+            item.getNameLabel().setFont(new Font("serif", 2, 16));
+            item.getYearLabel().setFont(new Font("serif", 1, 12));
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent evt) {
+            controller.findItemInfo(item.getXGUI_Item().getKey());
+            if (selectedItem != null) {
+                selectedItem.setBackground(colorCach.get(selectedItem.getXGUI_Item().getKey()));
+            }
+            selectedItem = item;
+            selectedItem.setBackground(Color.green);
+
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent evt) {
+            evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
+            if (item != selectedItem) {
+                item.setBackground(Color.YELLOW);
+            }
+            item.getNameLabel().setForeground(Color.red);
+            item.getYearLabel().setForeground(Color.red);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent evt) {
+            evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            if (item != selectedItem) {
+                item.setBackground(colorCach.get(item.getXGUI_Item().getKey()));
+            }
+            item.getNameLabel().setForeground(Color.black);
+            item.getYearLabel().setForeground(Color.black);
+        }
     }
 }
