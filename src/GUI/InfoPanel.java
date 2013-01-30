@@ -1,6 +1,9 @@
 package GUI;
 
-import java.util.Date;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import service.imdb.domain.ImdbDataObject;
 
@@ -19,7 +22,7 @@ public class InfoPanel extends JPanel {
      */
     // Variables declaration - do not modify
     private javax.swing.JLabel plotLb;
-    private javax.swing.JLabel rateInfo;
+    private javax.swing.JLabel rateInfoLb;
     private javax.swing.JLabel playLb;
     private javax.swing.JLabel typeLb;
     private javax.swing.JLabel nameLb;
@@ -29,7 +32,10 @@ public class InfoPanel extends JPanel {
     private javax.swing.JLabel langLb;
     private javax.swing.JLabel starLb;
     private javax.swing.JLabel posterLb;
-    private javax.swing.JPanel ratingPanel;
+    
+    private JPanel rightPanel;
+    private JPanel posterPanel;
+    private javax.swing.JPanel bottomPanel;
     // End of variables declaration
 
     public InfoPanel() {
@@ -56,7 +62,7 @@ public class InfoPanel extends JPanel {
 
             starLb.setText("star");
 
-            rateInfo.setText(info.getRating() + "/ 10 Rated by " + info.getRating_count() + " users");
+            rateInfoLb.setText(info.getRating() + "/ 10 Rated by " + info.getRating_count() + " users");
 
             playLb.setText("Play");
 
@@ -77,6 +83,10 @@ public class InfoPanel extends JPanel {
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
+        rightPanel = new JPanel();
+        posterPanel = new JPanel();
+        bottomPanel = new javax.swing.JPanel();
+        
         plotLb = new javax.swing.JLabel();
         nameLb = new javax.swing.JLabel();
         genreLb = new javax.swing.JLabel();
@@ -84,25 +94,96 @@ public class InfoPanel extends JPanel {
         actorLb = new javax.swing.JLabel();
         typeLb = new javax.swing.JLabel();
         langLb = new javax.swing.JLabel();
-        ratingPanel = new javax.swing.JPanel();
+        
         starLb = new javax.swing.JLabel();
-        rateInfo = new javax.swing.JLabel();
+        rateInfoLb = new javax.swing.JLabel();
         playLb = new javax.swing.JLabel();
         posterLb = new javax.swing.JLabel();
         
-        setRatingPanelLayout();
+        setBottomPanelLayout();
         setInfoPanelLayout();
+        
+//        setRightPanelLayout();
+//        setPosterPanelLayout();
+//        setBottomPanelLayout2();
+//        setInfoPanelLayout2();
+        
     }
-
-    private void setRatingPanelLayout() {
-        javax.swing.GroupLayout ratingPanelLayout = new javax.swing.GroupLayout(ratingPanel);
-        ratingPanel.setLayout(ratingPanelLayout);
+    
+    private void setInfoPanelLayout2(){
+       
+        JPanel mainPanel = new JPanel();
+        BoxLayout mainLayout = new BoxLayout(mainPanel,BoxLayout.LINE_AXIS);
+        
+        mainPanel.add(rightPanel);
+        mainPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        mainPanel.add(posterPanel);
+        
+        this.setLayout(new BorderLayout());
+        this.add(mainPanel, BorderLayout.CENTER);
+        this.add(bottomPanel,BorderLayout.PAGE_END);
+        
+        
+    }
+    
+    private void setPosterPanelLayout(){
+        posterPanel.setLayout(new BorderLayout());
+        posterPanel.add(posterLb,BorderLayout.CENTER);
+    }
+    private void setRightPanelLayout(){
+        
+        JPanel type_lang_panel = new JPanel();
+        BoxLayout typeLangLayout = new BoxLayout(type_lang_panel, BoxLayout.LINE_AXIS);
+        type_lang_panel.add(typeLb);
+        type_lang_panel.add(Box.createRigidArea(new Dimension(10, 0)));
+        type_lang_panel.add(langLb);
+        
+         BoxLayout mainLayout = new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS);
+         rightPanel.setLayout(mainLayout);
+         rightPanel.add(nameLb);
+         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
+         rightPanel.add(genreLb);
+         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
+         rightPanel.add(directLb);
+         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
+         rightPanel.add(actorLb);
+         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
+         rightPanel.add(type_lang_panel);
+         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
+         rightPanel.add(plotLb);
+         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
+   
+         
+    }
+    private void setBottomPanelLayout2(){
+        JPanel ratingPanel = new JPanel();
+        BoxLayout ratingLayout = new BoxLayout(ratingPanel,BoxLayout.PAGE_AXIS);
+        ratingPanel.setLayout(ratingLayout);
+        ratingPanel.add(rateInfoLb);
+        ratingPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        ratingPanel.add(starLb);
+        
+        JPanel toolPanel = new JPanel();
+        BoxLayout toolLayout = new BoxLayout(toolPanel,BoxLayout.LINE_AXIS);
+        toolPanel.setLayout(toolLayout);
+        toolPanel.add(playLb);
+        
+        BoxLayout bottomLayout = new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS);
+        bottomPanel.setLayout(bottomLayout);
+        bottomPanel.add(ratingPanel);
+        bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        bottomPanel.add(toolPanel);
+        
+    }
+    private void setBottomPanelLayout() {
+        javax.swing.GroupLayout ratingPanelLayout = new javax.swing.GroupLayout(bottomPanel);
+        bottomPanel.setLayout(ratingPanelLayout);
         ratingPanelLayout.setHorizontalGroup(
                 ratingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(ratingPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ratingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(rateInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rateInfoLb, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(starLb, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addComponent(playLb, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -112,7 +193,7 @@ public class InfoPanel extends JPanel {
                 .addGroup(ratingPanelLayout.createSequentialGroup()
                 .addGroup(ratingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(ratingPanelLayout.createSequentialGroup()
-                .addComponent(rateInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addComponent(rateInfoLb, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(starLb, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ratingPanelLayout.createSequentialGroup()
@@ -130,7 +211,7 @@ public class InfoPanel extends JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ratingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(bottomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -167,7 +248,7 @@ public class InfoPanel extends JPanel {
                 .addComponent(plotLb, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(posterLb, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ratingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bottomPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap()));
     }
 }
