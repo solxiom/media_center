@@ -18,6 +18,7 @@ import service.ftp.FTPFileManager;
 import service.ftp.FtpService;
 import service.imdb.dataService.ImdbDataService;
 import service.imdb.domain.ImdbDataObject;
+import service.imdb.domain.TitleSearchOptions;
 
 /**
  *
@@ -28,9 +29,10 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     //tools
     private List<XGUI_Observer> observers;
     private HashMap<Integer, MediaFile> activeResultMap;
-    XGUI_Item_Converter converter;
-    HostService hostService;
-    DataService dataService;
+    private XGUI_Item_Converter converter;
+    private HostService hostService;
+    private DataService dataService;
+    private final String dataServiceUrl;
 
     public XGUI_ControllerImpl() {
         this.observers = new LinkedList<XGUI_Observer>();
@@ -38,6 +40,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
         dataService = new ImdbDataService();
+        dataServiceUrl = "http://imdbapi.org";
     }
 
     public void registerObserver(XGUI_Observer obs) {
@@ -82,8 +85,12 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
 
     public void findItemInfo(int ItemCode) {
         MediaFile item = activeResultMap.get(ItemCode);
-
-        notifyObserversWithItemInfo(null);
+        String itemYear = getMovieYear(item.getName());
+        if(itemYear.equalsIgnoreCase("Unknown"))
+            itemYear ="";
+        TitleSearchOptions options = new TitleSearchOptions(item.getMediaName(), itemYear);
+        ImdbDataObject info = dataService.getDataByTitle(dataServiceUrl, options);
+        notifyObserversWithItemInfo(info);
 
     }
 
