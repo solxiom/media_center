@@ -2,8 +2,10 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.HashMap;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import service.imdb.domain.ImdbDataObject;
 
@@ -21,59 +23,33 @@ public class InfoPanel extends JPanel {
      * Creates new form InfoDesign
      */
     // Variables declaration - do not modify
-    private javax.swing.JLabel plotLb;
-    private javax.swing.JLabel rateInfoLb;
-    private javax.swing.JLabel playLb;
-    private javax.swing.JLabel typeLb;
-    private javax.swing.JLabel nameLb;
-    private javax.swing.JLabel genreLb;
-    private javax.swing.JLabel directLb;
-    private javax.swing.JLabel actorLb;
-    private javax.swing.JLabel langLb;
-    private javax.swing.JLabel starLb;
-    private javax.swing.JLabel posterLb;
-    
-    private JPanel rightPanel;
+    private JLabel titleLb;
+    private JLabel plotLb;
+    private JLabel rateInfoLb;
+    private JLabel playLb;
+    private JLabel typeLb;
+    private JLabel genreLb;
+    private JLabel directLb;
+    private JLabel actorLb;
+    private JLabel langLb;
+    private JLabel starLb;
+    private JLabel posterLb;
+    private JPanel plotPanel;
     private JPanel posterPanel;
-    private javax.swing.JPanel bottomPanel;
+    private JPanel bottomPanel;
     // End of variables declaration
 
     public InfoPanel() {
         initComponents();
     }
 
-    public void setInfo(ImdbDataObject info) {
-        this.removeAll();
-        initComponents();
-        if (info.getError() == null) {
-            nameLb.setText(info.getTitle() + " [" + info.getYear() + "]");
-
-            genreLb.setText("Genre: " + info.getGenres().toString().replace("[", "").replace("]", ""));
-
-            directLb.setText("Director: " + info.getDirectors().toString().replace("[", "").replace("]", ""));
-
-            actorLb.setText("Actores: " + info.getActors().toString().replace("[", "").replace("]", ""));
-
-            typeLb.setText("Type:" + info.getType());
-
-            plotLb.setText("Plot: " + info.getPlot());
-
-            langLb.setText("Language: " + info.getLanguage().toString().replace("[", "").replace("]", ""));
-
-            starLb.setText("star");
-
-            rateInfoLb.setText(info.getRating() + "/ 10 Rated by " + info.getRating_count() + " users");
-
-            playLb.setText("Play");
-
-            posterLb.setText("icon:");
-        } else {
-            nameLb.setText("No Information found for this Item!");
-        }
-
+    public void setInfo(ImdbDataObject info,XGUI_Info_Parser parser) {
+        this.removeAll();       
+        initCompsWithValues(parser.getValues(info));
         this.updateUI();
 
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,172 +59,118 @@ public class InfoPanel extends JPanel {
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        rightPanel = new JPanel();
         posterPanel = new JPanel();
-        bottomPanel = new javax.swing.JPanel();
-        
-        plotLb = new javax.swing.JLabel();
-        nameLb = new javax.swing.JLabel();
-        genreLb = new javax.swing.JLabel();
-        directLb = new javax.swing.JLabel();
-        actorLb = new javax.swing.JLabel();
-        typeLb = new javax.swing.JLabel();
-        langLb = new javax.swing.JLabel();
-        
-        starLb = new javax.swing.JLabel();
-        rateInfoLb = new javax.swing.JLabel();
-        playLb = new javax.swing.JLabel();
-        posterLb = new javax.swing.JLabel();
-        
+        bottomPanel = new JPanel();
+        plotPanel = new JPanel();
+
+        titleLb = new JLabel();
+        plotLb = new JLabel();
+        genreLb = new JLabel();
+        directLb = new JLabel();
+        actorLb = new JLabel();
+        typeLb = new JLabel();
+        langLb = new JLabel();
+
+        starLb = new JLabel();
+        rateInfoLb = new JLabel();
+        playLb = new JLabel();
+        posterLb = new JLabel();
+
+
+        setPosterPanelLayout();
         setBottomPanelLayout();
         setInfoPanelLayout();
-        
-//        setRightPanelLayout();
-//        setPosterPanelLayout();
-//        setBottomPanelLayout2();
-//        setInfoPanelLayout2();
-        
+
     }
-    
-    private void setInfoPanelLayout2(){
-       
-        JPanel mainPanel = new JPanel();
-        BoxLayout mainLayout = new BoxLayout(mainPanel,BoxLayout.LINE_AXIS);
-        
-        mainPanel.add(rightPanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        mainPanel.add(posterPanel);
-        
+
+    private void initCompsWithValues(HashMap<String, String> values) {
+
+
+        posterPanel = new JPanel();
+        bottomPanel = new JPanel();
+        plotPanel = new JPanel();
+
+        titleLb = new JLabel(values.get("title"));
+        plotLb = new JLabel(values.get("plot"));
+        genreLb = new JLabel(values.get("genre"));
+        directLb = new JLabel(values.get("director"));
+        actorLb = new JLabel(values.get("actors"));
+        typeLb = new JLabel(values.get("type"));
+        langLb = new JLabel(values.get("language"));
+        starLb = new JLabel("star");
+        rateInfoLb = new JLabel(values.get("rateInfo"));
+        playLb = new JLabel("play");
+        posterLb = new JLabel(values.get("poster"));
+
+        setPlotPanelLayout();
+        setPosterPanelLayout();
+        setBottomPanelLayout();
+        setInfoPanelLayout();
+    }
+
+    private void setInfoPanelLayout() {
+
         this.setLayout(new BorderLayout());
-        this.add(mainPanel, BorderLayout.CENTER);
-        this.add(bottomPanel,BorderLayout.PAGE_END);
-        
-        
+        this.add(posterPanel, BorderLayout.NORTH);
+        this.add(plotPanel, BorderLayout.WEST);
+        this.add(bottomPanel, BorderLayout.PAGE_END);
+        this.setMinimumSize(new Dimension(600, 600));
+
+
     }
-    
-    private void setPosterPanelLayout(){
+
+    private void setPlotPanelLayout() {
+        plotPanel.setLayout(new BorderLayout());
+        plotPanel.add(plotLb, BorderLayout.CENTER);
+    }
+
+    private void setPosterPanelLayout() {
+
+        JPanel rPane = new JPanel();
+        JPanel lPane = new JPanel();
+
         posterPanel.setLayout(new BorderLayout());
-        posterPanel.add(posterLb,BorderLayout.CENTER);
+        rPane.setLayout(new BorderLayout());
+        rPane.add(posterLb, BorderLayout.CENTER);
+
+        lPane.setLayout(new BoxLayout(lPane, BoxLayout.Y_AXIS));
+        lPane.add(Box.createRigidArea(new Dimension(0, 5)));
+        lPane.add( titleLb);
+        lPane.add(Box.createRigidArea(new Dimension(0, 5)));
+        lPane.add( genreLb);
+        lPane.add(Box.createRigidArea(new Dimension(0, 5)));
+        lPane.add(directLb);
+        lPane.add(Box.createRigidArea(new Dimension(0, 5)));
+        lPane.add(actorLb);
+        lPane.add(Box.createRigidArea(new Dimension(0, 5)));
+        lPane.add( typeLb);;
+        lPane.add(Box.createRigidArea(new Dimension(0, 5)));
+        lPane.add( langLb);
+        lPane.add(Box.createRigidArea(new Dimension(0, 5)));
+
+
+        posterPanel.add(rPane, BorderLayout.WEST);
+        posterPanel.add(lPane, BorderLayout.CENTER);
     }
-    private void setRightPanelLayout(){
-        
-        JPanel type_lang_panel = new JPanel();
-        BoxLayout typeLangLayout = new BoxLayout(type_lang_panel, BoxLayout.LINE_AXIS);
-        type_lang_panel.add(typeLb);
-        type_lang_panel.add(Box.createRigidArea(new Dimension(10, 0)));
-        type_lang_panel.add(langLb);
-        
-         BoxLayout mainLayout = new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS);
-         rightPanel.setLayout(mainLayout);
-         rightPanel.add(nameLb);
-         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
-         rightPanel.add(genreLb);
-         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
-         rightPanel.add(directLb);
-         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
-         rightPanel.add(actorLb);
-         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
-         rightPanel.add(type_lang_panel);
-         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
-         rightPanel.add(plotLb);
-         rightPanel.add(Box.createRigidArea(new Dimension(0,5)));
    
-         
-    }
-    private void setBottomPanelLayout2(){
+    private void setBottomPanelLayout() {
         JPanel ratingPanel = new JPanel();
-        BoxLayout ratingLayout = new BoxLayout(ratingPanel,BoxLayout.PAGE_AXIS);
+        BoxLayout ratingLayout = new BoxLayout(ratingPanel, BoxLayout.PAGE_AXIS);
         ratingPanel.setLayout(ratingLayout);
         ratingPanel.add(rateInfoLb);
-        ratingPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        ratingPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         ratingPanel.add(starLb);
-        
+
         JPanel toolPanel = new JPanel();
-        BoxLayout toolLayout = new BoxLayout(toolPanel,BoxLayout.LINE_AXIS);
+        BoxLayout toolLayout = new BoxLayout(toolPanel, BoxLayout.LINE_AXIS);
         toolPanel.setLayout(toolLayout);
         toolPanel.add(playLb);
-        
+
         BoxLayout bottomLayout = new BoxLayout(bottomPanel, BoxLayout.LINE_AXIS);
         bottomPanel.setLayout(bottomLayout);
         bottomPanel.add(ratingPanel);
         bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         bottomPanel.add(toolPanel);
-        
-    }
-    private void setBottomPanelLayout() {
-        javax.swing.GroupLayout ratingPanelLayout = new javax.swing.GroupLayout(bottomPanel);
-        bottomPanel.setLayout(ratingPanelLayout);
-        ratingPanelLayout.setHorizontalGroup(
-                ratingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(ratingPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(ratingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(rateInfoLb, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(starLb, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
-                .addComponent(playLb, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(140, 140, 140)));
-        ratingPanelLayout.setVerticalGroup(
-                ratingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(ratingPanelLayout.createSequentialGroup()
-                .addGroup(ratingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(ratingPanelLayout.createSequentialGroup()
-                .addComponent(rateInfoLb, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(starLb, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ratingPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(playLb, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap()));
-    }
 
-    private void setInfoPanelLayout() {
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(bottomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(typeLb, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(langLb, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(nameLb, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(actorLb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(directLb, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(genreLb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addComponent(plotLb, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(posterLb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap()));
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addGroup(layout.createSequentialGroup()
-                .addComponent(nameLb, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(genreLb, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(directLb, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(actorLb, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(langLb, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(typeLb, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(plotLb, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(posterLb, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bottomPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap()));
     }
 }

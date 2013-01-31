@@ -22,6 +22,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
     // Variables declaration - do not modify
     //tools
     private XGUI_Controller controller;
+    private XGUI_Info_Parser parser;
     //components
     private CategoryPanel categoryPanel;
     private SearchPanel searchPanel;
@@ -33,6 +34,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
     public XGUI_Frame() {
         super("Media Center v1.0");
         controller = new XGUI_ControllerImpl();
+        parser = new XGUI_Info_Parser();
         controller.registerObserver(this);
         initXFrame();
 
@@ -51,7 +53,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
     
     public void updateInfo(ImdbDataObject info){
         
-        middlePanel.getInfoPanel().setInfo(info);
+        middlePanel.getInfoPanel().setInfo(info,parser);
         
     }
 
