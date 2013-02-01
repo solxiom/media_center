@@ -46,7 +46,7 @@ public class CMD_Controller {
         String year = getMovieYear(mf.getName());
         DataObject info;
         TitleSearchOptions options;
-        DataService service = new ImdbDataService(new ImdbServer(new DataObjectConverterImpl()));
+        DataService service = new ImdbDataService(new ImdbServer(),new DataObjectConverterImpl());
         if (year != null) {
             options = new TitleSearchOptions(mf.getMediaName(), year);
         } else {
@@ -62,12 +62,12 @@ public class CMD_Controller {
     private String parseMovieInfo(DataObject info) {
         String str = "\n**************   *I**N**F**O*   *****************\n\n";
         str += "\n Name: " + info.getTitle() + " [" + info.getYear() + "]";
-        str += "\n Duration: " + info.getRuntime() + " Rating: [" + info.getRating() + "/10] from " + info.getRating_count() +" users";
+        str += "\n Duration: " + info.getRuntime() + " Rating: [" + info.getImdb_user_rating() + "/10] from " + info.getImdb_votes_count() +" users";
         str += "\n Language: " + info.getLanguage() + " Type: " + info.getType();
         str += "\n Genres: " + info.getGenres();
-        str += "\n Plot: " + parseMoviePlot(info.getPlot());
+        str += "\n Plot: " + parseMoviePlot(info.getStoryLine());
         str += "\n Directors: " + info.getDirectors();
-        str += "\n Actores: " + trimMovieActors(info.getActors(), 5);
+        str += "\n Actores: " + trimMovieActors(info.getCast(), 5);
         str += "\n \n \n**************   ******   **********************";
 
         return str;

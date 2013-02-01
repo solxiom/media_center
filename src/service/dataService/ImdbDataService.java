@@ -6,37 +6,28 @@ package service.dataService;
 
 import service.JsonServer;
 import service.DataService;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import service.domain.DataObject;
 import service.domain.IdSearchOptions;
 import service.domain.TitleSearchOptions;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import service.DataConverter;
+import service.domain.ImdbDataObject;
 
 /**
  *
  * @author kavan
  */
-public class ImdbDataService implements DataService {
+public class ImdbDataService implements DataService<ImdbDataObject> {
 
-    HttpClient client_globe;
-    HttpGet req_globe;
-    String jsonstr_globe = "";
-    DataObject dataObject_globe;
-    JsonServer server;
+//   
+    private JsonServer<ImdbDataObject> server;
+    private DataConverter converter;
+    private ImdbDataObject server_data;
+    
     
 
-    public ImdbDataService(JsonServer server) {
+    public ImdbDataService(JsonServer<ImdbDataObject> server, DataConverter converter) {
         this.server = server;
+        this.converter = converter;
     }
 
     @Override
@@ -49,13 +40,29 @@ public class ImdbDataService implements DataService {
         return getData(serverURL, options.toString());
     }
 
+    public ImdbDataObject getServerData() {
+        return this.getServerData();
+    }
+    
+
     private DataObject getData(String serverURL, String options) {
+       
+        try {
+            
+            return converter.convert(this.getServerData(serverURL, options));
+        } catch (Exception e) {
+
+            return null;
+        }
+    }  
+    private ImdbDataObject getServerData(String serverURL, String options) {
         String jsonstr = "";
         DataObject dataObject;
         String requestString = serverURL + "/" + options;
         jsonstr = server.requestToServer(requestString);
         try {
-            return server.jsonToDataObject(jsonstr);
+            server_data = server.jsonToServerObject(jsonstr);
+            return server_data;
         } catch (Exception e) {
 
             return null;

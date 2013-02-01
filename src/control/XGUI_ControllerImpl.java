@@ -45,8 +45,8 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
         data_converter = new DataObjectConverterImpl();
-        json_server = new ImdbServer(data_converter);
-        dataService = new ImdbDataService(json_server);
+        json_server = new ImdbServer();
+        dataService = new ImdbDataService(json_server,data_converter);
         dataServiceUrl = "http://imdbapi.org";
     }
 

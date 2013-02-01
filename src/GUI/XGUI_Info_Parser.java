@@ -25,7 +25,6 @@ public class XGUI_Info_Parser {
         String language = "";
         String rateInfo = "";
         String poster = "http://api.movieposterdb.com/image?title=amelia&api_key=demo&secret=cdeeea6bef66&width=300";
-        poster = "http://api.movieposterdb.com/image?title=buried&api_key=demo&secret=cdeeea6bef66&width=300";
         poster ="<img src='"+poster+"' width='300' height='400'";
         if (info != null && info.getError() == null) {
 
@@ -34,16 +33,16 @@ public class XGUI_Info_Parser {
             genre = "Genre: " + info.getGenres().toString().replace("[", "").replace("]", "");
             directors = "Director(s): " + info.getDirectors().toString().replace("[", "").replace("]", "");
             actors = "Actors: "
-                    + parseActors(info.getActors().toArray(new String[info.getActors().size()]), 6, 3)
+                    + parseActors(info.getCast().toArray(new String[info.getCast().size()]), 6, 3)
                     + "";
             type = "Type: " + getItemType(info.getType());
-            plot = "" + parsePlot(info.getPlot(), 90) + "";
+            plot = "" + parsePlot(info.getStoryLine(), 90) + "";
             language = "Language(s): " + info.getLanguage().toString().replace("[", "").replace("]", "");
-            rateInfo = info.getRating() + "/ 10 Rated by " + info.getRating_count() + " users";
-            if (info.getPoster().equals(" ")) {
+            rateInfo = info.getImdb_user_rating() + "/ 10 Rated by " + info.getImdb_votes_count() + " users";
+            if (info.getPosters().size() == 0) {
                 poster = "";
             } else {
-                poster = "<img src='" + info.getPoster() + "' width='300' height='400' />";
+                poster = "<img src='" + info.getPosters().get(0) + "' width='300' height='400' />";
             }
 
         }

@@ -26,7 +26,7 @@ public class Main_imdb_service {
 //?title=amelia+&type=json&plot=full&episode=1&limit=1&yg=1&mt=none&lang=en-US&offset=&aka=simple&release=simple&year=2009
 //tt1129445
         DataConverter converter = new DataObjectConverterImpl();
-        DataService service = new ImdbDataService(new ImdbServer(converter));
+        DataService service = new ImdbDataService(new ImdbServer(),converter);
         TitleSearchOptions options = new TitleSearchOptions("amelia","2009");
         
         options.setOffset("0");
@@ -36,7 +36,7 @@ public class Main_imdb_service {
             if (data.getError() != null) {
                 System.out.println("error: " +data.getError());
             } else {
-                System.out.println("plot: " + data.getPlot());
+                System.out.println("plot: " + data.getStoryLine());
                 System.out.println("total_found: " + data.getTotal_found());  
         
             }

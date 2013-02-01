@@ -22,7 +22,7 @@ import service.domain.DataObject;
  *
  * @author kavan
  */
-public abstract class JsonServer {
+public abstract class JsonServer<T> {
     
      public String requestToServer(String requestString) {
         String jsonResponse = "";
@@ -47,7 +47,7 @@ public abstract class JsonServer {
         return jsonResponse;
     }
 
-    public abstract DataObject jsonToDataObject(String jsonstr) throws Exception;
-
+    public abstract T jsonToServerObject(String jsonstr) throws Exception;
+    
     public abstract JsonObject getResultAsJsonObject(String jsonstr) throws Exception;
 }

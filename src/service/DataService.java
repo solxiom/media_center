@@ -12,10 +12,15 @@ import service.domain.DataObject;
  *
  * @author kavan
  */
-public interface DataService {
+public interface DataService<T> {
 
    public DataObject getDataById(String serverURL, IdSearchOptions options);
 
    public DataObject getDataByTitle(String serverURL, TitleSearchOptions options);
+   
+   public T getServerData();
+   
+   
+  
     
 }

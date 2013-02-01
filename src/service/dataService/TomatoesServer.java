@@ -18,21 +18,20 @@ import service.domain.tomatoes.TMDataObject;
  *
  * @author kavan
  */
-public class TomatoesServer extends JsonServer{
+public class TomatoesServer extends JsonServer<TMDataObject>{
 
-    DataConverter converter;
 
-    public TomatoesServer(DataObjectConverterImpl converter) {
-        this.converter = converter;
+    public TomatoesServer() {
+
     }
-    
+
     @Override
-    public DataObject jsonToDataObject(String jsonstr) throws Exception {       
-        TMDataObject tm_object;
+    public TMDataObject jsonToServerObject(String jsonstr) throws Exception {
+        
         JsonObject resultObj = getResultAsJsonObject(jsonstr);
-        tm_object = new Gson().fromJson(resultObj, TMDataObject.class);
-        return converter.convert(tm_object);
-    }
+        TMDataObject tm_object = new Gson().fromJson(resultObj, TMDataObject.class);
+        return tm_object;
+    }    
 
     @Override
     public JsonObject getResultAsJsonObject(String jsonstr) throws Exception {
@@ -49,6 +48,10 @@ public class TomatoesServer extends JsonServer{
                  if (element.isJsonObject()) {
 
                     resultObject = element.getAsJsonObject();
+                    if(resultObject.has("title") && resultObject.has("id")){
+                        return resultObject;
+                        
+                    }
                     if (resultObject.has("movies")) {
                         resultObject = resultObject.get("movies").getAsJsonObject();
                     }                 
