@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package service.imdb.domain;
+package service.domain;
 
 /**
  *
@@ -94,7 +94,22 @@ String release;
     public void setRelease(String release) {
         this.release = release;
     }
-
+/**
+     * 
+     * @return the correct syntax for using in http get request in OMDBAPI.COM 
+     */
+    public String getOmdbParameters(){
+        String str = "?";
+        str += "i=" + this.id;
+        str += "&plot=" + this.plot;
+        str += "&r=JSON";
+        str += "&tomatoes=true";
+        return str;
+    }
+    /**
+     * 
+     * @return the correct syntax for using in http get request in IMDBAPI.ORG 
+     */
     @Override
     public String toString() {
 // sample:

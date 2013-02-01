@@ -6,7 +6,7 @@ package control;
 
 import GUI.beans.XGUI_Item;
 import java.util.List;
-import service.imdb.domain.ImdbDataObject;
+import service.domain.DataObject;
 
 /**
  *
@@ -16,5 +16,5 @@ public interface XGUI_Observer {
 
     public void updateResults(List<XGUI_Item> results);
 
-    public void updateInfo(ImdbDataObject info);
+    public void updateInfo(DataObject info);
 }

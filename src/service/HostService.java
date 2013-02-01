@@ -6,7 +6,7 @@ package service;
 
 import java.util.List;
 import service.filesystem.MediaFile;
-import service.imdb.domain.ImdbDataObject;
+import service.domain.DataObject;
 
 /**
  *

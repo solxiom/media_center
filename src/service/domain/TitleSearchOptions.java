@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package service.imdb.domain;
+package service.domain;
 
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
@@ -197,7 +197,35 @@ public class TitleSearchOptions {
     
     /**
      * 
-     * @return the correct syntax for using in http get request
+     * @return the correct syntax for using in http get request in OMDBAPI.COM 
+     */
+    public String getOmdbParameters(){
+        String str = "?";
+        str += "t=" + this.title;
+        str += "&plot=" + this.plot;
+        str += "&y=" + this.year;
+        str += "&year=" + this.year;
+        str += "&r=JSON";
+        str += "&tomatoes=true";
+        return str.replace(' ', '+');
+    }
+    /**
+     * 
+     * @return the correct syntax for using in http get request in rottentomatoes.com 
+     */
+    public String getTomatoesParameters(){
+        String str = "?";
+        str += "t=" + this.title;
+        str += "&plot=" + this.plot;
+        str += "&y=" + this.year;
+        str += "&year=" + this.year;
+        str += "&r=JSON";
+        str += "&tomatoes=true";
+        return str.replace(' ', '+');
+    }
+    /**
+     * 
+     * @return the correct syntax for using in http get request in IMDBAPI.ORG 
      */
     @Override
     public String toString() {

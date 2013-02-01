@@ -5,7 +5,7 @@
 package GUI;
 
 import java.util.HashMap;
-import service.imdb.domain.ImdbDataObject;
+import service.domain.DataObject;
 
 /**
  *
@@ -13,7 +13,7 @@ import service.imdb.domain.ImdbDataObject;
  */
 public class XGUI_Info_Parser {
 
-    public HashMap<String, String> getValues(ImdbDataObject info) {
+    public HashMap<String, String> getValues(DataObject info) {
 
         HashMap<String, String> values = new HashMap<String, String>();
         String title = "No information found for this Item";
@@ -24,8 +24,10 @@ public class XGUI_Info_Parser {
         String plot = "";
         String language = "";
         String rateInfo = "";
-        String poster = "";
-        if (info.getError() == null) {
+        String poster = "http://api.movieposterdb.com/image?title=amelia&api_key=demo&secret=cdeeea6bef66&width=300";
+        poster = "http://api.movieposterdb.com/image?title=buried&api_key=demo&secret=cdeeea6bef66&width=300";
+        poster ="<img src='"+poster+"' width='300' height='400'";
+        if (info != null && info.getError() == null) {
 
             title = info.getTitle() + " [" + info.getYear() + "]";
             title = getStyledTitle(title);

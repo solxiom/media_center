@@ -16,9 +16,9 @@ import service.HostService;
 import service.filesystem.MediaFile;
 import service.ftp.FTPFileManager;
 import service.ftp.FtpService;
-import service.imdb.dataService.ImdbDataService;
-import service.imdb.domain.ImdbDataObject;
-import service.imdb.domain.TitleSearchOptions;
+import service.dataService.ImdbDataService;
+import service.domain.DataObject;
+import service.domain.TitleSearchOptions;
 
 /**
  *
@@ -57,7 +57,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         }
     }
 
-    public void notifyObserversWithItemInfo(ImdbDataObject info) {
+    public void notifyObserversWithItemInfo(DataObject info) {
         for (XGUI_Observer obs : observers) {
             obs.updateInfo(info);
         }
@@ -89,7 +89,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         if(itemYear.equalsIgnoreCase("Unknown"))
             itemYear ="";
         TitleSearchOptions options = new TitleSearchOptions(item.getMediaName(), itemYear);
-        ImdbDataObject info = dataService.getDataByTitle(dataServiceUrl, options);
+        DataObject info = dataService.getDataByTitle(dataServiceUrl, options);
         notifyObserversWithItemInfo(info);
 
     }

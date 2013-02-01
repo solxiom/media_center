@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package service.imdb.domain;
+package service.domain;
 
 import java.util.List;
 
@@ -11,8 +11,7 @@ import java.util.List;
  * @author kavan
  */
 public class ImdbDataObject {
-
-//Field	Type	Description
+   //Field	Type	Description
 //actors	List	The movie's cast list.
     List<String> actors;
 //also_known_as	List	 The movie's other name. Fields(full mode): title country remarks
@@ -276,5 +275,5 @@ public class ImdbDataObject {
                 + ", rating=" + rating + ", rating_count=" + rating_count + ", release_date=" + release_date
                 + ", runtime=" + runtime + ", title=" + title + ", type=" + type + ", writers=" + writers + ", year=" + year
                 + ", total_found=" + total_found + ", error=" + error + '}';
-    }
+    } 
 }

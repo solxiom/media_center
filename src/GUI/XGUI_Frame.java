@@ -11,7 +11,7 @@ import control.XGUI_Observer;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
-import service.imdb.domain.ImdbDataObject;
+import service.domain.DataObject;
 
 /**
  *
@@ -51,7 +51,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
         }
     }
     
-    public void updateInfo(ImdbDataObject info){
+    public void updateInfo(DataObject info){
         
         middlePanel.getInfoPanel().setInfo(info,parser);
         

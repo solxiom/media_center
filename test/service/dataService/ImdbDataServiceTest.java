@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package service.imdb.dataService;
+package service.dataService;
 
-import service.imdb.dataService.ImdbDataService;
+import service.dataService.ImdbDataService;
 import service.DataService;
-import service.imdb.domain.ImdbDataObject;
-import service.imdb.domain.IdSearchOptions;
-import service.imdb.domain.TitleSearchOptions;
+import service.domain.DataObject;
+import service.domain.IdSearchOptions;
+import service.domain.TitleSearchOptions;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,7 +49,7 @@ public class ImdbDataServiceTest {
         IdSearchOptions options = new IdSearchOptions("tt1129445");
       
         DataService instance = new ImdbDataService();
-        ImdbDataObject result = instance.getDataById(serverURL, options);
+        DataObject result = instance.getDataById(serverURL, options);
         assertEquals(expResultStr, result.getActors().toString());
     }
 
@@ -69,7 +69,7 @@ public class ImdbDataServiceTest {
         TitleSearchOptions options = new TitleSearchOptions("amelia","2009");
         options.setOffset("0");
         DataService instance = new ImdbDataService();
-        ImdbDataObject result = instance.getDataByTitle(serverURL, options);
+        DataObject result = instance.getDataByTitle(serverURL, options);
         assertEquals(expResultStr, result.getActors().toString());
       
     }
@@ -86,7 +86,7 @@ public class ImdbDataServiceTest {
         TitleSearchOptions options = new TitleSearchOptions("Beyond a Reasonable Doubt");
         options.setOffset("0");
         DataService instance = new ImdbDataService();
-        ImdbDataObject result = instance.getDataByTitle(serverURL, options);
+        DataObject result = instance.getDataByTitle(serverURL, options);
         assertEquals(expResultStr, result.getFilming_locations().toString());
       
     }

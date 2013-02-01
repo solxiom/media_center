@@ -13,7 +13,7 @@ import service.HostService;
 import service.filesystem.MediaFile;
 import service.filesystem.TypeX;
 import service.ftp.domain.FTPMediaFile;
-import service.imdb.domain.ImdbDataObject;
+import service.domain.DataObject;
 
 /**
  *

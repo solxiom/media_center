@@ -7,7 +7,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import service.imdb.domain.ImdbDataObject;
+import service.domain.DataObject;
 
 /*
  * To change this template, choose Tools | Templates
@@ -43,7 +43,7 @@ public class InfoPanel extends JPanel {
         initComponents();
     }
 
-    public void setInfo(ImdbDataObject info,XGUI_Info_Parser parser) {
+    public void setInfo(DataObject info,XGUI_Info_Parser parser) {
         this.removeAll();       
         initCompsWithValues(parser.getValues(info));
         this.updateUI();

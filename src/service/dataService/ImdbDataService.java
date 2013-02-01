@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package service.imdb.dataService;
+package service.dataService;
 
 import service.DataService;
 import com.google.gson.Gson;
@@ -11,9 +11,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-import service.imdb.domain.ImdbDataObject;
-import service.imdb.domain.IdSearchOptions;
-import service.imdb.domain.TitleSearchOptions;
+import service.domain.DataObject;
+import service.domain.IdSearchOptions;
+import service.domain.TitleSearchOptions;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import org.apache.http.HttpResponse;
@@ -30,24 +30,24 @@ public class ImdbDataService implements DataService {
     HttpClient client_globe;
     HttpGet req_globe;
     String jsonstr_globe = "";
-    ImdbDataObject dataObject_globe;
+    DataObject dataObject_globe;
 
     public ImdbDataService() {
     }
 
     @Override
-    public ImdbDataObject getDataByTitle(String serverURL, TitleSearchOptions options) {
+    public DataObject getDataByTitle(String serverURL, TitleSearchOptions options) {
         return getData(serverURL, options.toString());
     }
 
     @Override
-    public ImdbDataObject getDataById(String serverURL, IdSearchOptions options) {
+    public DataObject getDataById(String serverURL, IdSearchOptions options) {
         return getData(serverURL, options.toString());
     }
 
-    private ImdbDataObject getData(String serverURL, String options) {
+    private DataObject getData(String serverURL, String options) {
         String jsonstr = "";
-        ImdbDataObject dataObject;
+        DataObject dataObject;
         String requestString = serverURL + "/" + options;
         jsonstr = connectToServer(requestString);
         try {
@@ -81,10 +81,10 @@ public class ImdbDataService implements DataService {
         return jsonResponse;
     }
 
-    private ImdbDataObject jsonToDataObject(String jsonstr) throws Exception {
-        ImdbDataObject dataObject;
+    private DataObject jsonToDataObject(String jsonstr) throws Exception {
+        DataObject dataObject;
         JsonObject resultObj = getResultAsJsonObject(jsonstr);
-        dataObject = new Gson().fromJson(resultObj, ImdbDataObject.class);
+        dataObject = new Gson().fromJson(resultObj, DataObject.class);
         return dataObject;
     }
 
