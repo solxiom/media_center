@@ -12,6 +12,8 @@ import service.domain.TitleSearchOptions;
 import service.DataService;
 import service.dataService.ImdbDataService;
 import java.util.*;
+import service.dataService.DataObjectConverterImpl;
+import service.dataService.ImdbServer;
 
 /**
  *
@@ -44,7 +46,7 @@ public class CMD_Controller {
         String year = getMovieYear(mf.getName());
         DataObject info;
         TitleSearchOptions options;
-        DataService service = new ImdbDataService();
+        DataService service = new ImdbDataService(new ImdbServer(new DataObjectConverterImpl()));
         if (year != null) {
             options = new TitleSearchOptions(mf.getMediaName(), year);
         } else {

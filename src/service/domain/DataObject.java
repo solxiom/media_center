@@ -5,6 +5,7 @@
 package service.domain;
 
 import java.util.List;
+import service.dataService.DataObjectConverterImpl;
 
 /**
  *
@@ -72,7 +73,7 @@ public class DataObject {
 
     public DataObject() {
     }
-
+    
     public String getFilming_locations() {
         return filming_locations;
     }

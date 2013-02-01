@@ -4,11 +4,13 @@
  */
 package main;
 
+import service.DataConverter;
 import service.domain.DataObject;
-import service.domain.IdSearchOptions;
 import service.dataService.ImdbDataService;
 import service.domain.TitleSearchOptions;
 import service.DataService;
+import service.dataService.DataObjectConverterImpl;
+import service.dataService.ImdbServer;
 
 /**
  *
@@ -23,7 +25,8 @@ public class Main_imdb_service {
 //http://imdbapi.org/
 //?title=amelia+&type=json&plot=full&episode=1&limit=1&yg=1&mt=none&lang=en-US&offset=&aka=simple&release=simple&year=2009
 //tt1129445
-        DataService service = new ImdbDataService();
+        DataConverter converter = new DataObjectConverterImpl();
+        DataService service = new ImdbDataService(new ImdbServer(converter));
         TitleSearchOptions options = new TitleSearchOptions("amelia","2009");
         
         options.setOffset("0");

@@ -4,19 +4,22 @@
  */
 package control;
 
-import GUI.ListItem;
 import GUI.beans.XGUI_Item;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import service.DataConverter;
 import service.DataService;
 import service.HostService;
+import service.JsonServer;
+import service.dataService.DataObjectConverterImpl;
 import service.filesystem.MediaFile;
 import service.ftp.FTPFileManager;
 import service.ftp.FtpService;
 import service.dataService.ImdbDataService;
+import service.dataService.ImdbServer;
 import service.domain.DataObject;
 import service.domain.TitleSearchOptions;
 
@@ -32,6 +35,8 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private XGUI_Item_Converter converter;
     private HostService hostService;
     private DataService dataService;
+    private DataConverter data_converter; 
+    private JsonServer json_server;
     private final String dataServiceUrl;
 
     public XGUI_ControllerImpl() {
@@ -39,7 +44,9 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         activeResultMap = new HashMap<Integer, MediaFile>();
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
-        dataService = new ImdbDataService();
+        data_converter = new DataObjectConverterImpl();
+        json_server = new ImdbServer(data_converter);
+        dataService = new ImdbDataService(json_server);
         dataServiceUrl = "http://imdbapi.org";
     }
 

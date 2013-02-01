@@ -28,8 +28,6 @@ public class TomatoesDataService implements DataService{
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    
-    
     private String getApiKey(){
         int index = 0;        
          index = (int)(Math.random() * (apiKeys.length -1));

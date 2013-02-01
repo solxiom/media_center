@@ -132,11 +132,7 @@ public class TMDataObject {
     public void setLinks(TMLinks links) {
         this.links = links;
     }
-//    abridged_directors: [
-//{
-//name: "Dennis Dugan"
-//}
-//]
+
 }
 /*
 id: "771205893",
@@ -192,6 +188,11 @@ characters: [
 "Sophia"
 ]
 },
+abridged_directors: [
+{
+name: "Dennis Dugan"
+}
+],
 {
 name: "Rohan Chand",
 id: "771386205",
@@ -212,4 +213,5 @@ reviews: "http://api.rottentomatoes.com/api/public/v1.0/movies/771205893/reviews
 similar: "http://api.rottentomatoes.com/api/public/v1.0/movies/771205893/similar.json"
 }
 }
+
 */

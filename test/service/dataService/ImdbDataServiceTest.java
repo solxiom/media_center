@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import service.DataConverter;
 
 /**
  *
@@ -47,8 +48,8 @@ public class ImdbDataServiceTest {
                 + " Tom Fairfoot, Ryann Shane, William Cuddy, Elizabeth Shepherd, "
                 + "Richard Donat]";
         IdSearchOptions options = new IdSearchOptions("tt1129445");
-      
-        DataService instance = new ImdbDataService();
+        DataConverter converter = new DataObjectConverterImpl();
+        DataService instance = new ImdbDataService(new ImdbServer(converter));
         DataObject result = instance.getDataById(serverURL, options);
         assertEquals(expResultStr, result.getActors().toString());
     }
@@ -68,7 +69,8 @@ public class ImdbDataServiceTest {
                 + "Richard Donat]";
         TitleSearchOptions options = new TitleSearchOptions("amelia","2009");
         options.setOffset("0");
-        DataService instance = new ImdbDataService();
+        DataConverter converter = new DataObjectConverterImpl();
+        DataService instance = new ImdbDataService(new ImdbServer(converter));
         DataObject result = instance.getDataByTitle(serverURL, options);
         assertEquals(expResultStr, result.getActors().toString());
       
@@ -85,7 +87,8 @@ public class ImdbDataServiceTest {
         String expResultStr = "Benton, Louisiana, USA";
         TitleSearchOptions options = new TitleSearchOptions("Beyond a Reasonable Doubt");
         options.setOffset("0");
-        DataService instance = new ImdbDataService();
+        DataConverter converter = new DataObjectConverterImpl();
+        DataService instance = new ImdbDataService(new ImdbServer(converter));
         DataObject result = instance.getDataByTitle(serverURL, options);
         assertEquals(expResultStr, result.getFilming_locations().toString());
       
