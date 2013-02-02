@@ -17,14 +17,18 @@ import service.domain.tomatoes.TMDataObject;
  *
  * @author kavan
  */
-public class TomatoesDataService implements DataService<TMDataObject> {
+public class TMDataService implements DataService<TMDataObject> {
 
+    /**
+     * rotten tomatoes data service service api: http://api.rottentomatoes.com/
+     *
+     */
     final String[] apiKeys;
     private JsonServer<TMDataObject> server;
     private DataConverter converter;
     private TMDataObject server_data;
 
-    public TomatoesDataService(String[] apiKeys, JsonServer<TMDataObject> server, DataConverter converter) {
+    public TMDataService(String[] apiKeys, JsonServer<TMDataObject> server, DataConverter converter) {
         this.apiKeys = apiKeys;
         this.server = server;
         this.converter = converter;
@@ -33,30 +37,28 @@ public class TomatoesDataService implements DataService<TMDataObject> {
 
     public DataObject getDataById(String serverURL, IdSearchOptions options) {
 
-        String parameters = getIdParameters(options);
-        
+        String parameters = options.getTomatoesParameters(getApiKey());
+
         return getData(serverURL, parameters);
     }
 
     public DataObject getDataByTitle(String serverURL, TitleSearchOptions options) {
-        String parameters = getTitleParameters(options);
-        return getData(serverURL, parameters);
+        //needs adouble search for detailed info
+        String parameters = options.getTomatoesParameters(getApiKey());
+        TMDataObject d = getServerData(serverURL, parameters);
+        if (d == null) {
+            return null;
+        }
+        IdSearchOptions o = new IdSearchOptions(d.getId());
+        DataObject dob = getDataById(serverURL, o);
+       
+        return dob;
     }
 
     public TMDataObject getServerData() {
         return this.server_data;
     }
 
-    
-
-    private String getIdParameters(IdSearchOptions options){
-        String parameters = options.getId() + ".json?";
-        return parameters;
-    }
-    private String getTitleParameters(TitleSearchOptions options){
-        String parameters = "movies.json" + options.toString();
-        return parameters;
-    }
     private String getApiKey() {
         int index = 0;
         index = (int) (Math.random() * (apiKeys.length - 1));
@@ -66,19 +68,20 @@ public class TomatoesDataService implements DataService<TMDataObject> {
 
     private DataObject getData(String serverURL, String options) {
 
-        try {
-            return converter.convert(getServerData(serverURL, options));
-        } catch (Exception e) {
-
-            return null;
-        }
+//        try {
+        return converter.convert(getServerData(serverURL, options));
+//        } catch (Exception e) {
+//            System.out.println("Hello.... here: " + e);
+//            return null;
+//        }
     }
 
     private TMDataObject getServerData(String serverURL, String options) {
         String jsonstr = "";
         DataObject dataObject;
-        String requestString = serverURL + options + "&apikey=" + getApiKey();
+        String requestString = serverURL + options;
         jsonstr = server.requestToServer(requestString);
+
         try {
             server_data = server.jsonToServerObject(jsonstr);
             return server_data;

@@ -51,7 +51,7 @@ public class ImdbDataServiceTest {
         DataConverter converter = new DataObjectConverterImpl();
         DataService instance = new ImdbDataService(new ImdbServer(),converter);
         DataObject result = instance.getDataById(serverURL, options);
-        assertEquals(expResultStr, result.getActors().toString());
+        assertEquals(expResultStr, result.getCast().toString());
     }
 
     /**
@@ -90,7 +90,7 @@ public class ImdbDataServiceTest {
         DataConverter converter = new DataObjectConverterImpl();
         DataService instance = new ImdbDataService(new ImdbServer(),converter);
         DataObject result = instance.getDataByTitle(serverURL, options);
-        assertEquals(expResultStr, result.???().toString());
+        assertEquals(expResultStr, result.getRuntime().toString());
       
     }
 }

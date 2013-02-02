@@ -15,7 +15,11 @@ import service.domain.TitleSearchOptions;
  * @author kavan
  */
 public class OmdbDataService implements DataService<OmdbDataObject>{
-
+    /**
+     * OMDB API data service
+     * service api: http://omdbapi.com/
+     * 
+     */
     public DataObject getDataById(String serverURL, IdSearchOptions options) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

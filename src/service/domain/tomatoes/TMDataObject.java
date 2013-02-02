@@ -14,6 +14,8 @@ public class TMDataObject {
 
     String id;
     String title;
+    int year;
+    List<String> genres;
     String mpaa_rating;
     String runtime;
     String critics_consensus;
@@ -23,19 +25,56 @@ public class TMDataObject {
     List<TMCast> abridged_cast;
     TMAlternate_ids alternate_ids;
     TMLinks links;
-    TMDirector abridged_directors;
+    List<TMDirector> abridged_directors;
     String studio;
+    String error;
+    TMRatings ratings;
 
     public TMDataObject() {
     }
 
-    public TMDirector getAbridged_directors() {
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public TMRatings getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(TMRatings ratings) {
+        this.ratings = ratings;
+    }
+    
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    
+    
+    public List<String> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
+
+    public List<TMDirector> getAbridged_directors() {
         return abridged_directors;
     }
 
-    public void setAbridged_directors(TMDirector abridged_directors) {
+    public void setAbridged_directors(List<TMDirector> abridged_directors) {
         this.abridged_directors = abridged_directors;
     }
+
 
     public String getStudio() {
         return studio;

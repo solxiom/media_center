@@ -108,6 +108,34 @@ String release;
     }
     /**
      * 
+     * @return the correct syntax for using in http get request in OMDBAPI.COM 
+     */
+    public String getTomatoesParameters(String apiKey){
+        String str ="/movies/"+this.getId()+".json?apikey="+apiKey;
+
+        return str;
+    }
+      /**
+     * 
+     * @return the correct syntax for using in http get request in IMDBAPI.ORG 
+     */
+        public String getImdbParameters() {
+// sample:
+//        ?id=tt1129445&type=json&plot=simple&episode=1&lang=en-US&aka=simple&release=simple
+        String str ="?";
+        str+="id=" + id;
+        str+="&type=" + type;
+        str+="&plot=" + plot;
+        str+="&episode=" + episode;
+        str+="&lang=" + lang;
+        str+="&aka=" + aka;
+        str+="&release=" + release;
+        
+     
+        return    str;
+    }
+    /**
+     * 
      * @return the correct syntax for using in http get request in IMDBAPI.ORG 
      */
     @Override

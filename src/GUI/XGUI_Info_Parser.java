@@ -16,7 +16,7 @@ public class XGUI_Info_Parser {
     public HashMap<String, String> getValues(DataObject info) {
 
         HashMap<String, String> values = new HashMap<String, String>();
-        String title = "No information found for this Item";
+        String title = getStyledCaution("Sorry!<br/> No information found for this Item");
         String genre = "";
         String actors = "";
         String directors = "";
@@ -24,27 +24,36 @@ public class XGUI_Info_Parser {
         String plot = "";
         String language = "";
         String rateInfo = "";
-        String poster = "http://api.movieposterdb.com/image?title=amelia&api_key=demo&secret=cdeeea6bef66&width=300";
-        poster ="<img src='"+poster+"' width='300' height='400'";
+        String poster = "sad-face";
         if (info != null && info.getError() == null) {
 
             title = info.getTitle() + " [" + info.getYear() + "]";
             title = getStyledTitle(title);
-            genre = "Genre: " + info.getGenres().toString().replace("[", "").replace("]", "");
+            genre = "Genre: ";
+            if (info.getGenres() != null) {
+                genre += info.getGenres().toString().replace("[", "").replace("]", "");
+            }
             directors = "Director(s): " + info.getDirectors().toString().replace("[", "").replace("]", "");
             actors = "Actors: "
                     + parseActors(info.getCast().toArray(new String[info.getCast().size()]), 6, 3)
                     + "";
             type = "Type: " + getItemType(info.getType());
             plot = "" + parsePlot(info.getStoryLine(), 90) + "";
-            language = "Language(s): " + info.getLanguage().toString().replace("[", "").replace("]", "");
+
+            language = "Language(s): ";
+            if (info.getLanguage() != null) {
+                language += info.getLanguage().toString().replace("[", "").replace("]", "");
+            }
             rateInfo = info.getImdb_user_rating() + "/ 10 Rated by " + info.getImdb_votes_count() + " users";
             if (info.getPosters().size() == 0) {
                 poster = "";
             } else {
-                poster = "<img src='" + info.getPosters().get(0) + "' width='300' height='400' />";
+                poster = "<img src='" + info.getPosters().get(1) + "' width='300' height='400' />";
             }
 
+        }
+        if (info == null) {
+            System.out.println("info null");
         }
 
         values.put("title", title);
@@ -64,27 +73,48 @@ public class XGUI_Info_Parser {
         values.put("rateInfo", rateInfo);
 
         values.put("poster", poster);
-        
+
         putIntoHTMLTag(values);
         return values;
     }
-    private String getStyledTitle(String tit){
-        String css ="background-color:black;color:white;font-size:x-large;"
+
+    private String getStyledTitle(String tit) {
+        String css = "background-color:black;color:white;font-size:x-large;"
                 + "border: solid white 2px;padding:2px;"
                 + "font-weight:bold;text-wrap:none;"
                 + "";
-        String styled ="<div style='"+css+"'>"+tit+"</div>";
-        
+        String styled = "<div style='" + css + "'>" + tit + "</div>";
+
         return styled;
-        
+
     }
-    private void putIntoHTMLTag(HashMap<String,String> vals){
-        for(String k: vals.keySet()){
-            String newVal = "<html><body style='padding:5px;'>"+ vals.get(k) +"</body></html>";
+    private String getStyledCaution(String tit) {
+        String css = "background-color:red;color:white;font-size:x-large;"
+                + "border: solid white 2px;padding:2px;"
+                + "font-weight:bold;text-wrap:none;"
+                + "";
+        String styled = "<div style='" + css + "'>" + tit + "</div>";
+
+        return styled;
+
+    }
+
+    private void putIntoHTMLTag(HashMap<String, String> vals) {
+        for (String k : vals.keySet()) {
+            String newVal = inDefaultHtmlTag(vals.get(k));
             vals.put(k, newVal);
         }
     }
+    
+    public String inDefaultHtmlTag(String str){
+        String newVal = "<html><body style='padding:5px;'>" + str + "</body></html>";
+        return newVal;
+    }
+
     public String getItemType(String code) {
+        if (code == null || code.equals(" ")) {
+            return "Uknown";
+        }
         if (code.equalsIgnoreCase("M")) {
             return "Movie";
         }
@@ -114,7 +144,7 @@ public class XGUI_Info_Parser {
             if (count != 0 && count % perLine == 0) {
 
                 res += "<br/>";
-                
+
             }
             if (count >= total) {
                 res += "...";

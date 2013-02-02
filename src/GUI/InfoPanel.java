@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.util.HashMap;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import service.domain.DataObject;
@@ -100,14 +102,24 @@ public class InfoPanel extends JPanel {
         starLb = new JLabel("star");
         rateInfoLb = new JLabel(values.get("rateInfo"));
         playLb = new JLabel("play");
-        posterLb = new JLabel(values.get("poster"));
-
+        if(values.get("poster").equalsIgnoreCase(new XGUI_Info_Parser().inDefaultHtmlTag("sad-face")) )
+        {
+            posterLb = getSadLabel();
+        }else{
+            posterLb = new JLabel(values.get("poster"));
+        }
         setPlotPanelLayout();
         setPosterPanelLayout();
         setBottomPanelLayout();
         setInfoPanelLayout();
     }
-
+    private JLabel getSadLabel(){
+        JLabel lb = new JLabel();
+        Icon icon = new ImageIcon(getClass().getResource("/img/sad-face2.png"));
+        lb.setIcon(icon);
+        lb.setMinimumSize(new Dimension(320, 320));
+        return lb;
+    }
     private void setInfoPanelLayout() {
 
         this.setLayout(new BorderLayout());

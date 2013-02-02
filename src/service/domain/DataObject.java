@@ -25,7 +25,7 @@ public class DataObject {
 //genres	List	The movie's genres.(e.g. Drama, War)
     List<String> genres;
 //imdb_id	String	The movie's ID on IMDb.com.
-    String imdb_id;    
+    String imdb_id;   
 //rotten tomatoes id	
     String tm_id;
 //language	List	The movie's audio language.
@@ -66,8 +66,6 @@ public class DataObject {
     String type;
 //year	Int	The movie's age.
     int year;
-//if paging is used in the searchOptions see offset for paging in TitleSearchOptions class
-    String total_found;
 //error messae example film not found
     String error;
 
@@ -257,15 +255,6 @@ public class DataObject {
     public void setYear(int year) {
         this.year = year;
     }
-
-    public String getTotal_found() {
-        return total_found;
-    }
-
-    public void setTotal_found(String total_found) {
-        this.total_found = total_found;
-    }
-
     public String getError() {
         return error;
     }

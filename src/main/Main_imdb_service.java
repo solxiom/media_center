@@ -37,7 +37,7 @@ public class Main_imdb_service {
                 System.out.println("error: " +data.getError());
             } else {
                 System.out.println("plot: " + data.getStoryLine());
-                System.out.println("total_found: " + data.getTotal_found());  
+                System.out.println("total_found: ");  
         
             }
         } else {

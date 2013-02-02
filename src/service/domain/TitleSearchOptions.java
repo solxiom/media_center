@@ -75,8 +75,9 @@ public class TitleSearchOptions {
     }
 
     public String getTitle() {
-        if(this.title == null)
+        if (this.title == null) {
             return "";
+        }
         return title;
     }
 
@@ -85,8 +86,9 @@ public class TitleSearchOptions {
     }
 
     public String getType() {
-        if(this.type == null)
+        if (this.type == null) {
             return "";
+        }
         return type;
     }
 
@@ -95,8 +97,9 @@ public class TitleSearchOptions {
     }
 
     public String getPlot() {
-        if(this.plot == null)
+        if (this.plot == null) {
             return "";
+        }
         return plot;
     }
 
@@ -105,8 +108,9 @@ public class TitleSearchOptions {
     }
 
     public String getEpisode() {
-        if(this.episode == null)
+        if (this.episode == null) {
             return "";
+        }
         return episode;
     }
 
@@ -115,8 +119,9 @@ public class TitleSearchOptions {
     }
 
     public String getLimit() {
-        if(this.limit == null)
+        if (this.limit == null) {
             return "";
+        }
         return limit;
     }
 
@@ -125,8 +130,9 @@ public class TitleSearchOptions {
     }
 
     public String getYg() {
-        if(this.yg == null)
+        if (this.yg == null) {
             return "";
+        }
         return yg;
     }
 
@@ -135,8 +141,9 @@ public class TitleSearchOptions {
     }
 
     public String getMt() {
-        if(this.mt == null)
+        if (this.mt == null) {
             return "";
+        }
         return mt;
     }
 
@@ -145,8 +152,9 @@ public class TitleSearchOptions {
     }
 
     public String getLang() {
-        if(this.lang == null)
+        if (this.lang == null) {
             return "";
+        }
         return lang;
     }
 
@@ -155,8 +163,9 @@ public class TitleSearchOptions {
     }
 
     public String getOffset() {
-        if(this.offset == null)
+        if (this.offset == null) {
             return "";
+        }
         return offset;
     }
 
@@ -165,8 +174,9 @@ public class TitleSearchOptions {
     }
 
     public String getAka() {
-        if(this.aka == null)
+        if (this.aka == null) {
             return "";
+        }
         return aka;
     }
 
@@ -175,8 +185,9 @@ public class TitleSearchOptions {
     }
 
     public String getRelease() {
-        if(this.release == null)
+        if (this.release == null) {
             return "";
+        }
         return release;
     }
 
@@ -185,8 +196,9 @@ public class TitleSearchOptions {
     }
 
     public String getYear() {
-        if(this.year == null)
+        if (this.year == null) {
             return "";
+        }
         return year;
     }
 
@@ -194,38 +206,75 @@ public class TitleSearchOptions {
         this.year = year;
     }
 
-    
     /**
-     * 
-     * @return the correct syntax for using in http get request in OMDBAPI.COM 
+     *
+     * @return the correct syntax for using in http get request in OMDBAPI.COM
      */
-    public String getOmdbParameters(){
+    public String getOmdbParameters() {
         String str = "?";
         str += "t=" + this.title;
         str += "&plot=" + this.plot;
         str += "&y=" + this.year;
-        str += "&year=" + this.year;
         str += "&r=JSON";
         str += "&tomatoes=true";
         return str.replace(' ', '+');
     }
+
     /**
-     * 
-     * @return the correct syntax for using in http get request in rottentomatoes.com 
+     *
+     * @return the correct syntax for using in http get request in
+     * rottentomatoes.com
      */
-    public String getTomatoesParameters(){
-        String str = "?";
-        str += "t=" + this.title;
-        str += "&plot=" + this.plot;
-        str += "&y=" + this.year;
-        str += "&year=" + this.year;
-        str += "&r=JSON";
-        str += "&tomatoes=true";
+    public String getTomatoesParameters(String apiKey) {
+        String str = "/movies.json?apikey=" + apiKey;
+        if (this.year != null || !this.year.equalsIgnoreCase(" ")) {
+            str += "&q=" + this.title + " " + this.year;
+        } else {
+            str += "&q=" + this.title;
+        }
+
+        if (this.limit == null || this.limit.equalsIgnoreCase(" ")) {
+            str += "&page_limit=1";
+        } else {
+            str += "&page_limit=" + this.limit;
+        }
+
         return str.replace(' ', '+');
     }
+
     /**
-     * 
-     * @return the correct syntax for using in http get request in IMDBAPI.ORG 
+     *
+     * @return the correct syntax for using in http get request in IMDBAPI.ORG
+     */
+    public String getImdbParameters() {
+//        sample: 
+//        ?title=amelia&type=json&plot=full&episode=1&limit=1&year=2009
+//        &yg=1&mt=none&lang=en-US&offset=&aka=simple&release=simple
+        if (this.year != null) {
+            this.yg = "1";
+        }
+        if (this.offset == null) {
+            this.offset = "";
+        }
+        String str = "?";
+        str += "title=" + this.title;
+        str += "&type=" + this.type;
+        str += "&plot=" + this.plot;
+        str += "&episode=" + this.episode;
+        str += "&limit=" + this.limit;
+        str += "&yg=" + this.yg;
+        str += "&mt=" + this.mt;
+        str += "&lang=" + this.lang;
+        str += "&offset=" + this.offset;
+        str += "&aka=" + this.aka;
+        str += "&release=" + this.release;
+        str += "&year=" + this.year;
+        return str.replace(' ', '+');
+    }
+
+    /**
+     *
+     * @return the correct syntax for using in http get request in IMDBAPI.ORG
      */
     @Override
     public String toString() {

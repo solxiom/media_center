@@ -18,8 +18,9 @@ import service.dataService.DataObjectConverterImpl;
 import service.filesystem.MediaFile;
 import service.ftp.FTPFileManager;
 import service.ftp.FtpService;
-import service.dataService.ImdbDataService;
 import service.dataService.ImdbServer;
+import service.dataService.TMDataService;
+import service.dataService.TomatoesServer;
 import service.domain.DataObject;
 import service.domain.TitleSearchOptions;
 
@@ -38,16 +39,22 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private DataConverter data_converter; 
     private JsonServer json_server;
     private final String dataServiceUrl;
+    private final String[] dataApiKey;
 
     public XGUI_ControllerImpl() {
+        dataApiKey = new String[2];
+        dataApiKey[0] ="4qcmmmshcx94zrh76gc2eyez";
+        dataApiKey[1] ="jcq7xn2x744c25xabcj3n9mk";
         this.observers = new LinkedList<XGUI_Observer>();
         activeResultMap = new HashMap<Integer, MediaFile>();
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
         data_converter = new DataObjectConverterImpl();
-        json_server = new ImdbServer();
-        dataService = new ImdbDataService(json_server,data_converter);
-        dataServiceUrl = "http://imdbapi.org";
+        json_server = new TomatoesServer();
+//        dataService = new ImdbDataService(json_server,data_converter);
+//        dataServiceUrl = "http://imdbapi.org";
+        dataService = new TMDataService(dataApiKey,json_server,data_converter);
+        dataServiceUrl = "http://api.rottentomatoes.com/api/public/v1.0";
     }
 
     public void registerObserver(XGUI_Observer obs) {
