@@ -22,7 +22,7 @@ public class XGUI_Info_Parser {
         String directors = "";
         String type = "";
         String plot = "";
-        String language = "";
+        String mpaa = "";
         String rateInfo = "";
         String poster = "sad-face";
         if (info != null && info.getError() == null) {
@@ -40,9 +40,9 @@ public class XGUI_Info_Parser {
             type = "Type: " + getItemType(info.getType());
             plot = "" + parsePlot(info.getStoryLine(), 90) + "";
 
-            language = "Language(s): ";
-            if (info.getLanguage() != null) {
-                language += info.getLanguage().toString().replace("[", "").replace("]", "");
+            mpaa = "";
+            if (info.getRated() != null) {
+                mpaa += info.getRated();
             }
             rateInfo = info.getImdb_user_rating() + "/ 10 Rated by " + info.getImdb_votes_count() + " users";
             if (info.getPosters().size() == 0) {
@@ -68,7 +68,7 @@ public class XGUI_Info_Parser {
 
         values.put("plot", plot);
 
-        values.put("language", language);
+        values.put("mpaa", mpaa);
 
         values.put("rateInfo", rateInfo);
 
@@ -160,6 +160,7 @@ public class XGUI_Info_Parser {
     public String parsePlot(String str, int line_size) {
         String res = "";
         int x = 0;
+        
         for (int i = 0; i < str.length(); i++) {
 
             if (i > 0 && i % line_size == 0) {

@@ -64,6 +64,7 @@ public class TMDataObject {
     }
 
     public void setGenres(List<String> genres) {
+        
         this.genres = genres;
     }
 
@@ -72,6 +73,7 @@ public class TMDataObject {
     }
 
     public void setAbridged_directors(List<TMDirector> abridged_directors) {
+        
         this.abridged_directors = abridged_directors;
     }
 

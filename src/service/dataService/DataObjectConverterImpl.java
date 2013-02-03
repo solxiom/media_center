@@ -85,7 +85,7 @@ public class DataObjectConverterImpl implements DataConverter {
             }
         }
         List<String> directs = new LinkedList<String>();
-         System.out.println("directors"+ object.getAbridged_directors().get(0).getName());
+
         if (object.getAbridged_directors() != null) {
             for (TMDirector d : object.getAbridged_directors()) {
                 directs.add(d.getName());
@@ -98,14 +98,18 @@ public class DataObjectConverterImpl implements DataConverter {
         data.setCast(cast);
         data.setStoryLine(object.getSynopsis());
         data.setDirectors(directs);
-        data.setTeather_release_date(object.getRelease_dates().getTheater());
-        data.setDvd_release_date(object.getRelease_dates().getDvd());
+        if (object.getRelease_dates() != null) {
+            data.setTeather_release_date(object.getRelease_dates().getTheater());
+            data.setDvd_release_date(object.getRelease_dates().getDvd());
+        }
         data.setGenres(object.getGenres());
         data.setError(object.getError());
         data.setRated(object.getMpaa_rating());
         data.setRuntime(object.getRuntime() + "");
         data.setYear(object.getYear());
-        data.setTm_user_meter(Integer.parseInt(object.getRatings().getAudience_score()));
+        if (object.getRatings() != null) {
+            data.setTm_user_meter(Integer.parseInt(object.getRatings().getAudience_score()));
+        }
         data.setStudio(object.getStudio());
 
         return data;

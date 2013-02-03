@@ -43,8 +43,8 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
 
     public XGUI_ControllerImpl() {
         dataApiKey = new String[2];
-        dataApiKey[0] ="4qcmmmshcx94zrh76gc2eyez";
-        dataApiKey[1] ="jcq7xn2x744c25xabcj3n9mk";
+        dataApiKey[0] ="4qcmmmshcx94zrh76gc2eyez";// active with solxiom account
+        dataApiKey[1] ="rquwhx4xrfss7vxuc6bje64h";//active with ali.doori account
         this.observers = new LinkedList<XGUI_Observer>();
         activeResultMap = new HashMap<Integer, MediaFile>();
         converter = new XGUI_Item_Converter();
@@ -53,7 +53,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         json_server = new TomatoesServer();
 //        dataService = new ImdbDataService(json_server,data_converter);
 //        dataServiceUrl = "http://imdbapi.org";
-        dataService = new TMDataService(dataApiKey,json_server,data_converter);
+        dataService = new TMDataService(dataApiKey,json_server,data_converter,true);
         dataServiceUrl = "http://api.rottentomatoes.com/api/public/v1.0";
     }
 

@@ -9,18 +9,20 @@ package service.domain.tomatoes;
  * @author kavan
  */
 public class TMDirector {
-    String Name;
+    String name;
 
     public TMDirector() {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
+    public void setName(String name) {
+        this.name = name;
     }
+
+   
     
     
     
