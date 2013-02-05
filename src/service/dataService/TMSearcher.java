@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import service.JsonSearcher;
 import service.JsonServer;
-import service.dataService.TMDataService;
+import service.Tools;
 
 /**
  *
@@ -39,7 +39,7 @@ public class TMSearcher implements JsonSearcher {
      * @return the id of movie or not_found
      */
     public String findItemId(String title, String year) {
-        String api_key = TMDataService.getApiKey(apiKeys);
+        String api_key = Tools.getRandomMember(apiKeys);
         if (api_key.equalsIgnoreCase("no-key")) {
             return null;
         }

@@ -8,6 +8,7 @@ import service.DataConverter;
 import service.DataService;
 import service.JsonSearcher;
 import service.JsonServer;
+import service.Tools;
 import service.domain.IdSearchOptions;
 import service.domain.DataObject;
 import service.domain.TitleSearchOptions;
@@ -42,29 +43,11 @@ public class TMDataService implements DataService<TMDataObject> {
         this.server_data = null;
         titId_doubleSearch = doubleSearch;
     }
-    /**
-     * static method to return a random key from array
-     * @param keys
-     * @return 
-     */
-    
-     public static String getApiKey(String[] keys){
-        if (keys.length == 0) {
-            return "no-key";
-        }
-        int index = 0;
-        index = (int) (Math.random() * (keys.length));
-        if (index == keys.length && keys.length > 0) {
-            index -= 1;
-        }
-
-
-        return keys[index];
-    }
+  
 
     public DataObject getDataById(String serverURL, IdSearchOptions options) {
 
-        String parameters = options.getTomatoesParameters(getApiKey(apiKeys));
+        String parameters = options.getTomatoesParameters(Tools.getRandomMember(apiKeys));
         TMDataObject dob = getServerData(serverURL, parameters);
 
         return converter.convert(dob);
@@ -85,7 +68,7 @@ public class TMDataService implements DataService<TMDataObject> {
      */
     public DataObject getDataByTitle(String serverURL, TitleSearchOptions options) {
     
-        String parameters = options.getTomatoesParameters(getApiKey(apiKeys));
+        String parameters = options.getTomatoesParameters(Tools.getRandomMember(apiKeys));
         TMDataObject server_d = getServerData(serverURL, parameters);
 
         if (server_d == null) {
