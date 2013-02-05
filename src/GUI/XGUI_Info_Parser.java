@@ -52,8 +52,14 @@ public class XGUI_Info_Parser {
             }
 
         }
-        if (info == null) {
-            System.out.println("info null");
+        /**
+         * TESTING posters
+         */
+        if (info != null && info.getPosters() != null) {
+            System.out.println("poster[0]: " + info.getPosters().get(0));
+            System.out.println("poster[1]: " + info.getPosters().get(1));
+            System.out.println("poster[2]: " + info.getPosters().get(2));
+            System.out.println("poster[3]: " + info.getPosters().get(3));
         }
 
         values.put("title", title);
@@ -88,6 +94,7 @@ public class XGUI_Info_Parser {
         return styled;
 
     }
+
     private String getStyledCaution(String tit) {
         String css = "background-color:red;color:white;font-size:x-large;"
                 + "border: solid white 2px;padding:2px;"
@@ -105,8 +112,8 @@ public class XGUI_Info_Parser {
             vals.put(k, newVal);
         }
     }
-    
-    public String inDefaultHtmlTag(String str){
+
+    public String inDefaultHtmlTag(String str) {
         String newVal = "<html><body style='padding:5px;'>" + str + "</body></html>";
         return newVal;
     }
@@ -160,7 +167,7 @@ public class XGUI_Info_Parser {
     public String parsePlot(String str, int line_size) {
         String res = "";
         int x = 0;
-        
+
         for (int i = 0; i < str.length(); i++) {
 
             if (i > 0 && i % line_size == 0) {

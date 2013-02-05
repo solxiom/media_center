@@ -13,14 +13,15 @@ import java.util.List;
 import service.DataConverter;
 import service.DataService;
 import service.HostService;
+import service.JsonSearcher;
 import service.JsonServer;
 import service.dataService.DataObjectConverterImpl;
 import service.filesystem.MediaFile;
 import service.ftp.FTPFileManager;
 import service.ftp.FtpService;
-import service.dataService.ImdbServer;
 import service.dataService.TMDataService;
-import service.dataService.TomatoesServer;
+import service.dataService.TMSearcher;
+import service.dataService.TMServer;
 import service.domain.DataObject;
 import service.domain.TitleSearchOptions;
 
@@ -38,6 +39,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private DataService dataService;
     private DataConverter data_converter; 
     private JsonServer json_server;
+    private JsonSearcher json_searcher;
     private final String dataServiceUrl;
     private final String[] dataApiKey;
 
@@ -45,16 +47,19 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         dataApiKey = new String[2];
         dataApiKey[0] ="4qcmmmshcx94zrh76gc2eyez";// active with solxiom account
         dataApiKey[1] ="rquwhx4xrfss7vxuc6bje64h";//active with ali.doori account
+        dataServiceUrl = "http://api.rottentomatoes.com/api/public/v1.0";
+        //        dataServiceUrl = "http://imdbapi.org";
         this.observers = new LinkedList<XGUI_Observer>();
         activeResultMap = new HashMap<Integer, MediaFile>();
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
         data_converter = new DataObjectConverterImpl();
-        json_server = new TomatoesServer();
+        json_server = new TMServer();
+        json_searcher = new TMSearcher(json_server, dataServiceUrl, dataApiKey);
 //        dataService = new ImdbDataService(json_server,data_converter);
-//        dataServiceUrl = "http://imdbapi.org";
-        dataService = new TMDataService(dataApiKey,json_server,data_converter,true);
-        dataServiceUrl = "http://api.rottentomatoes.com/api/public/v1.0";
+
+        dataService = new TMDataService(dataApiKey,json_server,json_searcher,data_converter,true);
+        
     }
 
     public void registerObserver(XGUI_Observer obs) {

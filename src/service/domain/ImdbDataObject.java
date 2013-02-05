@@ -21,7 +21,7 @@ public class ImdbDataObject {
 //directors	List	The movie's directors.
     List<String> directors;
 //episodes	List	The TV series's episodes(only TV series). Fields: date season episode title.
-    List<Episode> episodes;
+    List<ImdbEpisode> episodes;
 //filming_locations	String	The movie's locations.
    String filming_locations;
 //genres	List	The movie's genres.(e.g. Drama, War)
@@ -112,11 +112,11 @@ public class ImdbDataObject {
         this.directors = directors;
     }
 
-    public List<Episode> getEpisodes() {
+    public List<ImdbEpisode> getEpisodes() {
         return episodes;
     }
 
-    public void setEpisodes(List<Episode> episodes) {
+    public void setEpisodes(List<ImdbEpisode> episodes) {
         this.episodes = episodes;
     }
 

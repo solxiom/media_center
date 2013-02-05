@@ -8,14 +8,14 @@ package service.domain;
  *
  * @author kavan
  */
-public class Episode {
+public class ImdbEpisode {
 //    Fields: date season episode title.
     String date;
     String season;
     String episode;
     String title;
 
-    public Episode() {
+    public ImdbEpisode() {
     }
     
 

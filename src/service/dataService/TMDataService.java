@@ -6,10 +6,10 @@ package service.dataService;
 
 import service.DataConverter;
 import service.DataService;
+import service.JsonSearcher;
 import service.JsonServer;
 import service.domain.IdSearchOptions;
 import service.domain.DataObject;
-import service.domain.ImdbDataObject;
 import service.domain.TitleSearchOptions;
 import service.domain.tomatoes.TMDataObject;
 
@@ -25,25 +25,46 @@ public class TMDataService implements DataService<TMDataObject> {
      */
     final String[] apiKeys;
     private JsonServer<TMDataObject> server;
+    private JsonSearcher searcher;
     private DataConverter converter;
     private TMDataObject server_data;
     private boolean titId_doubleSearch;
 
-    public TMDataService(String[] apiKeys, JsonServer<TMDataObject> server, DataConverter converter) {
-        this(apiKeys, server, converter, false);
+    public TMDataService(String[] apiKeys, JsonServer<TMDataObject> server,JsonSearcher searcher, DataConverter converter) {
+        this(apiKeys, server, searcher,converter, false);
     }
 
-    public TMDataService(String[] apiKeys, JsonServer<TMDataObject> server, DataConverter converter, boolean doubleSearch) {
+    public TMDataService(String[] apiKeys, JsonServer<TMDataObject> server,JsonSearcher searcher ,DataConverter converter, boolean doubleSearch) {
         this.apiKeys = apiKeys;
         this.server = server;
+        this.searcher = searcher;
         this.converter = converter;
         this.server_data = null;
         titId_doubleSearch = doubleSearch;
     }
+    /**
+     * static method to return a random key from array
+     * @param keys
+     * @return 
+     */
+    
+     public static String getApiKey(String[] keys){
+        if (keys.length == 0) {
+            return "no-key";
+        }
+        int index = 0;
+        index = (int) (Math.random() * (keys.length));
+        if (index == keys.length && keys.length > 0) {
+            index -= 1;
+        }
+
+
+        return keys[index];
+    }
 
     public DataObject getDataById(String serverURL, IdSearchOptions options) {
 
-        String parameters = options.getTomatoesParameters(getApiKey());
+        String parameters = options.getTomatoesParameters(getApiKey(apiKeys));
         TMDataObject dob = getServerData(serverURL, parameters);
 
         return converter.convert(dob);
@@ -63,45 +84,39 @@ public class TMDataService implements DataService<TMDataObject> {
      * @return DataObject
      */
     public DataObject getDataByTitle(String serverURL, TitleSearchOptions options) {
-        //needs adouble search for detailed info
-        String parameters = options.getTomatoesParameters(getApiKey());
+    
+        String parameters = options.getTomatoesParameters(getApiKey(apiKeys));
         TMDataObject server_d = getServerData(serverURL, parameters);
-        int year = -1;
-        try{
-         year = Integer.parseInt(options.getYear());
-        }catch(Exception e){
-            
-        }
-        /**
-         * if it was wrong movie search for more available movies
-         *
-         */
+
         if (server_d == null) {
             return null;
         }
-        if (!server_d.getTitle().equalsIgnoreCase(options.getTitle()) || 
-                (year != -1 && server_d.getYear() != year) ) {
+    
+        if (needsMoreSearch(options, server_d)) {
 
             String mv_id = "";
-            if (options.getYear().equals(" ") || options.getYear() == null) {
-                mv_id = new TomatoesServer().searchMovie(options.getTitle(), null, getApiKey(), serverURL);
-      
-            } else {
-                mv_id = new TomatoesServer().searchMovie(options.getTitle(), options.getYear(), getApiKey(), serverURL);
-    
-            }
 
-            if (mv_id.equalsIgnoreCase("not_found")) {
-                return null;
+            if (options.getYear().equals(" ") || options.getYear() == null) {
+                mv_id = searcher.findItemId(options.getTitle(), null);
+
+
+            } else {
+                mv_id = searcher.findItemId(options.getTitle(), options.getYear());
+
+
             }
-            return getDataById(serverURL, new IdSearchOptions(mv_id));
+            // if find a better result go for it otherwise continue with the old one
+            if (!mv_id.equalsIgnoreCase("not_found")) {
+                return getDataById(serverURL, new IdSearchOptions(mv_id));
+            }
+            
         }
         if (!titId_doubleSearch) {
             return converter.convert(server_d);
         }
 
         /*
-         * if double search needed for more detailed info 
+         * when double search needed for more detailed info 
          */
         IdSearchOptions opt2 = new IdSearchOptions(server_d.getId());
         DataObject dob = getDataById(serverURL, opt2);
@@ -113,19 +128,49 @@ public class TMDataService implements DataService<TMDataObject> {
         return this.server_data;
     }
 
-    private String getApiKey() {
-        if (apiKeys.length == 0) {
-            return "no-key";
+    @SuppressWarnings("empty-statement")
+    private boolean needsMoreSearch(TitleSearchOptions options, TMDataObject server_d) {
+        int o_year = -1, s_year = -1;
+        String s_tit = server_d.getTitle(),
+                o_tit = options.getTitle(),
+                mode_1 = o_tit.replace(" and ", " & "),
+                mode_2 = o_tit.replace(" ", "/");
+
+        try {
+            o_year = Integer.parseInt(options.getYear());
+            s_year = server_d.getYear();
+
+        } catch (Exception e) {
+            
         }
-        int index = 0;
-        index = (int) (Math.random() * (apiKeys.length));
-        if (index == apiKeys.length && apiKeys.length > 0) {
-            index -= 1;
+
+        if (isYearsMatter(s_year, o_year)) {
+            return true;
+        }
+        if (!s_tit.equalsIgnoreCase(o_tit)) {
+
+            if (s_tit.equalsIgnoreCase(mode_1) || s_tit.equalsIgnoreCase(mode_2)) {
+
+                return false;
+
+            }
+            return true;
         }
 
 
-        return apiKeys[index];
+
+        return false;
     }
+
+    private boolean isYearsMatter(int year_1, int year_2) {
+        if ((year_1 != -1 || year_2 != -1)) {
+            if (year_1 != year_2) {
+                return true;
+            }
+        }
+        return false;
+    }
+   
 
     private TMDataObject getServerData(String serverURL, String options) {
         String jsonstr = "";
