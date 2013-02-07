@@ -213,10 +213,14 @@ public class TitleSearchOptions {
     public String getOmdbParameters() {
         String str = "?";
         str += "t=" + this.title;
-        str += "&plot=" + this.plot;
+        if (plot.equalsIgnoreCase("simple") || plot.equalsIgnoreCase("short")) {
+            str += "&plot=short";
+        } else {
+            str += "&plot=full";
+        }
         str += "&y=" + this.year;
         str += "&r=JSON";
-        str += "&tomatoes=true";
+        str += "&tomatoes=false";
         return str.replace(' ', '+');
     }
 
