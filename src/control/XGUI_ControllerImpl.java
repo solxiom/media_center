@@ -40,10 +40,15 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private DataConverter data_converter; 
     private JsonServer json_server;
     private JsonSearcher json_searcher;
-    private final String dataServiceUrl;
-    private final String[] dataApiKey;
+    private String dataServiceUrl;
+    private String[] dataApiKey;
 
     public XGUI_ControllerImpl() {
+        
+        setUpAndConfig_tomatoes();
+        
+    }
+    private void setUpAndConfig_tomatoes(){
         dataApiKey = new String[2];
         dataApiKey[0] ="4qcmmmshcx94zrh76gc2eyez";// active with solxiom account
         dataApiKey[1] ="rquwhx4xrfss7vxuc6bje64h";//active with ali.doori account
@@ -59,7 +64,6 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
 //        dataService = new ImdbDataService(json_server,data_converter);
 
         dataService = new TMDataService(dataApiKey,json_server,json_searcher,data_converter,true);
-        
     }
 
     public void registerObserver(XGUI_Observer obs) {
