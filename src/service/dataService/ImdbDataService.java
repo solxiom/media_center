@@ -10,6 +10,7 @@ import service.domain.DataObject;
 import service.domain.IdSearchOptions;
 import service.domain.TitleSearchOptions;
 import service.DataConverter;
+import service.Tools;
 import service.domain.ImdbDataObject;
 
 /**
@@ -50,28 +51,18 @@ public class ImdbDataService implements DataService<ImdbDataObject> {
 
         try {
 
-            return converter.convert(this.getServerData(serverURL, options));
+            return converter.convert(this.getServerObject(serverURL, options));
         } catch (Exception e) {
 
             return null;
         }
     }
 
-    private ImdbDataObject getServerData(String serverURL, String options) {
+    private ImdbDataObject getServerObject(String serverURL, String options) {
         String jsonstr = "";
         DataObject dataObject;
-        String requestString = serverURL + "/" + options;
+        String requestString = Tools.bindUrlwithParameters(serverURL, options, "/");//serverURL + "/" + options;
         
-        if (!serverURL.endsWith("/") && !options.startsWith("/")) {
-            requestString = serverURL + "/" + options;
-        } else if ((serverURL.endsWith("/") && !options.endsWith("/"))
-                || (!serverURL.endsWith("/") && options.endsWith("/"))) {
-            requestString = serverURL + options;
-        }
-        else if(serverURL.endsWith("/") && options.endsWith("/")){
-            requestString = serverURL + options.substring(1);
-        }
-
         jsonstr = server.requestToServer(requestString);
         try {
             server_data = server.jsonToServerObject(jsonstr);

@@ -47,20 +47,22 @@ public class XGUI_Info_Parser {
             rateInfo = info.getImdb_user_rating() + "/ 10 Rated by " + info.getImdb_votes_count() + " users";
             if (info.getPosters().size() == 0) {
                 poster = "";
-            } else {
+            } else if(info.getPosters().size() > 1) {
                 poster = "<img src='" + info.getPosters().get(1) + "' width='300' height='400' />";
+            }else  {
+                poster = "<img src='" + info.getPosters().get(0) + "' width='300' height='400' />";
             }
 
         }
         /**
          * TESTING posters
          */
-        if (info != null && info.getPosters() != null) {
-            System.out.println("poster[0]: " + info.getPosters().get(0));
-            System.out.println("poster[1]: " + info.getPosters().get(1));
-            System.out.println("poster[2]: " + info.getPosters().get(2));
-            System.out.println("poster[3]: " + info.getPosters().get(3));
-        }
+//        if (info != null && info.getPosters() != null) {
+//            System.out.println("poster[0]: " + info.getPosters().get(0));
+//            System.out.println("poster[1]: " + info.getPosters().get(1));
+//            System.out.println("poster[2]: " + info.getPosters().get(2));
+//            System.out.println("poster[3]: " + info.getPosters().get(3));
+//        }
 
         values.put("title", title);
 

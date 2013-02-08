@@ -16,6 +16,8 @@ import service.HostService;
 import service.JsonSearcher;
 import service.JsonServer;
 import service.dataService.DataObjectConverterImpl;
+import service.dataService.OmdbDataService;
+import service.dataService.OmdbServer;
 import service.filesystem.MediaFile;
 import service.ftp.FTPFileManager;
 import service.ftp.FtpService;
@@ -37,33 +39,45 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private XGUI_Item_Converter converter;
     private HostService hostService;
     private DataService dataService;
-    private DataConverter data_converter; 
+    private DataConverter data_converter;
     private JsonServer json_server;
     private JsonSearcher json_searcher;
     private String dataServiceUrl;
     private String[] dataApiKey;
 
     public XGUI_ControllerImpl() {
-        
-        setUpAndConfig_tomatoes();
-        
-    }
-    private void setUpAndConfig_tomatoes(){
-        dataApiKey = new String[2];
-        dataApiKey[0] ="4qcmmmshcx94zrh76gc2eyez";// active with solxiom account
-        dataApiKey[1] ="rquwhx4xrfss7vxuc6bje64h";//active with ali.doori account
-        dataServiceUrl = "http://api.rottentomatoes.com/api/public/v1.0";
-        //        dataServiceUrl = "http://imdbapi.org";
         this.observers = new LinkedList<XGUI_Observer>();
         activeResultMap = new HashMap<Integer, MediaFile>();
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
+        
+//        setUpAndConfig_tomatoes();
+        setUpAndConfig_omdb();
+
+    }
+
+    private void setUpAndConfig_omdb() {
+
+        dataServiceUrl = "http://omdbapi.com";
+        data_converter = new DataObjectConverterImpl();
+        json_server = new OmdbServer();
+        dataService = new OmdbDataService(json_server, data_converter);
+    }
+
+    private void setUpAndConfig_tomatoes() {
+        dataApiKey = new String[2];
+        dataApiKey[0] = "4qcmmmshcx94zrh76gc2eyez";// active with solxiom account
+        dataApiKey[1] = "rquwhx4xrfss7vxuc6bje64h";//active with ali.doori account
+        dataServiceUrl = "http://api.rottentomatoes.com/api/public/v1.0";
+        //        dataServiceUrl = "http://imdbapi.org";
+
+
         data_converter = new DataObjectConverterImpl();
         json_server = new TMServer();
         json_searcher = new TMSearcher(json_server, dataServiceUrl, dataApiKey);
 //        dataService = new ImdbDataService(json_server,data_converter);
 
-        dataService = new TMDataService(dataApiKey,json_server,json_searcher,data_converter,true);
+        dataService = new TMDataService(dataApiKey, json_server, json_searcher, data_converter, true);
     }
 
     public void registerObserver(XGUI_Observer obs) {
@@ -109,8 +123,9 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     public void findItemInfo(int ItemCode) {
         MediaFile item = activeResultMap.get(ItemCode);
         String itemYear = getMovieYear(item.getName());
-        if(itemYear.equalsIgnoreCase("Unknown"))
-            itemYear ="";
+        if (itemYear.equalsIgnoreCase("Unknown")) {
+            itemYear = "";
+        }
         TitleSearchOptions options = new TitleSearchOptions(item.getMediaName(), itemYear);
         DataObject info = dataService.getDataByTitle(dataServiceUrl, options);
         notifyObserversWithItemInfo(info);

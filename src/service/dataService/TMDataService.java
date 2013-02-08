@@ -48,7 +48,7 @@ public class TMDataService implements DataService<TMDataObject> {
     public DataObject getDataById(String serverURL, IdSearchOptions options) {
 
         String parameters = options.getTomatoesParameters(Tools.getRandomMember(apiKeys));
-        TMDataObject dob = getServerData(serverURL, parameters);
+        TMDataObject dob = getServerObject(serverURL, parameters);
 
         return converter.convert(dob);
     }
@@ -69,7 +69,7 @@ public class TMDataService implements DataService<TMDataObject> {
     public DataObject getDataByTitle(String serverURL, TitleSearchOptions options) {
     
         String parameters = options.getTomatoesParameters(Tools.getRandomMember(apiKeys));
-        TMDataObject server_d = getServerData(serverURL, parameters);
+        TMDataObject server_d = getServerObject(serverURL, parameters);
 
         if (server_d == null) {
             return null;
@@ -155,10 +155,10 @@ public class TMDataService implements DataService<TMDataObject> {
     }
    
 
-    private TMDataObject getServerData(String serverURL, String options) {
+    private TMDataObject getServerObject(String serverURL, String options) {
         String jsonstr = "";
         DataObject dataObject;
-        String requestString = serverURL + options;
+        String requestString = Tools.bindUrlwithParameters(serverURL, options, null);
         jsonstr = server.requestToServer(requestString);
 
         try {

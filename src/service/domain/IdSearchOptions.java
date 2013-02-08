@@ -101,10 +101,14 @@ String release;
     public String getOmdbParameters(){
         String str = "?";
         str += "i=" + this.id;
-        str += "&plot=" + this.plot;
+        if (plot.equalsIgnoreCase("simple") || plot.equalsIgnoreCase("short")) {
+            str += "&plot=short";
+        } else {
+            str += "&plot=full";
+        }
         str += "&r=JSON";
-        str += "&tomatoes=true";
-        return str;
+        str += "&tomatoes=false";
+        return str.replace(' ', '+');
     }
     /**
      * 

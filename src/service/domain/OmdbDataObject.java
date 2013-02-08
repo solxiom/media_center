@@ -20,6 +20,7 @@ public class OmdbDataObject {
     String Actors;
     String Plot;
     String Poster;
+    int Year;
     float imdbRating;
     int imdbVotes;
     String imdbID;
@@ -33,6 +34,14 @@ public class OmdbDataObject {
 
     public void setTitle(String Title) {
         this.Title = Title;
+    }
+
+    public int getYear() {
+        return Year;
+    }
+
+    public void setYear(int Year) {
+        this.Year = Year;
     }
 
     public String getRated() {

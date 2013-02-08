@@ -29,8 +29,33 @@ public class DataObjectConverterImpl implements DataConverter {
 
     @Override
     public DataObject convert(OmdbDataObject object) {
+        String[] poster = new String[1];
+        if (object == null) {
+            return null;
+        }
+        if (object.getPoster() != null) {
+            poster[0] = object.getPoster();
+        }
 
-        return null;
+
+        data = new DataObject();
+        data.setImdb_id(object.getImdbID());
+        data.setTitle(object.getTitle());
+        data.setPosters(Arrays.asList(poster));
+        data.setCast(Arrays.asList(object.getActors().split(",")));
+
+        data.setStoryLine(object.getPlot());
+
+        data.setDirectors(Arrays.asList(object.getDirector().split(",")));
+        data.setTeather_release_date(object.getReleased());
+        data.setGenres(Arrays.asList(object.getGenre().split(",")));
+        data.setRated(object.getRated());
+        data.setRuntime(object.getRuntime());
+        data.setImdb_user_rating(object.getImdbRating());
+        data.setImdb_votes_count(object.getImdbVotes());
+        data.setYear(object.getYear());
+
+        return data;
     }
 
     @Override
