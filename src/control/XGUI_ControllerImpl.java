@@ -45,7 +45,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private JsonSearcher json_searcher;
     private String dataServiceUrl;
     private String[] dataApiKey;
-    private Thread infoInProc, itemInfo;
+    private Thread infoInProc, resultsInProc,info_thread;
 
     public XGUI_ControllerImpl() {
         this.observers = new LinkedList<XGUI_Observer>();
@@ -104,14 +104,18 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         }
     }
 
-    public void putObserversInInfoProcessState() {
+    public void putInProcessState_info() {
 
-        infoInProc = new InfoInProcess();
+        if(infoInProc != null){
+            infoInProc.interrupt();
+            infoInProc = null;
+        }
+        infoInProc = async_info_inProcess();
         infoInProc.start();
 
     }
 
-    public void putObserversInResultsProcessState() {
+    public void putInProcessState_results() {
         for (XGUI_Observer obs : observers) {
             obs.setResultsInProcess();
         }
@@ -138,10 +142,13 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     }
 
     public void findItemInfo(int itemCode) {
-
-        putObserversInInfoProcessState();
-        itemInfo = new ItemInfo(5000, itemCode);
-        itemInfo.start();
+        putInProcessState_info();
+        if (info_thread != null) {
+            info_thread.interrupt();
+            info_thread = null;
+        }
+        info_thread = async_info_search(itemCode, 5000);
+        info_thread.start();
 
     }
 
@@ -197,78 +204,56 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         return year;
     }
 
-    class InfoInProcess extends Thread {
-
-        InfoInProcess() {
-            if (infoInProc != null) {
-                infoInProc.interrupt();
-                infoInProc = null;
-            }
-        }
-
-        @Override
-        public void run() {
-            boolean go = true;
-            long timer = 0;
-            while (go) {
-
+    private Thread async_info_search(final int item_code, final long w) {
+        Runnable info_th = new Runnable() {
+            @Override
+            public void run() {
                 try {
-                    sleep(400);
-                    timer += 400;
-                    for (XGUI_Observer obs : observers) {
-                        obs.setInfoInProcess();
+
+                    Thread.sleep(w);
+                    MediaFile item = activeResultMap.get(item_code);
+                    String itemYear = getMovieYear(item.getName());
+                    if (itemYear.equalsIgnoreCase("Unknown")) {
+                        itemYear = "";
                     }
+                    TitleSearchOptions options = new TitleSearchOptions(item.getMediaName(), itemYear);
+                    DataObject info = dataService.getDataByTitle(dataServiceUrl, options);
+                    if (infoInProc != null) {
+                        infoInProc.interrupt();
+                        infoInProc = null;
+                    }
+                    notifyObserversWithItemInfo(info);
 
                 } catch (InterruptedException ie) {
-                    go = false;
                 }
             }
+        };
 
-        }
+        return new Thread(info_th, "info_thread");
+
     }
 
-    class ItemInfo extends Thread {
+    private Thread async_info_inProcess() {
+        Runnable info_inProcess = new Runnable() {
+            @Override
+            public void run() {               
 
-        long mills;
-        int itemCode;
+                while (true) {
 
-        ItemInfo(long mills, int itemCode) {
-            if (itemInfo != null) {
-                itemInfo.interrupt();
-                itemInfo = null;
+                    try {
+                        Thread.sleep(400);                   
+                        for (XGUI_Observer obs : observers) {
+                            obs.setInfoInProcess();
+                        }
+
+                    } catch (InterruptedException ie) {
+                        break;
+                    }
+                }               
+
             }
-            this.mills = mills;
-            this.itemCode = itemCode;
-
-
-        }
-
-        @Override
-        public void run() {
-
-            long timer = 0;
-
-
-            try {
-                sleep(mills);
-                MediaFile item = activeResultMap.get(itemCode);
-                String itemYear = getMovieYear(item.getName());
-                if (itemYear.equalsIgnoreCase("Unknown")) {
-                    itemYear = "";
-                }
-                TitleSearchOptions options = new TitleSearchOptions(item.getMediaName(), itemYear);
-                DataObject info = dataService.getDataByTitle(dataServiceUrl, options);
-                if (infoInProc != null) {
-                    infoInProc.interrupt();
-                    infoInProc = null;
-                }
-                notifyObserversWithItemInfo(info);
-
-            } catch (InterruptedException ie) {
-            }
-
-            return;
-        }
+        };
+        return new Thread(info_inProcess,"info_inProcess");
     }
 
     class XGUI_Item_Converter {
