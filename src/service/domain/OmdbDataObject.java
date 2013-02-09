@@ -20,9 +20,9 @@ public class OmdbDataObject {
     String Actors;
     String Plot;
     String Poster;
-    int Year;
-    float imdbRating;
-    int imdbVotes;
+    String Year;
+    String imdbRating;
+    String imdbVotes;
     String imdbID;
 
     public OmdbDataObject() {
@@ -36,13 +36,6 @@ public class OmdbDataObject {
         this.Title = Title;
     }
 
-    public int getYear() {
-        return Year;
-    }
-
-    public void setYear(int Year) {
-        this.Year = Year;
-    }
 
     public String getRated() {
         return Rated;
@@ -116,21 +109,33 @@ public class OmdbDataObject {
         this.Poster = Poster;
     }
 
-    public float getImdbRating() {
+    public String getYear() {
+        return Year;
+    }
+
+    public void setYear(String Year) {
+        this.Year = Year;
+    }
+
+    public String getImdbRating() {
         return imdbRating;
     }
 
-    public void setImdbRating(float imdbRating) {
+    public void setImdbRating(String imdbRating) {
         this.imdbRating = imdbRating;
     }
 
-    public int getImdbVotes() {
+  
+
+    public String getImdbVotes() {
         return imdbVotes;
     }
 
-    public void setImdbVotes(int imdbVotes) {
+    public void setImdbVotes(String imdbVotes) {
         this.imdbVotes = imdbVotes;
     }
+
+  
 
     public String getImdbID() {
         return imdbID;

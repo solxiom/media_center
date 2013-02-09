@@ -39,17 +39,49 @@ public class InfoPanel extends JPanel {
     private JPanel plotPanel;
     private JPanel posterPanel;
     private JPanel bottomPanel;
+    private JLabel processLb;
+    private boolean proc_bin;
     // End of variables declaration
 
     public InfoPanel() {
+        proc_bin = true;
         initComponents();
     }
 
+    public void setInProcess() {
+        if (this.proc_bin) {
+            this.proc_bin = false;
+        } else {
+            this.proc_bin = true;
+        }
+       
+        this.removeAll();
+        initInProcess();
+        this.updateUI();
+
+    }
+
     public void setInfo(DataObject info, XGUI_Info_Parser parser) {
+
         this.removeAll();
         initCompsWithValues(parser.getValues(info));
         this.updateUI();
 
+    }
+
+    private void initInProcess() {
+        String iconStr = "/img/process/down.png";
+        if (proc_bin) {
+            iconStr = "/img/process/up.png";
+        }
+        JPanel proc_panel = new JPanel();
+        processLb = new JLabel();
+        ImageIcon icon = new ImageIcon(getClass().getResource(iconStr));
+        processLb.setIcon(icon);      
+        proc_panel.add(processLb);
+        this.setLayout(new BorderLayout());
+        this.add(proc_panel, BorderLayout.CENTER);
+        this.setMinimumSize(new Dimension(600, 600));
     }
 
     /**

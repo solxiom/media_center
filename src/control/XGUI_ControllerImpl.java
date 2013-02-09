@@ -17,6 +17,7 @@ import service.JsonSearcher;
 import service.JsonServer;
 import service.dataService.DataObjectConverterImpl;
 import service.dataService.OmdbDataService;
+import service.dataService.OmdbSearcher;
 import service.dataService.OmdbServer;
 import service.filesystem.MediaFile;
 import service.ftp.FTPFileManager;
@@ -44,13 +45,14 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private JsonSearcher json_searcher;
     private String dataServiceUrl;
     private String[] dataApiKey;
+    private Thread infoInProc, itemInfo;
 
     public XGUI_ControllerImpl() {
         this.observers = new LinkedList<XGUI_Observer>();
         activeResultMap = new HashMap<Integer, MediaFile>();
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
-        
+
 //        setUpAndConfig_tomatoes();
         setUpAndConfig_omdb();
 
@@ -61,7 +63,8 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         dataServiceUrl = "http://omdbapi.com";
         data_converter = new DataObjectConverterImpl();
         json_server = new OmdbServer();
-        dataService = new OmdbDataService(json_server, data_converter);
+        json_searcher = new OmdbSearcher(json_server, dataServiceUrl);
+        dataService = new OmdbDataService(json_server, data_converter, json_searcher);
     }
 
     private void setUpAndConfig_tomatoes() {
@@ -89,6 +92,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     }
 
     public void notifyObserversWithResults(List<XGUI_Item> results) {
+
         for (XGUI_Observer obs : observers) {
             obs.updateResults(results);
         }
@@ -97,6 +101,19 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     public void notifyObserversWithItemInfo(DataObject info) {
         for (XGUI_Observer obs : observers) {
             obs.updateInfo(info);
+        }
+    }
+
+    public void putObserversInInfoProcessState() {
+
+        infoInProc = new InfoInProcess();
+        infoInProc.start();
+
+    }
+
+    public void putObserversInResultsProcessState() {
+        for (XGUI_Observer obs : observers) {
+            obs.setResultsInProcess();
         }
     }
 
@@ -120,15 +137,11 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         return years.toArray(new String[]{});
     }
 
-    public void findItemInfo(int ItemCode) {
-        MediaFile item = activeResultMap.get(ItemCode);
-        String itemYear = getMovieYear(item.getName());
-        if (itemYear.equalsIgnoreCase("Unknown")) {
-            itemYear = "";
-        }
-        TitleSearchOptions options = new TitleSearchOptions(item.getMediaName(), itemYear);
-        DataObject info = dataService.getDataByTitle(dataServiceUrl, options);
-        notifyObserversWithItemInfo(info);
+    public void findItemInfo(int itemCode) {
+
+        putObserversInInfoProcessState();
+        itemInfo = new ItemInfo(5000, itemCode);
+        itemInfo.start();
 
     }
 
@@ -182,6 +195,80 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         }
 
         return year;
+    }
+
+    class InfoInProcess extends Thread {
+
+        InfoInProcess() {
+            if (infoInProc != null) {
+                infoInProc.interrupt();
+                infoInProc = null;
+            }
+        }
+
+        @Override
+        public void run() {
+            boolean go = true;
+            long timer = 0;
+            while (go) {
+
+                try {
+                    sleep(400);
+                    timer += 400;
+                    for (XGUI_Observer obs : observers) {
+                        obs.setInfoInProcess();
+                    }
+
+                } catch (InterruptedException ie) {
+                    go = false;
+                }
+            }
+
+        }
+    }
+
+    class ItemInfo extends Thread {
+
+        long mills;
+        int itemCode;
+
+        ItemInfo(long mills, int itemCode) {
+            if (itemInfo != null) {
+                itemInfo.interrupt();
+                itemInfo = null;
+            }
+            this.mills = mills;
+            this.itemCode = itemCode;
+
+
+        }
+
+        @Override
+        public void run() {
+
+            long timer = 0;
+
+
+            try {
+                sleep(mills);
+                MediaFile item = activeResultMap.get(itemCode);
+                String itemYear = getMovieYear(item.getName());
+                if (itemYear.equalsIgnoreCase("Unknown")) {
+                    itemYear = "";
+                }
+                TitleSearchOptions options = new TitleSearchOptions(item.getMediaName(), itemYear);
+                DataObject info = dataService.getDataByTitle(dataServiceUrl, options);
+                if (infoInProc != null) {
+                    infoInProc.interrupt();
+                    infoInProc = null;
+                }
+                notifyObserversWithItemInfo(info);
+
+            } catch (InterruptedException ie) {
+            }
+
+            return;
+        }
     }
 
     class XGUI_Item_Converter {

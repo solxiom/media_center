@@ -6,6 +6,7 @@ package service.dataService;
 
 import service.DataConverter;
 import service.DataService;
+import service.JsonSearcher;
 import service.JsonServer;
 import service.Tools;
 import service.domain.IdSearchOptions;
@@ -28,10 +29,12 @@ public class OmdbDataService implements DataService<OmdbDataObject> {
     private JsonServer<OmdbDataObject> server;
     private DataConverter converter;
     private OmdbDataObject server_data;
+    private JsonSearcher searcher;
 
-    public OmdbDataService(JsonServer<OmdbDataObject> server, DataConverter converter) {
+    public OmdbDataService(JsonServer<OmdbDataObject> server, DataConverter converter, JsonSearcher searcher) {
         this.server = server;
         this.converter = converter;
+        this.searcher = searcher;
     }
 
     public DataObject getDataById(String serverURL, IdSearchOptions options) {
@@ -39,7 +42,19 @@ public class OmdbDataService implements DataService<OmdbDataObject> {
     }
 
     public DataObject getDataByTitle(String serverURL, TitleSearchOptions options) {
-        return converter.convert(getServerObject(serverURL, options.getOmdbParameters()));
+        OmdbDataObject obj = getServerObject(serverURL, options.getOmdbParameters());
+        String item_id = "not_found";
+        IdSearchOptions id_options;
+        if (obj == null || !obj.getTitle().equalsIgnoreCase(options.getTitle())) {
+            item_id = searcher.findItemId(options.getTitle(), options.getYear());
+            if (!item_id.equalsIgnoreCase("not_found")) {
+                id_options = new IdSearchOptions(item_id);
+                return getDataById(serverURL, id_options);
+            }
+
+        }
+
+        return converter.convert(obj);
     }
 
     public OmdbDataObject getServerData() {
@@ -53,16 +68,16 @@ public class OmdbDataService implements DataService<OmdbDataObject> {
         String jsonstr = "";
         DataObject dataObject;
         String requestString = Tools.bindUrlwithParameters(serverURL, options, "/");//serverURL + "/" + options;
-        System.out.println(""+requestString);
+        System.out.println("" + requestString);
         jsonstr = server.requestToServer(requestString);
-        System.out.println("str: "+ jsonstr);
+        System.out.println("str: " + jsonstr);
         try {
-            
+
             server_data = server.jsonToServerObject(jsonstr);
-            System.out.println("object: "+server_data);
+            System.out.println("object: " + server_data);
             return server_data;
         } catch (Exception e) {
-            System.out.println("error"+ e);
+            System.out.println("error" + e);
             return null;
         }
     }

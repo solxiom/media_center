@@ -22,6 +22,10 @@ public interface XGUI_Subjet {
     
     public void notifyObserversWithItemInfo(DataObject info);
     
+    public void putObserversInInfoProcessState();
+    
+     public void putObserversInResultsProcessState();
+    
    
     
 }

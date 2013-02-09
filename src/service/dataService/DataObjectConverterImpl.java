@@ -51,9 +51,21 @@ public class DataObjectConverterImpl implements DataConverter {
         data.setGenres(Arrays.asList(object.getGenre().split(",")));
         data.setRated(object.getRated());
         data.setRuntime(object.getRuntime());
-        data.setImdb_user_rating(object.getImdbRating());
-        data.setImdb_votes_count(object.getImdbVotes());
-        data.setYear(object.getYear());
+        try {
+            data.setImdb_user_rating(Float.parseFloat(object.getImdbRating()));
+        } catch (Exception e) {
+            data.setImdb_user_rating(0);
+        }
+        try {
+            data.setImdb_votes_count(Integer.parseInt(object.getImdbVotes().replace(",", "")));
+        } catch (Exception e) {
+            data.setImdb_votes_count(0);
+        }
+        try {
+            data.setYear(Integer.parseInt(object.getYear()));
+        } catch (Exception e) {
+            data.setYear(0);
+        }
 
         return data;
     }

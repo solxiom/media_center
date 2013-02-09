@@ -17,4 +17,8 @@ public interface XGUI_Observer {
     public void updateResults(List<XGUI_Item> results);
 
     public void updateInfo(DataObject info);
+    
+    public void setInfoInProcess();
+    
+    public void setResultsInProcess();
 }
