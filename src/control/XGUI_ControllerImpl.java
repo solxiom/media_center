@@ -58,7 +58,6 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
 
-//        setUpAndConfig_tomatoes();
         setUpAndConfig_omdb();
 
     }
@@ -109,18 +108,18 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         }
     }
 
-    public void putObserversInProcessState(XProcessType procType) {  
-            for(XGUI_Observer obs: observers){
-                obs.putInProcessState(procType);
+    public void putObserversInProcessState(XProcessType procType) {
+        for(XGUI_Observer obs: observers){
+                obs.startInProcessState(procType);
             }
-      
     }
 
-    public void stopObserversInProcessState(XProcessType procType) {
+    public void removeObserversInProcessState(XProcessType procType) {
         for(XGUI_Observer obs: observers){
                 obs.stopInProcessState(procType);
             }
     }
+
 
     public String[] getSearchGeneres() {
         String[] genres = {"<--All-->", "Action", "Drama",
@@ -228,29 +227,6 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
 
     }
 
-    private Thread async_inProcess_info(final long cycle_sleep) {
-        Runnable info_inProcess = new Runnable() {
-            @Override
-            public void run() {
-
-                while (true) {
-
-                    try {
-                        Thread.sleep(cycle_sleep);
-                        for (XGUI_Observer obs : observers) {
-                            obs.putInProcessState(XProcessType.RETRIEVE_INFO);
-                        }
-
-                    } catch (InterruptedException ie) {
-                        break;
-                    }
-                }
-
-            }
-        };
-        return new Thread(info_inProcess, "info_inProcess");
-    }
-
     private Thread async_searchInfo(final int item_code, final long w) {
         Runnable info_th = new Runnable() {
             @Override
@@ -265,7 +241,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
                     }
                     TitleSearchOptions options = new TitleSearchOptions(item.getMediaName(), itemYear);
                     DataObject info = dataService.getDataByTitle(dataServiceUrl, options);
-                    stopObserversInProcessState(XProcessType.RETRIEVE_INFO);
+                    removeObserversInProcessState(XProcessType.RETRIEVE_INFO);
                     notifyObserversWithItemInfo(info);
 
                 } catch (InterruptedException ie) {
@@ -286,7 +262,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
                     List<MediaFile> files = listHostFiles(type);
                     List<XGUI_Item> items = converter.convertAll(files);
                     updateActiveResultMap(files);
-                    stopObserversInProcessState(XProcessType.LIST_MEDIA);
+                    removeObserversInProcessState(XProcessType.LIST_MEDIA);
                     notifyObserversWithResults(items);
                 } catch (InterruptedException ix) {
                 }

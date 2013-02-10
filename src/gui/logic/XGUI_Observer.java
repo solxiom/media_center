@@ -18,9 +18,10 @@ public interface XGUI_Observer {
     public void updateResults(List<XGUI_Item> results);
 
     public void updateInfo(DataObject info);
-
-    public void putInProcessState(XProcessType procType);
     
-    public void stopInProcessState(XProcessType procType);
+    public void startInProcessState(XProcessType type);
+    
+    public void stopInProcessState(XProcessType type);
+    
 
 }

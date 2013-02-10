@@ -41,19 +41,18 @@ public class InfoPanel extends JPanel {
     private JPanel posterPanel;
     private JPanel bottomPanel;
     private JLabel processLb;
-    private Thread inProc_anime;
+    private boolean proc_icon_b;
     // End of variables declaration
 
     public InfoPanel() {
+        proc_icon_b = true;
         initComponents();
     }
 
-    public void setInProcessState(boolean state) {
-        stopInProcessAnime();
-        if (state) {
-            inProc_anime = new InProcessAnime();
-            inProc_anime.start();
-        }
+    public void changeInProcessIcon() {
+         this.removeAll();
+        initInProcess();
+        this.updateUI();
     }
 
     public void setInfo(DataObject info, XGUI_Info_Parser parser) {
@@ -64,11 +63,15 @@ public class InfoPanel extends JPanel {
 
     }
 
-    private void initInProcess(boolean bin) {
-        this.removeAll();
-        String iconStr = "/img/process/down.png";
-        if (bin) {
+    private void initInProcess() {
+        
+        String iconStr =""; 
+        if (proc_icon_b) {
             iconStr = "/img/process/up.png";
+            proc_icon_b = false;
+        }else{
+            iconStr = "/img/process/down.png";
+            proc_icon_b = true;
         }
         JPanel proc_panel = new JPanel();
         processLb = new JLabel();
@@ -78,17 +81,10 @@ public class InfoPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(proc_panel, BorderLayout.CENTER);
         this.setMinimumSize(new Dimension(600, 600));
-        this.updateUI();
+        
     }
 
    
-
-    private void stopInProcessAnime() {
-        if (inProc_anime != null) {
-            inProc_anime.interrupt();
-            inProc_anime = null;
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -248,26 +244,5 @@ public class InfoPanel extends JPanel {
         bottomPanel.add(toolPanel);
 
     }
-    class InProcessAnime extends Thread{
-
-            @Override
-            public void run() {
-                boolean bin = true;
-                while (true) {
-                    try {
-                        this.sleep(500);
-                        
-                        initInProcess(bin);
-                        
-                        if (bin) {
-                            bin = false;
-                        }
-
-                    } catch (InterruptedException ix) {
-                    }
-                }
-            }
-        
-
-    }
+  
 }

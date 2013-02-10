@@ -30,6 +30,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
     private SearchPanel searchPanel;
     private MiddlePanel middlePanel;
     private BottomPanel bottomPanel;
+    private Thread info_inProc;
 
     // End of variables declaration
     public XGUI_Frame() {
@@ -58,18 +59,45 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
 
     }
 
-    public void putInProcessState(XProcessType type) {
-        if (type == XProcessType.RETRIEVE_INFO) {
-            middlePanel.getInfoPanel().setInProcessState(true);
-        }else if(type == XProcessType.LIST_MEDIA){
-            
+    public void startInProcessState(XProcessType type) {
+        stopInProcessState(type);
+        info_inProc = inProcessAnime(500, type);
+        info_inProc.start();
+    }
+
+    public void stopInProcessState(XProcessType type) {
+        if (type == XProcessType.RETRIEVE_INFO
+                && info_inProc != null) {
+            info_inProc.interrupt();
+            info_inProc = null;
         }
     }
-    public void stopInProcessState(XProcessType type) {
+
+    private Thread inProcessAnime(final long cycle_sleep, final XProcessType proc_type) {
+        Runnable info_inProcess = new Runnable() {
+            @Override
+            public void run() {
+
+                while (true) {
+
+                    try {
+                        Thread.sleep(cycle_sleep);
+                        sendInProcessPulse(proc_type);
+
+                    } catch (InterruptedException ie) {
+                        break;
+                    }
+                }
+
+            }
+        };
+        return new Thread(info_inProcess, "info_inProcess");
+    }
+
+    private void sendInProcessPulse(XProcessType type) {
         if (type == XProcessType.RETRIEVE_INFO) {
-            middlePanel.getInfoPanel().setInProcessState(false);
-        }else if(type == XProcessType.LIST_MEDIA){
-            
+            middlePanel.getInfoPanel().changeInProcessIcon();
+        } else if (type == XProcessType.LIST_MEDIA) {
         }
     }
 

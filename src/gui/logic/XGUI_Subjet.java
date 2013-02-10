@@ -22,9 +22,9 @@ public interface XGUI_Subjet {
     public void notifyObserversWithResults(List<XGUI_Item> results);
 
     public void notifyObserversWithItemInfo(DataObject info);
-
+    
     public void putObserversInProcessState(XProcessType processType);
     
-    public void stopObserversInProcessState(XProcessType processType);
-
+    public void removeObserversInProcessState(XProcessType processType);
+    
 }
