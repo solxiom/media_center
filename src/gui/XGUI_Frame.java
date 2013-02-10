@@ -34,7 +34,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
 
     // End of variables declaration
     public XGUI_Frame() {
-        super("Media Center v1.0");
+        super("Media Center V-1.0");
         controller = new XGUI_ControllerImpl();
         parser = new XGUI_Info_Parser();
         controller.registerObserver(this);

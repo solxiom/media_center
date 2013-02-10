@@ -29,10 +29,10 @@ public class MiddlePanel extends JPanel {
     //tools
     private XGUI_Controller controller;
     // Variables declaration - do not modify
-    private javax.swing.JScrollPane leftScrollPane;
+    private JScrollPane leftScrollPane;
     private JPanel leftSP_Panel;
     private HashMap<Integer, Color> itemStyleCach;
-    private javax.swing.JPanel rightPanel;
+    private JPanel rightPanel;
     private InfoPanel infoPanel;
     private ListItem selectedItem;
 
@@ -63,7 +63,7 @@ public class MiddlePanel extends JPanel {
             setItemHandlers(item);
             leftSP_Panel.add(item);
         }
-        this.updateUI();
+        this.revalidate();
 
     }
 

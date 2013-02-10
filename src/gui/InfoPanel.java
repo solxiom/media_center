@@ -50,26 +50,25 @@ public class InfoPanel extends JPanel {
     }
 
     public void changeInProcessIcon() {
-         this.removeAll();
+        this.removeAll();
         initInProcess();
-        this.updateUI();
+        this.revalidate();
     }
 
     public void setInfo(DataObject info, XGUI_Info_Parser parser) {
-
         this.removeAll();
         initCompsWithValues(parser.getValues(info));
-        this.updateUI();
+        this.revalidate();
 
     }
 
     private void initInProcess() {
-        
-        String iconStr =""; 
+
+        String iconStr = "";
         if (proc_icon_b) {
             iconStr = "/img/process/up.png";
             proc_icon_b = false;
-        }else{
+        } else {
             iconStr = "/img/process/down.png";
             proc_icon_b = true;
         }
@@ -81,10 +80,8 @@ public class InfoPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(proc_panel, BorderLayout.CENTER);
         this.setMinimumSize(new Dimension(600, 600));
-        
-    }
 
-   
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -244,5 +241,4 @@ public class InfoPanel extends JPanel {
         bottomPanel.add(toolPanel);
 
     }
-  
 }
