@@ -22,13 +22,10 @@ import service.domain.DataObject;
 public class FtpService implements HostService {
 
     private FTPFileManager fileManager;
-   
 
     public FtpService(FTPFileManager manager) {
         this.fileManager = manager;
     }
-    
-    
 
     public List<MediaFile> listMovies() {
         List<MediaFile> movies = new LinkedList<MediaFile>();
@@ -39,8 +36,8 @@ public class FtpService implements HostService {
                 break;
             }
         }
-        movies.addAll(Arrays.asList(fileSystem)); 
-        
+        movies.addAll(Arrays.asList(fileSystem));
+
         return removeNoneVideoFiles(movies);
     }
 
@@ -53,8 +50,8 @@ public class FtpService implements HostService {
                 break;
             }
         }
-        tvs.addAll(Arrays.asList(fileSystem)); 
-        
+        tvs.addAll(Arrays.asList(fileSystem));
+
         return removeNoneVideoFiles(tvs);
     }
 
@@ -67,8 +64,8 @@ public class FtpService implements HostService {
                 break;
             }
         }
-        docs.addAll(Arrays.asList(fileSystem)); 
-        
+        docs.addAll(Arrays.asList(fileSystem));
+
         return removeNoneVideoFiles(docs);
     }
 
@@ -81,17 +78,18 @@ public class FtpService implements HostService {
                 break;
             }
         }
-        peritems.addAll(Arrays.asList(fileSystem)); 
-        
+        peritems.addAll(Arrays.asList(fileSystem));
+
         return removeNoneVideoFiles(peritems);
     }
-    private List<MediaFile> removeNoneVideoFiles(List<MediaFile> list){
+
+    private List<MediaFile> removeNoneVideoFiles(List<MediaFile> list) {
         List<MediaFile> list2 = new LinkedList<MediaFile>();
         list2.addAll(list);
-        for(MediaFile f:list){
-            if(!(f.isMediaType(TypeX.VIDEO)|| f.isMediaType(TypeX.MEDIA_DIR)
+        for (MediaFile f : list) {
+            if (!(f.isMediaType(TypeX.VIDEO) || f.isMediaType(TypeX.MEDIA_DIR)
                     || f.isMediaType(TypeX.SEASON_DIR)
-                    || f.isMediaType(TypeX.TVS_DIR)) ){
+                    || f.isMediaType(TypeX.TVS_DIR))) {
                 list2.remove(f);
             }
         }

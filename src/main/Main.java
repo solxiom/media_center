@@ -4,7 +4,7 @@
  */
 package main;
 
-import GUI.XGUI_Frame;
+import gui.XGUI_Frame;
 import control.CMD_Controller;
 import service.ftp.FTPFileManager;
 import service.ftp.domain.FTPMediaFile;
@@ -33,7 +33,7 @@ public class Main {
         //System.out.println(new LocalFileManager().makeDir("Downloads"));
         //System.out.println(System.getProperty("user.dir")+"/Tools/VLC/vlc.exe");
 //        new MainFrame();
-       
+
         Process p = null;
 
         while (true) {

@@ -2,9 +2,10 @@
  * To changeLabelIcon this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui;
 
-import control.XGUI_Controller;
+import gui.logic.XGUI_IconChanger;
+import gui.logic.XGUI_Controller;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -63,8 +64,6 @@ public class SearchPanel extends JPanel {
         searchField.setEditable(false);
         searchField.setFocusable(false);
         searchField.addFocusListener(new FocusListener() {
-            
-
             public void focusGained(FocusEvent e) {
                 JTextField field = (JTextField) e.getSource();
                 if (field.getText().equals(searchFieldTip)) {
@@ -93,12 +92,12 @@ public class SearchPanel extends JPanel {
                 if (box.isSelected()) {
                     searchField.setEditable(true);
                     searchField.setFocusable(true);
-                    
+
                 } else {
                     searchField.setEditable(false);
                     searchField.setFocusable(false);
                     searchField.setText(searchFieldTip);
-                    
+
                 }
             }
         });
@@ -123,10 +122,10 @@ public class SearchPanel extends JPanel {
 
         genreLb.setText("Genre:");
         genreLb.setFont(new Font("Serif", Font.BOLD, 11));
-        
-        
+
+
         yearCombo.setModel(new javax.swing.DefaultComboBoxModel(controller.getSearchYears()));
-        
+
         categoryCombo.setModel(new javax.swing.DefaultComboBoxModel(controller.getSearchCategories()));
 
         genreCombo.setModel(new javax.swing.DefaultComboBoxModel(controller.getSearchGeneres()));
@@ -135,19 +134,21 @@ public class SearchPanel extends JPanel {
         searchBt.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().changeLabelIcon((JLabel) evt.getSource(), "/img/xsearch4_64_sw.png");
+                new XGUI_IconChanger().changeLabelIcon((JLabel) evt.getSource(), "/img/xsearch4_64_sw.png");
             }
 
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().changeLabelIcon((JLabel) evt.getSource(), "/img/xsearch4_64.png");
+                new XGUI_IconChanger().changeLabelIcon((JLabel) evt.getSource(), "/img/xsearch4_64.png");
             }
+
             @Override
-            public void mouseEntered(MouseEvent evt){
+            public void mouseEntered(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+
             @Override
-            public void mouseExited(MouseEvent evt){
+            public void mouseExited(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });

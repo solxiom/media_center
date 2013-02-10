@@ -15,10 +15,8 @@ import service.filesystem.MediaFile;
 public class MultiServerDataEngine implements DataEngine {
 
     public MultiServerDataEngine() {
-    
     }
-    
-    
+
     public DataObject findMovie(MediaFile file) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -34,5 +32,4 @@ public class MultiServerDataEngine implements DataEngine {
     public DataObject findPersianItem(MediaFile file) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
 }

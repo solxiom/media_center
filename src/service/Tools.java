@@ -74,6 +74,13 @@ public class Tools {
 
         return res;
     }
-    
-   
+     public static String getMovieYear(String name) {
+        String year = "Unknown";
+        if (name.contains("(y")) {
+
+            year = name.substring(name.indexOf("(y") + 2, name.indexOf("(y") + 6);
+        }
+
+        return year;
+    }
 }

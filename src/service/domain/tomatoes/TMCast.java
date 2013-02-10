@@ -9,7 +9,7 @@ package service.domain.tomatoes;
  * @author kavan
  */
 public class TMCast {
-    
+
     String name;
     String id;
     String[] characters;
@@ -40,7 +40,6 @@ public class TMCast {
     public void setCharacters(String[] characters) {
         this.characters = characters;
     }
-    
 }
 /*
 abridged_cast: [

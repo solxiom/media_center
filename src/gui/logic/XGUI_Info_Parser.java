@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui.logic;
 
 import java.util.HashMap;
 import service.domain.DataObject;
@@ -47,9 +47,9 @@ public class XGUI_Info_Parser {
             rateInfo = info.getImdb_user_rating() + "/ 10 Rated by " + info.getImdb_votes_count() + " users";
             if (info.getPosters().size() == 0) {
                 poster = "";
-            } else if(info.getPosters().size() > 1) {
+            } else if (info.getPosters().size() > 1) {
                 poster = "<img src='" + info.getPosters().get(1) + "' width='300' height='400' />";
-            }else  {
+            } else {
                 poster = "<img src='" + info.getPosters().get(0) + "' width='300' height='400' />";
             }
 
@@ -63,7 +63,6 @@ public class XGUI_Info_Parser {
 //            System.out.println("poster[2]: " + info.getPosters().get(2));
 //            System.out.println("poster[3]: " + info.getPosters().get(3));
 //        }
-
         values.put("title", title);
 
         values.put("genre", genre);

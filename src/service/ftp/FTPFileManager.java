@@ -133,15 +133,16 @@ public class FTPFileManager {
 
         return this.cateFolders;
     }
-    public FTPMediaFile[] removeProhibitedFoldersFromRoot(FTPMediaFile[] root){
+
+    public FTPMediaFile[] removeProhibitedFoldersFromRoot(FTPMediaFile[] root) {
         List<FTPMediaFile> result = new ArrayList<FTPMediaFile>();
-        
-        for(FTPMediaFile f: root){
-            if(isCategoryFolder(f.getName()))
+
+        for (FTPMediaFile f : root) {
+            if (isCategoryFolder(f.getName())) {
                 result.add(f);
+            }
         }
-        
+
         return result.toArray(new FTPMediaFile[result.size()]);
     }
-    
 }

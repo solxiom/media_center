@@ -25,7 +25,7 @@ public class DataObject {
 //genres	List	The movie's genres.(e.g. Drama, War)
     List<String> genres;
 //imdb_id	String	The movie's ID on IMDb.com.
-    String imdb_id;   
+    String imdb_id;
 //rotten tomatoes id	
     String tm_id;
 //language	List	The movie's audio language.
@@ -38,19 +38,13 @@ public class DataObject {
     String rated;
 //precentage value of rotten tomatoes user votes
     int tm_user_meter;
-    
     float tm_user_rating;
-    
     float tm_votes_count;
 //rating_count	Int	The number of voters if avalaible.
     int imdb_votes_count;
-    
     float imdb_user_rating;
-    
     String teather_release_date;
-    
     String dvd_release_date;
-    
 //runtime	List	The movie's duration.
     String runtime;
 //title	String	The movie's name.
@@ -255,6 +249,7 @@ public class DataObject {
     public void setYear(int year) {
         this.year = year;
     }
+
     public String getError() {
         return error;
     }
@@ -262,5 +257,4 @@ public class DataObject {
     public void setError(String error) {
         this.error = error;
     }
-    
 }

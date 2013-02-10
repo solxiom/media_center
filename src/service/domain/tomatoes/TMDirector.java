@@ -9,6 +9,7 @@ package service.domain.tomatoes;
  * @author kavan
  */
 public class TMDirector {
+
     String name;
 
     public TMDirector() {
@@ -21,9 +22,4 @@ public class TMDirector {
     public void setName(String name) {
         this.name = name;
     }
-
-   
-    
-    
-    
 }

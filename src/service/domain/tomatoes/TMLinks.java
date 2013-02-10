@@ -9,6 +9,7 @@ package service.domain.tomatoes;
  * @author kavan
  */
 public class TMLinks {
+
     String self;
     String alternate;
     String cast;
@@ -66,8 +67,6 @@ public class TMLinks {
     public void setSimilar(String similar) {
         this.similar = similar;
     }
-    
-    
 }
 /*
  *links: {

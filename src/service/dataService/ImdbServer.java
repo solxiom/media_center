@@ -21,10 +21,7 @@ import service.domain.ImdbDataObject;
  */
 public class ImdbServer extends JsonServer<ImdbDataObject> {
 
-
-
     public ImdbServer() {
-      
     }
 
     @Override

@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package control;
+package gui.logic;
 
-import GUI.beans.XGUI_Item;
+import gui.beans.XGUI_Item;
+import gui.beans.XProcessType;
 import java.util.List;
 import service.domain.DataObject;
 
@@ -17,8 +18,9 @@ public interface XGUI_Observer {
     public void updateResults(List<XGUI_Item> results);
 
     public void updateInfo(DataObject info);
+
+    public void putInProcessState(XProcessType procType);
     
-    public void setInfoInProcess();
-    
-    public void setResultsInProcess();
+    public void stopInProcessState(XProcessType procType);
+
 }

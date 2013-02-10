@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui;
 
 import java.awt.Color;
 
@@ -40,7 +40,7 @@ public class DesignFrame extends javax.swing.JFrame {
         middlePanel = new javax.swing.JPanel();
         leftScrollPane = new javax.swing.JScrollPane();
         rightInfoPanel = new javax.swing.JPanel();
-        infoDesign1 = new GUI.InfoDesign();
+        infoDesign1 = new gui.InfoDesign();
         bottomPanel = new javax.swing.JPanel();
         settingsLb = new javax.swing.JLabel();
         searchPanel = new javax.swing.JPanel();
@@ -354,7 +354,7 @@ public class DesignFrame extends javax.swing.JFrame {
     private javax.swing.JLabel docLb;
     private javax.swing.JComboBox genreCombo;
     private javax.swing.JLabel genreLb;
-    private GUI.InfoDesign infoDesign1;
+    private gui.InfoDesign infoDesign1;
     private javax.swing.JScrollPane leftScrollPane;
     private javax.swing.JPanel middlePanel;
     private javax.swing.JLabel mvIconLb;

@@ -48,7 +48,7 @@ public class TMDataObject {
     public void setRatings(TMRatings ratings) {
         this.ratings = ratings;
     }
-    
+
     public int getYear() {
         return year;
     }
@@ -57,14 +57,12 @@ public class TMDataObject {
         this.year = year;
     }
 
-    
-    
     public List<String> getGenres() {
         return genres;
     }
 
     public void setGenres(List<String> genres) {
-        
+
         this.genres = genres;
     }
 
@@ -73,10 +71,9 @@ public class TMDataObject {
     }
 
     public void setAbridged_directors(List<TMDirector> abridged_directors) {
-        
+
         this.abridged_directors = abridged_directors;
     }
-
 
     public String getStudio() {
         return studio;
@@ -173,7 +170,6 @@ public class TMDataObject {
     public void setLinks(TMLinks links) {
         this.links = links;
     }
-
 }
 /*
 id: "771205893",

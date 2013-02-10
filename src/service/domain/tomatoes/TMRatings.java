@@ -9,7 +9,7 @@ package service.domain.tomatoes;
  * @author kavan
  */
 public class TMRatings {
-   
+
     String critics_rating;
     String critics_score;
     String audience_rating;
@@ -49,7 +49,6 @@ public class TMRatings {
     public void setAudience_score(String audience_score) {
         this.audience_score = audience_score;
     }
-    
 }
 
 /*

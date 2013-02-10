@@ -1,5 +1,6 @@
-package GUI;
+package gui;
 
+import gui.logic.XGUI_Info_Parser;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.HashMap;
@@ -40,25 +41,19 @@ public class InfoPanel extends JPanel {
     private JPanel posterPanel;
     private JPanel bottomPanel;
     private JLabel processLb;
-    private boolean proc_bin;
+    private Thread inProc_anime;
     // End of variables declaration
 
     public InfoPanel() {
-        proc_bin = true;
         initComponents();
     }
 
-    public void setInProcess() {
-        if (this.proc_bin) {
-            this.proc_bin = false;
-        } else {
-            this.proc_bin = true;
+    public void setInProcessState(boolean state) {
+        stopInProcessAnime();
+        if (state) {
+            inProc_anime = new InProcessAnime();
+            inProc_anime.start();
         }
-       
-        this.removeAll();
-        initInProcess();
-        this.updateUI();
-
     }
 
     public void setInfo(DataObject info, XGUI_Info_Parser parser) {
@@ -69,19 +64,30 @@ public class InfoPanel extends JPanel {
 
     }
 
-    private void initInProcess() {
+    private void initInProcess(boolean bin) {
+        this.removeAll();
         String iconStr = "/img/process/down.png";
-        if (proc_bin) {
+        if (bin) {
             iconStr = "/img/process/up.png";
         }
         JPanel proc_panel = new JPanel();
         processLb = new JLabel();
         ImageIcon icon = new ImageIcon(getClass().getResource(iconStr));
-        processLb.setIcon(icon);      
+        processLb.setIcon(icon);
         proc_panel.add(processLb);
         this.setLayout(new BorderLayout());
         this.add(proc_panel, BorderLayout.CENTER);
         this.setMinimumSize(new Dimension(600, 600));
+        this.updateUI();
+    }
+
+   
+
+    private void stopInProcessAnime() {
+        if (inProc_anime != null) {
+            inProc_anime.interrupt();
+            inProc_anime = null;
+        }
     }
 
     /**
@@ -240,6 +246,28 @@ public class InfoPanel extends JPanel {
         bottomPanel.add(ratingPanel);
         bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         bottomPanel.add(toolPanel);
+
+    }
+    class InProcessAnime extends Thread{
+
+            @Override
+            public void run() {
+                boolean bin = true;
+                while (true) {
+                    try {
+                        this.sleep(500);
+                        
+                        initInProcess(bin);
+                        
+                        if (bin) {
+                            bin = false;
+                        }
+
+                    } catch (InterruptedException ix) {
+                    }
+                }
+            }
+        
 
     }
 }

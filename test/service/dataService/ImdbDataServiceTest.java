@@ -22,14 +22,14 @@ import service.DataConverter;
  * @author kavan
  */
 public class ImdbDataServiceTest {
-    
+
     public ImdbDataServiceTest() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -41,7 +41,7 @@ public class ImdbDataServiceTest {
     public void testGetDataById() {
 //        tt1129445
         System.out.println("getDataById");
-       String serverURL = "http://imdbapi.org";
+        String serverURL = "http://imdbapi.org";
         String expResultStr = "[Hilary Swank, Richard Gere,"
                 + " Ewan McGregor, Christopher Eccleston, Joe Anderson, Cherry "
                 + "Jones, Mia Wasikowska, Aaron Abrams, Dylan Roberts, Scott Yaphe,"
@@ -49,7 +49,7 @@ public class ImdbDataServiceTest {
                 + "Richard Donat]";
         IdSearchOptions options = new IdSearchOptions("tt1129445");
         DataConverter converter = new DataObjectConverterImpl();
-        DataService instance = new ImdbDataService(new ImdbServer(),converter);
+        DataService instance = new ImdbDataService(new ImdbServer(), converter);
         DataObject result = instance.getDataById(serverURL, options);
         assertEquals(expResultStr, result.getCast().toString());
     }
@@ -67,15 +67,16 @@ public class ImdbDataServiceTest {
                 + "Jones, Mia Wasikowska, Aaron Abrams, Dylan Roberts, Scott Yaphe,"
                 + " Tom Fairfoot, Ryann Shane, William Cuddy, Elizabeth Shepherd, "
                 + "Richard Donat]";
-        TitleSearchOptions options = new TitleSearchOptions("amelia","2009");
+        TitleSearchOptions options = new TitleSearchOptions("amelia", "2009");
         options.setOffset("0");
         DataConverter converter = new DataObjectConverterImpl();
-        DataService instance = new ImdbDataService(new ImdbServer(),converter);
+        DataService instance = new ImdbDataService(new ImdbServer(), converter);
         DataObject result = instance.getDataByTitle(serverURL, options);
         assertEquals(expResultStr, result.getCast().toString());
-      
+
     }
     //Benton, Louisiana, USA
+
     /**
      * Test of getDataByTitle method, of class DataService.
      */
@@ -88,9 +89,9 @@ public class ImdbDataServiceTest {
         TitleSearchOptions options = new TitleSearchOptions("Beyond a Reasonable Doubt");
         options.setOffset("0");
         DataConverter converter = new DataObjectConverterImpl();
-        DataService instance = new ImdbDataService(new ImdbServer(),converter);
+        DataService instance = new ImdbDataService(new ImdbServer(), converter);
         DataObject result = instance.getDataByTitle(serverURL, options);
         assertEquals(expResultStr, result.getRuntime().toString());
-      
+
     }
 }

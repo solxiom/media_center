@@ -12,23 +12,23 @@ public class IdSearchOptions {
 //Parameter	Required	Valid options	  DefaultValue	Description
 
 //id	        Yes	       /^tt\d+$/		        The IMDB ID of the movie you wish to get the info for (e.g. tt0120689)
-String id;
+    String id;
 //type   	No	       json, jsonp, xml	   json	        The data type you wish the API to return.
-String type;
+    String type;
 //plot	        No	       none, simple, full simple	The plot type you wish the API to return.
-String plot;
+    String plot;
 //episode	No	       1,0	            1	        When the parameter is 0, "episodes" is not included in the result.
-String episode;
+    String episode;
 //lang	        No	       en-US, zh-CN        en-US	The data language you wish the API to reutrn.
-String lang;
+    String lang;
 //aka	        No	       simple,full        simple	The aka type you wish the API to return.
-String aka;
+    String aka;
 //release	No	       simple,full        simple	The release date type you wish the API to return.
-String release;
+    String release;
 
-/**
- * some default values changed here
- */
+    /**
+     * some default values changed here
+     */
     public IdSearchOptions(String id) {
         this.id = id;
         this.type = "json";
@@ -94,11 +94,12 @@ String release;
     public void setRelease(String release) {
         this.release = release;
     }
-/**
-     * 
-     * @return the correct syntax for using in http get request in OMDBAPI.COM 
+
+    /**
+     *
+     * @return the correct syntax for using in http get request in OMDBAPI.COM
      */
-    public String getOmdbParameters(){
+    public String getOmdbParameters() {
         String str = "?";
         str += "i=" + this.id;
         if (plot.equalsIgnoreCase("simple") || plot.equalsIgnoreCase("short")) {
@@ -110,53 +111,55 @@ String release;
         str += "&tomatoes=false";
         return str.replace(' ', '+');
     }
+
     /**
-     * 
-     * @return the correct syntax for using in http get request in OMDBAPI.COM 
+     *
+     * @return the correct syntax for using in http get request in OMDBAPI.COM
      */
-    public String getTomatoesParameters(String apiKey){
-        String str ="/movies/"+this.getId()+".json?apikey="+apiKey;
+    public String getTomatoesParameters(String apiKey) {
+        String str = "/movies/" + this.getId() + ".json?apikey=" + apiKey;
 
         return str;
     }
-      /**
-     * 
-     * @return the correct syntax for using in http get request in IMDBAPI.ORG 
+
+    /**
+     *
+     * @return the correct syntax for using in http get request in IMDBAPI.ORG
      */
-        public String getImdbParameters() {
+    public String getImdbParameters() {
 // sample:
 //        ?id=tt1129445&type=json&plot=simple&episode=1&lang=en-US&aka=simple&release=simple
-        String str ="?";
-        str+="id=" + id;
-        str+="&type=" + type;
-        str+="&plot=" + plot;
-        str+="&episode=" + episode;
-        str+="&lang=" + lang;
-        str+="&aka=" + aka;
-        str+="&release=" + release;
-        
-     
-        return    str;
+        String str = "?";
+        str += "id=" + id;
+        str += "&type=" + type;
+        str += "&plot=" + plot;
+        str += "&episode=" + episode;
+        str += "&lang=" + lang;
+        str += "&aka=" + aka;
+        str += "&release=" + release;
+
+
+        return str;
     }
+
     /**
-     * 
-     * @return the correct syntax for using in http get request in IMDBAPI.ORG 
+     *
+     * @return the correct syntax for using in http get request in IMDBAPI.ORG
      */
     @Override
     public String toString() {
 // sample:
 //        ?id=tt1129445&type=json&plot=simple&episode=1&lang=en-US&aka=simple&release=simple
-        String str ="?";
-        str+="id=" + id;
-        str+="&type=" + type;
-        str+="&plot=" + plot;
-        str+="&episode=" + episode;
-        str+="&lang=" + lang;
-        str+="&aka=" + aka;
-        str+="&release=" + release;
-        
-     
-        return    str;
-    }
+        String str = "?";
+        str += "id=" + id;
+        str += "&type=" + type;
+        str += "&plot=" + plot;
+        str += "&episode=" + episode;
+        str += "&lang=" + lang;
+        str += "&aka=" + aka;
+        str += "&release=" + release;
 
+
+        return str;
+    }
 }

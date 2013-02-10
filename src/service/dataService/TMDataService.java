@@ -31,11 +31,11 @@ public class TMDataService implements DataService<TMDataObject> {
     private TMDataObject server_data;
     private boolean titId_doubleSearch;
 
-    public TMDataService(String[] apiKeys, JsonServer<TMDataObject> server,JsonSearcher searcher, DataConverter converter) {
-        this(apiKeys, server, searcher,converter, false);
+    public TMDataService(String[] apiKeys, JsonServer<TMDataObject> server, JsonSearcher searcher, DataConverter converter) {
+        this(apiKeys, server, searcher, converter, false);
     }
 
-    public TMDataService(String[] apiKeys, JsonServer<TMDataObject> server,JsonSearcher searcher ,DataConverter converter, boolean doubleSearch) {
+    public TMDataService(String[] apiKeys, JsonServer<TMDataObject> server, JsonSearcher searcher, DataConverter converter, boolean doubleSearch) {
         this.apiKeys = apiKeys;
         this.server = server;
         this.searcher = searcher;
@@ -43,7 +43,6 @@ public class TMDataService implements DataService<TMDataObject> {
         this.server_data = null;
         titId_doubleSearch = doubleSearch;
     }
-  
 
     public DataObject getDataById(String serverURL, IdSearchOptions options) {
 
@@ -67,14 +66,14 @@ public class TMDataService implements DataService<TMDataObject> {
      * @return DataObject
      */
     public DataObject getDataByTitle(String serverURL, TitleSearchOptions options) {
-    
+
         String parameters = options.getTomatoesParameters(Tools.getRandomMember(apiKeys));
         TMDataObject server_d = getServerObject(serverURL, parameters);
 
         if (server_d == null) {
             return null;
         }
-    
+
         if (needsMoreSearch(options, server_d)) {
 
             String mv_id = "";
@@ -92,7 +91,7 @@ public class TMDataService implements DataService<TMDataObject> {
             if (!mv_id.equalsIgnoreCase("not_found")) {
                 return getDataById(serverURL, new IdSearchOptions(mv_id));
             }
-            
+
         }
         if (!titId_doubleSearch) {
             return converter.convert(server_d);
@@ -124,7 +123,6 @@ public class TMDataService implements DataService<TMDataObject> {
             s_year = server_d.getYear();
 
         } catch (Exception e) {
-            
         }
 
         if (isYearsMatter(s_year, o_year)) {
@@ -153,7 +151,6 @@ public class TMDataService implements DataService<TMDataObject> {
         }
         return false;
     }
-   
 
     private TMDataObject getServerObject(String serverURL, String options) {
         String jsonstr = "";

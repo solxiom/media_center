@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package control;
+package gui.logic;
 
-import GUI.ListItem;
+import gui.logic.XGUI_Subjet;
+import gui.ListItem;
 
 /**
  *
@@ -25,6 +26,6 @@ public interface XGUI_Controller extends XGUI_Subjet {
     public void listPersianMedia();
 
     public void listDocumentaries();
-    
+
     public void findItemInfo(int itemCode);
 }

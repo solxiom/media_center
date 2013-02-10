@@ -255,7 +255,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="GUI.InfoDesign" name="infoDesign1">
+            <Component class="gui.InfoDesign" name="infoDesign1">
             </Component>
           </SubComponents>
         </Container>

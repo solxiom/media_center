@@ -10,6 +10,7 @@ package service.domain;
  */
 public class ImdbEpisode {
 //    Fields: date season episode title.
+
     String date;
     String season;
     String episode;
@@ -17,7 +18,6 @@ public class ImdbEpisode {
 
     public ImdbEpisode() {
     }
-    
 
     public String getDate() {
         return date;

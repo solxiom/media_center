@@ -9,8 +9,6 @@ package service;
  * @author kavan
  */
 public interface JsonSearcher {
-    
-    
+
     public String findItemId(String title, String year);
-    
 }

@@ -2,9 +2,10 @@
  * To changeLabelIcon this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui;
 
-import control.XGUI_Controller;
+import gui.logic.XGUI_IconChanger;
+import gui.logic.XGUI_Controller;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -19,8 +20,8 @@ import javax.swing.JPanel;
  */
 public class CategoryPanel extends JPanel {
 
-      //toole
-     XGUI_Controller controller;
+    //toole
+    XGUI_Controller controller;
     // Variables declaration - do not modify
     private javax.swing.JLabel docIconLb;
     private javax.swing.JLabel docLb;
@@ -35,13 +36,13 @@ public class CategoryPanel extends JPanel {
     public CategoryPanel(XGUI_Controller controller) {
         this.controller = controller;
         initCategoryPanel();
-        
+
 
     }
 
     private void initCategoryPanel() {
-        
-        final IconChanger iconChanger = new IconChanger();
+
+        final XGUI_IconChanger iconChanger = new XGUI_IconChanger();
         mvIconLb = new javax.swing.JLabel();
         perIconLb = new javax.swing.JLabel();
         docIconLb = new javax.swing.JLabel();
@@ -68,20 +69,22 @@ public class CategoryPanel extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                
-                iconChanger.changeLabelFontColor(getComponents(),mvLb , Color.red, Color.BLACK);
+
+                iconChanger.changeLabelFontColor(getComponents(), mvLb, Color.red, Color.BLACK);
                 controller.listMovies();
             }
+
             @Override
-            public void mouseEntered(MouseEvent evt){
+            public void mouseEntered(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+
             @Override
-            public void mouseExited(MouseEvent evt){
+            public void mouseExited(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
-        
+
 
         perIconLb.setBackground(new java.awt.Color(204, 204, 204));
         perIconLb.setForeground(new java.awt.Color(255, 102, 102));
@@ -100,15 +103,17 @@ public class CategoryPanel extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                iconChanger.changeLabelFontColor(getComponents(),perLb , Color.red, Color.BLACK);
+                iconChanger.changeLabelFontColor(getComponents(), perLb, Color.red, Color.BLACK);
                 controller.listPersianMedia();
             }
+
             @Override
-            public void mouseEntered(MouseEvent evt){
+            public void mouseEntered(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+
             @Override
-            public void mouseExited(MouseEvent evt){
+            public void mouseExited(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
@@ -131,15 +136,17 @@ public class CategoryPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent evt) {
 
-                iconChanger.changeLabelFontColor(getComponents(),docLb , Color.red, Color.BLACK);
+                iconChanger.changeLabelFontColor(getComponents(), docLb, Color.red, Color.BLACK);
                 controller.listDocumentaries();
             }
+
             @Override
-            public void mouseEntered(MouseEvent evt){
+            public void mouseEntered(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+
             @Override
-            public void mouseExited(MouseEvent evt){
+            public void mouseExited(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
@@ -161,15 +168,17 @@ public class CategoryPanel extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                iconChanger.changeLabelFontColor(getComponents(),tvsLb , Color.red, Color.BLACK);
+                iconChanger.changeLabelFontColor(getComponents(), tvsLb, Color.red, Color.BLACK);
                 controller.listTvShows();
             }
+
             @Override
-            public void mouseEntered(MouseEvent evt){
+            public void mouseEntered(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+
             @Override
-            public void mouseExited(MouseEvent evt){
+            public void mouseExited(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
@@ -190,15 +199,17 @@ public class CategoryPanel extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                iconChanger.changeLabelFontColor(getComponents(),tvsLb , Color.red, Color.BLACK);
+                iconChanger.changeLabelFontColor(getComponents(), tvsLb, Color.red, Color.BLACK);
                 controller.listTvShows();
             }
+
             @Override
-            public void mouseEntered(MouseEvent evt){
+            public void mouseEntered(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+
             @Override
-            public void mouseExited(MouseEvent evt){
+            public void mouseExited(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
@@ -219,17 +230,19 @@ public class CategoryPanel extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                
-                iconChanger.changeLabelFontColor(getComponents(),mvLb , Color.red, Color.BLACK);
+
+                iconChanger.changeLabelFontColor(getComponents(), mvLb, Color.red, Color.BLACK);
                 controller.listMovies();
-              
+
             }
+
             @Override
-            public void mouseEntered(MouseEvent evt){
+            public void mouseEntered(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+
             @Override
-            public void mouseExited(MouseEvent evt){
+            public void mouseExited(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
@@ -250,15 +263,17 @@ public class CategoryPanel extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                iconChanger.changeLabelFontColor(getComponents(),perLb , Color.red, Color.BLACK);
+                iconChanger.changeLabelFontColor(getComponents(), perLb, Color.red, Color.BLACK);
                 controller.listPersianMedia();
             }
+
             @Override
-            public void mouseEntered(MouseEvent evt){
+            public void mouseEntered(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+
             @Override
-            public void mouseExited(MouseEvent evt){
+            public void mouseExited(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });
@@ -280,15 +295,17 @@ public class CategoryPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent evt) {
 
-                iconChanger.changeLabelFontColor(getComponents(),docLb , Color.red, Color.BLACK);
+                iconChanger.changeLabelFontColor(getComponents(), docLb, Color.red, Color.BLACK);
                 controller.listDocumentaries();
             }
+
             @Override
-            public void mouseEntered(MouseEvent evt){
+            public void mouseEntered(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+
             @Override
-            public void mouseExited(MouseEvent evt){
+            public void mouseExited(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });

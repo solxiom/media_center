@@ -96,6 +96,4 @@ public class TMServer extends JsonServer<TMDataObject> {
 
         return resultObject;
     }
-
-  
 }

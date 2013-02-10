@@ -9,12 +9,13 @@ package service.domain.tomatoes;
  * @author kavan
  */
 public class TMRealeses {
+
     String theater;
     String dvd;
 
     public TMRealeses() {
     }
-    
+
     public String getTheater() {
         return theater;
     }
@@ -30,7 +31,6 @@ public class TMRealeses {
     public void setDvd(String dvd) {
         this.dvd = dvd;
     }
-    
 }
 /*
 release_dates: {

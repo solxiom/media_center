@@ -27,7 +27,7 @@ public class OmdbDataObject {
 
     public OmdbDataObject() {
     }
-    
+
     public String getTitle() {
         return Title;
     }
@@ -35,7 +35,6 @@ public class OmdbDataObject {
     public void setTitle(String Title) {
         this.Title = Title;
     }
-
 
     public String getRated() {
         return Rated;
@@ -125,8 +124,6 @@ public class OmdbDataObject {
         this.imdbRating = imdbRating;
     }
 
-  
-
     public String getImdbVotes() {
         return imdbVotes;
     }
@@ -134,8 +131,6 @@ public class OmdbDataObject {
     public void setImdbVotes(String imdbVotes) {
         this.imdbVotes = imdbVotes;
     }
-
-  
 
     public String getImdbID() {
         return imdbID;

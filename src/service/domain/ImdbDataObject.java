@@ -11,8 +11,9 @@ import java.util.List;
  * @author kavan
  */
 public class ImdbDataObject {
-   //Field	Type	Description
+    //Field	Type	Description
 //actors	List	The movie's cast list.
+
     List<String> actors;
 //also_known_as	List	 The movie's other name. Fields(full mode): title country remarks
     List<String> also_known_as;
@@ -23,7 +24,7 @@ public class ImdbDataObject {
 //episodes	List	The TV series's episodes(only TV series). Fields: date season episode title.
     List<ImdbEpisode> episodes;
 //filming_locations	String	The movie's locations.
-   String filming_locations;
+    String filming_locations;
 //genres	List	The movie's genres.(e.g. Drama, War)
     List<String> genres;
 //imdb_id	String	The movie's ID on IMDb.com.
@@ -78,7 +79,7 @@ public class ImdbDataObject {
 
     public void setFilming_locations(String filming_locations) {
         this.filming_locations = filming_locations;
-    }   
+    }
 
     public List<String> getActors() {
         return actors;
@@ -119,7 +120,6 @@ public class ImdbDataObject {
     public void setEpisodes(List<ImdbEpisode> episodes) {
         this.episodes = episodes;
     }
-
 
     public List<String> getGenres() {
         return genres;
@@ -275,5 +275,5 @@ public class ImdbDataObject {
                 + ", rating=" + rating + ", rating_count=" + rating_count + ", release_date=" + release_date
                 + ", runtime=" + runtime + ", title=" + title + ", type=" + type + ", writers=" + writers + ", year=" + year
                 + ", total_found=" + total_found + ", error=" + error + '}';
-    } 
+    }
 }

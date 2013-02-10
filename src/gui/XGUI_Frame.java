@@ -2,12 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui;
 
-import GUI.beans.XGUI_Item;
-import control.XGUI_Controller;
+import gui.logic.XGUI_Info_Parser;
+import gui.beans.XGUI_Item;
+import gui.logic.XGUI_Controller;
 import control.XGUI_ControllerImpl;
-import control.XGUI_Observer;
+import gui.beans.XProcessType;
+import gui.logic.XGUI_Observer;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
@@ -30,7 +32,6 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
     private BottomPanel bottomPanel;
 
     // End of variables declaration
-
     public XGUI_Frame() {
         super("Media Center v1.0");
         controller = new XGUI_ControllerImpl();
@@ -50,20 +51,28 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
             middlePanel.setResults(items);
         }
     }
-    
-    public void updateInfo(DataObject info){
-        
-        middlePanel.getInfoPanel().setInfo(info,parser);
-        
-    }
-    
-    public void setInfoInProcess(){
-        middlePanel.getInfoPanel().setInProcess();
+
+    public void updateInfo(DataObject info) {
+
+        middlePanel.getInfoPanel().setInfo(info, parser);
+
     }
 
-    public void setResultsInProcess(){
-       
+    public void putInProcessState(XProcessType type) {
+        if (type == XProcessType.RETRIEVE_INFO) {
+            middlePanel.getInfoPanel().setInProcessState(true);
+        }else if(type == XProcessType.LIST_MEDIA){
+            
+        }
     }
+    public void stopInProcessState(XProcessType type) {
+        if (type == XProcessType.RETRIEVE_INFO) {
+            middlePanel.getInfoPanel().setInProcessState(false);
+        }else if(type == XProcessType.LIST_MEDIA){
+            
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,7 +93,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
 
         pack();
 
-    } 
+    }
 
     /**
      * @param args the command line arguments

@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui;
 
-import GUI.beans.XGUI_Item;
+import gui.beans.XGUI_Item;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -78,6 +78,7 @@ public class ListItem extends JPanel {
     public JLabel getYearLabel() {
         return yearLb;
     }
+
     public XGUI_Item getXGUI_Item() {
 
         return item;

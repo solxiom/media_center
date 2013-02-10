@@ -46,7 +46,7 @@ public class CMD_Controller {
         String year = getMovieYear(mf.getName());
         DataObject info;
         TitleSearchOptions options;
-        DataService service = new ImdbDataService(new ImdbServer(),new DataObjectConverterImpl());
+        DataService service = new ImdbDataService(new ImdbServer(), new DataObjectConverterImpl());
         if (year != null) {
             options = new TitleSearchOptions(mf.getMediaName(), year);
         } else {
@@ -54,15 +54,16 @@ public class CMD_Controller {
         }
 //        options.setPlot("simple");
         info = service.getDataByTitle("http://imdbapi.org", options);
-        if(info == null || info.getError() != null)
-            return "No Infromation Found for item [" + mf.getMediaName()+"] ";
+        if (info == null || info.getError() != null) {
+            return "No Infromation Found for item [" + mf.getMediaName() + "] ";
+        }
         return parseMovieInfo(info);
     }
 
     private String parseMovieInfo(DataObject info) {
         String str = "\n**************   *I**N**F**O*   *****************\n\n";
         str += "\n Name: " + info.getTitle() + " [" + info.getYear() + "]";
-        str += "\n Duration: " + info.getRuntime() + " Rating: [" + info.getImdb_user_rating() + "/10] from " + info.getImdb_votes_count() +" users";
+        str += "\n Duration: " + info.getRuntime() + " Rating: [" + info.getImdb_user_rating() + "/10] from " + info.getImdb_votes_count() + " users";
         str += "\n Language: " + info.getLanguage() + " Type: " + info.getType();
         str += "\n Genres: " + info.getGenres();
         str += "\n Plot: " + parseMoviePlot(info.getStoryLine());

@@ -62,7 +62,7 @@ public class ImdbDataService implements DataService<ImdbDataObject> {
         String jsonstr = "";
         DataObject dataObject;
         String requestString = Tools.bindUrlwithParameters(serverURL, options, "/");//serverURL + "/" + options;
-        
+
         jsonstr = server.requestToServer(requestString);
         try {
             server_data = server.jsonToServerObject(jsonstr);

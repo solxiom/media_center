@@ -2,8 +2,9 @@
  * To changeLabelIcon this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui;
 
+import gui.logic.XGUI_IconChanger;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,27 +24,29 @@ public class BottomPanel extends JPanel {
         initBottomPanel();
     }
 
- 
     private void initBottomPanel() {
-  
+
         settingsLb = new javax.swing.JLabel();
 
-        settingsLb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/xsettings_64.png"))); 
+        settingsLb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/xsettings_64.png")));
         settingsLb.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                new IconChanger().changeLabelIcon((JLabel)evt.getSource(),"/img/xsettings_64_sw.png");
+                new XGUI_IconChanger().changeLabelIcon((JLabel) evt.getSource(), "/img/xsettings_64_sw.png");
             }
+
             @Override
             public void mouseReleased(MouseEvent evt) {
-                new IconChanger().changeLabelIcon((JLabel)evt.getSource(),"/img/xsettings_64.png");
+                new XGUI_IconChanger().changeLabelIcon((JLabel) evt.getSource(), "/img/xsettings_64.png");
             }
+
             @Override
-            public void mouseEntered(MouseEvent evt){
+            public void mouseEntered(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
+
             @Override
-            public void mouseExited(MouseEvent evt){
+            public void mouseExited(MouseEvent evt) {
                 evt.getComponent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         });

@@ -4,7 +4,11 @@
  */
 package control;
 
-import GUI.beans.XGUI_Item;
+import gui.logic.XGUI_Controller;
+import gui.logic.XGUI_Item_Converter;
+import gui.logic.XGUI_Observer;
+import gui.beans.XGUI_Item;
+import gui.beans.XProcessType;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -15,6 +19,7 @@ import service.DataService;
 import service.HostService;
 import service.JsonSearcher;
 import service.JsonServer;
+import service.Tools;
 import service.dataService.DataObjectConverterImpl;
 import service.dataService.OmdbDataService;
 import service.dataService.OmdbSearcher;
@@ -45,7 +50,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private JsonSearcher json_searcher;
     private String dataServiceUrl;
     private String[] dataApiKey;
-    private Thread infoInProc, resultsInProc,info_thread;
+    private Thread infoInProc, resultsInProc, info_thread, results_thread;
 
     public XGUI_ControllerImpl() {
         this.observers = new LinkedList<XGUI_Observer>();
@@ -104,30 +109,29 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         }
     }
 
-    public void putInProcessState_info() {
-
-        if(infoInProc != null){
-            infoInProc.interrupt();
-            infoInProc = null;
-        }
-        infoInProc = async_info_inProcess();
-        infoInProc.start();
-
+    public void putObserversInProcessState(XProcessType procType) {  
+            for(XGUI_Observer obs: observers){
+                obs.putInProcessState(procType);
+            }
+      
     }
 
-    public void putInProcessState_results() {
-        for (XGUI_Observer obs : observers) {
-            obs.setResultsInProcess();
-        }
+    public void stopObserversInProcessState(XProcessType procType) {
+        for(XGUI_Observer obs: observers){
+                obs.stopInProcessState(procType);
+            }
     }
 
     public String[] getSearchGeneres() {
-        String[] genres = {"<--All-->", "Action", "Drama", "Romance", "Thriller", "SciFi", "Horror", "Comedy", "Biography", "History", "Crime"};
+        String[] genres = {"<--All-->", "Action", "Drama",
+            "Romance", "Thriller", "SciFi", "Horror", "Comedy",
+            "Biography", "History", "Crime"};
         return genres;
     }
 
     public String[] getSearchCategories() {
-        String[] categories = {"<--All-->", "Movies", "TvShows", "Documentaries", "Persian Media"};
+        String[] categories = {"<--All-->", "Movies",
+            "TvShows", "Documentaries", "Persian Media"};
         return categories;
     }
 
@@ -142,12 +146,9 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     }
 
     public void findItemInfo(int itemCode) {
-        putInProcessState_info();
-        if (info_thread != null) {
-            info_thread.interrupt();
-            info_thread = null;
-        }
-        info_thread = async_info_search(itemCode, 5000);
+        putObserversInProcessState(XProcessType.RETRIEVE_INFO);
+        stopProcessThread(XProcessType.RETRIEVE_INFO);
+        info_thread = async_searchInfo(itemCode, 5000);
         info_thread.start();
 
     }
@@ -194,17 +195,63 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         }
     }
 
-    private String getMovieYear(String name) {
-        String year = "Unknown";
-        if (name.contains("(y")) {
+    private void stopProcessThread(XProcessType procType) {
 
-            year = name.substring(name.indexOf("(y") + 2, name.indexOf("(y") + 6);
+        if (procType == XProcessType.RETRIEVE_INFO
+                && info_thread != null) {
+            info_thread.interrupt();
+            info_thread = null;
+        } else if (procType == XProcessType.LIST_MEDIA
+                && results_thread != null) {
+            results_thread.interrupt();
+            results_thread = null;
+        }
+}
+
+    private List<MediaFile> listHostFiles(ListType type) {
+        switch (type) {
+            case MOVIES_LIST:
+                return hostService.listMovies();
+
+            case TVS_LIST:
+                return hostService.listTvShows();
+
+            case DOC_LIST:
+                return hostService.listDocumentaries();
+
+            case PERSIAN_LIST:
+                return hostService.listPersianItems();
+            default:
+                return null;
+
         }
 
-        return year;
     }
 
-    private Thread async_info_search(final int item_code, final long w) {
+    private Thread async_inProcess_info(final long cycle_sleep) {
+        Runnable info_inProcess = new Runnable() {
+            @Override
+            public void run() {
+
+                while (true) {
+
+                    try {
+                        Thread.sleep(cycle_sleep);
+                        for (XGUI_Observer obs : observers) {
+                            obs.putInProcessState(XProcessType.RETRIEVE_INFO);
+                        }
+
+                    } catch (InterruptedException ie) {
+                        break;
+                    }
+                }
+
+            }
+        };
+        return new Thread(info_inProcess, "info_inProcess");
+    }
+
+    private Thread async_searchInfo(final int item_code, final long w) {
         Runnable info_th = new Runnable() {
             @Override
             public void run() {
@@ -212,16 +259,13 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
 
                     Thread.sleep(w);
                     MediaFile item = activeResultMap.get(item_code);
-                    String itemYear = getMovieYear(item.getName());
+                    String itemYear = Tools.getMovieYear(item.getName());
                     if (itemYear.equalsIgnoreCase("Unknown")) {
                         itemYear = "";
                     }
                     TitleSearchOptions options = new TitleSearchOptions(item.getMediaName(), itemYear);
                     DataObject info = dataService.getDataByTitle(dataServiceUrl, options);
-                    if (infoInProc != null) {
-                        infoInProc.interrupt();
-                        infoInProc = null;
-                    }
+                    stopObserversInProcessState(XProcessType.RETRIEVE_INFO);
                     notifyObserversWithItemInfo(info);
 
                 } catch (InterruptedException ie) {
@@ -233,48 +277,24 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
 
     }
 
-    private Thread async_info_inProcess() {
-        Runnable info_inProcess = new Runnable() {
+    private Thread async_listMedia(final ListType type) {
+        Runnable media_th = new Runnable() {
             @Override
-            public void run() {               
-
-                while (true) {
-
-                    try {
-                        Thread.sleep(400);                   
-                        for (XGUI_Observer obs : observers) {
-                            obs.setInfoInProcess();
-                        }
-
-                    } catch (InterruptedException ie) {
-                        break;
-                    }
-                }               
-
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                    List<MediaFile> files = listHostFiles(type);
+                    List<XGUI_Item> items = converter.convertAll(files);
+                    updateActiveResultMap(files);
+                    stopObserversInProcessState(XProcessType.LIST_MEDIA);
+                    notifyObserversWithResults(items);
+                } catch (InterruptedException ix) {
+                }
             }
         };
-        return new Thread(info_inProcess,"info_inProcess");
-    }
 
-    class XGUI_Item_Converter {
 
-        XGUI_Item_Converter() {
-        }
 
-        XGUI_Item convert(MediaFile file) {
-            XGUI_Item item = new XGUI_Item();
-            item.setKey(file.getName().hashCode());
-            item.setName(file.getMediaName());
-            item.setYear(getMovieYear(file.getName()));
-            return item;
-        }
-
-        List<XGUI_Item> convertAll(List<MediaFile> files) {
-            List<XGUI_Item> items = new LinkedList<XGUI_Item>();
-            for (MediaFile f : files) {
-                items.add(convert(f));
-            }
-            return items;
-        }
+        return new Thread(media_th, "list_media_thread");
     }
 }

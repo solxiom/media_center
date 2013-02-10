@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui;
 
-import control.XGUI_Controller;
+import gui.logic.XGUI_Controller;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

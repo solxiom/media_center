@@ -9,6 +9,7 @@ package service.domain.tomatoes;
  * @author kavan
  */
 public class TMAlternate_ids {
+
     String imdb;
 
     public TMAlternate_ids() {
@@ -21,5 +22,4 @@ public class TMAlternate_ids {
     public void setImdb(String imdb) {
         this.imdb = imdb;
     }
-    
 }

@@ -16,22 +16,22 @@ import static org.junit.Assert.*;
  * @author kavan
  */
 public class ToolsTest {
-    
+
     public ToolsTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -74,11 +74,12 @@ public class ToolsTest {
         String parameters = "?s=tt&x=24";
         String bind = "/";
         String expResult = "http://solxiom.com/?s=tt&x=24";
-        
+
         String result = Tools.bindUrlwithParameters(url, parameters, bind);
-        assertEquals(expResult, result);  
-              
+        assertEquals(expResult, result);
+
     }
+
     /**
      * Test of bindUrlwithParameters method, of class Tools.
      */
@@ -89,11 +90,12 @@ public class ToolsTest {
         String parameters = "?s=tt&x=24";
         String bind = null;
         String expResult = "http://solxiom.com/?s=tt&x=24";
-        
+
         String result = Tools.bindUrlwithParameters(url, parameters, bind);
-        assertEquals(expResult, result);  
-        
+        assertEquals(expResult, result);
+
     }
+
     /**
      * Test of bindUrlwithParameters method, of class Tools.
      */
@@ -104,11 +106,12 @@ public class ToolsTest {
         String parameters = "/?s=tt&x=24";
         String bind = "/";
         String expResult = "http://solxiom.com/?s=tt&x=24";
-        
+
         String result = Tools.bindUrlwithParameters(url, parameters, bind);
-        assertEquals(expResult, result);  
-        
+        assertEquals(expResult, result);
+
     }
+
     /**
      * Test of bindUrlwithParameters method, of class Tools.
      */
@@ -119,9 +122,9 @@ public class ToolsTest {
         String parameters = "/?s=tt&x=24";
         String bind = "/";
         String expResult = "http://solxiom.com/?s=tt&x=24";
-        
+
         String result = Tools.bindUrlwithParameters(url, parameters, bind);
-        assertEquals(expResult, result);  
-        
+        assertEquals(expResult, result);
+
     }
 }

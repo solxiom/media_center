@@ -63,7 +63,7 @@ public class OmdbServer extends JsonServer<OmdbDataObject> {
 
             throw new JsonSyntaxException("Throwed after an Exception in method[jsonToDataObject]" + e.getMessage(), e.getCause());
         }
-    
+
         return null;
     }
 }

@@ -20,5 +20,4 @@ public interface DataConverter {
     DataObject convert(ImdbDataObject object);
 
     DataObject convert(TMDataObject object);
-    
 }

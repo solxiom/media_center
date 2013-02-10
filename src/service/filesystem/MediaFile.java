@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package service.filesystem;
 
 import service.ftp.domain.FTPMediaFile;
@@ -24,19 +23,20 @@ public interface MediaFile {
     String getMediaName();
 
     String getName();
-    
+
     TypeX getMediaType();
 
     FTPMediaFile getParentFolder();
 
     QualityX getQuality();
 
-
     boolean isDirContainsType(TypeX contentType);
+
     boolean isDirectory();
+
     boolean isDirEmpty();
+
     boolean isMediaType(TypeX t);
 
     MediaFile[] listMediaFiles();
-
 }

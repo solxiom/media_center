@@ -23,8 +23,8 @@ import service.domain.DataObject;
  * @author kavan
  */
 public abstract class JsonServer<T> {
-    
-     public String requestToServer(String requestString) {
+
+    public String requestToServer(String requestString) {
         String jsonResponse = "";
         HttpGet req = new HttpGet(requestString);
 
@@ -48,6 +48,6 @@ public abstract class JsonServer<T> {
     }
 
     public abstract T jsonToServerObject(String jsonstr) throws Exception;
-    
+
     public abstract JsonObject getResultAsJsonObject(String jsonstr) throws Exception;
 }

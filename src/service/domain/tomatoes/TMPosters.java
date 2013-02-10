@@ -9,7 +9,7 @@ package service.domain.tomatoes;
  * @author kavan
  */
 public class TMPosters {
-  
+
     String thumbnail;
     String profile;
     String detailed;
@@ -49,7 +49,6 @@ public class TMPosters {
     public void setOriginal(String original) {
         this.original = original;
     }
-    
 }
 /*
 posters: {

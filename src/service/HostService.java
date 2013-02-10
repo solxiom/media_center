@@ -21,6 +21,4 @@ public interface HostService {
     public List<MediaFile> listDocumentaries();
 
     public List<MediaFile> listPersianItems();
-    
-  
 }
