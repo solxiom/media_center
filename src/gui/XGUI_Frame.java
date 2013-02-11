@@ -60,9 +60,12 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
     }
 
     public void startInProcessState(XProcessType type) {
+
         stopInProcessState(type);
-        info_inProc = inProcessAnime(500, type);
-        info_inProc.start();
+        if (type == XProcessType.RETRIEVE_INFO) {
+            info_inProc = inProcessAnime(500, type);
+            info_inProc.start();
+        }
     }
 
     public void stopInProcessState(XProcessType type) {
@@ -71,6 +74,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
             info_inProc.interrupt();
             info_inProc = null;
         }
+    
     }
 
     private Thread inProcessAnime(final long cycle_sleep, final XProcessType proc_type) {
@@ -85,6 +89,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
                         sendInProcessPulse(proc_type);
 
                     } catch (InterruptedException ie) {
+                        clearInProcessPulse(proc_type);
                         break;
                     }
                 }
@@ -97,6 +102,12 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
     private void sendInProcessPulse(XProcessType type) {
         if (type == XProcessType.RETRIEVE_INFO) {
             middlePanel.getInfoPanel().changeInProcessIcon();
+        } else if (type == XProcessType.LIST_MEDIA) {
+        }
+    }
+    private void clearInProcessPulse(XProcessType type){
+         if (type == XProcessType.RETRIEVE_INFO) {
+            middlePanel.getInfoPanel().clearInfoPanel();        
         } else if (type == XProcessType.LIST_MEDIA) {
         }
     }

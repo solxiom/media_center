@@ -50,19 +50,18 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private JsonSearcher json_searcher;
     private String dataServiceUrl;
     private String[] dataApiKey;
-    private Thread infoInProc, resultsInProc, info_thread, results_thread;
+    private Thread info_thread, listMedia_thread;
 
-    public XGUI_ControllerImpl() {
+    public XGUI_ControllerImpl(){
         this.observers = new LinkedList<XGUI_Observer>();
         activeResultMap = new HashMap<Integer, MediaFile>();
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
 
         setUpAndConfig_omdb();
-
     }
 
-    private void setUpAndConfig_omdb() {
+    private void setUpAndConfig_omdb(){
 
         dataServiceUrl = "http://omdbapi.com";
         data_converter = new DataObjectConverterImpl();
@@ -83,7 +82,6 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         json_server = new TMServer();
         json_searcher = new TMSearcher(json_server, dataServiceUrl, dataApiKey);
 //        dataService = new ImdbDataService(json_server,data_converter);
-
         dataService = new TMDataService(dataApiKey, json_server, json_searcher, data_converter, true);
     }
 
@@ -109,17 +107,16 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     }
 
     public void putObserversInProcessState(XProcessType procType) {
-        for(XGUI_Observer obs: observers){
-                obs.startInProcessState(procType);
-            }
+        for (XGUI_Observer obs : observers) {
+            obs.startInProcessState(procType);
+        }
     }
 
     public void removeObserversInProcessState(XProcessType procType) {
-        for(XGUI_Observer obs: observers){
-                obs.stopInProcessState(procType);
-            }
+        for (XGUI_Observer obs : observers) {
+            obs.stopInProcessState(procType);
+        }
     }
-
 
     public String[] getSearchGeneres() {
         String[] genres = {"<--All-->", "Action", "Drama",
@@ -153,33 +150,19 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     }
 
     public void listMovies() {
-
-        List<MediaFile> files = hostService.listMovies();
-        List<XGUI_Item> movies = converter.convertAll(files);
-        updateActiveResultMap(files);
-        notifyObserversWithResults(movies);
-
+        startListMediaThread(ListType.MOVIES_LIST);
     }
 
     public void listTvShows() {
-        List<MediaFile> files = hostService.listTvShows();
-        List<XGUI_Item> tvs = converter.convertAll(files);
-        updateActiveResultMap(files);
-        notifyObserversWithResults(tvs);
+        startListMediaThread(ListType.TVS_LIST);
     }
 
     public void listPersianMedia() {
-        List<MediaFile> files = hostService.listPersianItems();
-        List<XGUI_Item> perItems = converter.convertAll(files);
-        updateActiveResultMap(files);
-        notifyObserversWithResults(perItems);
+        startListMediaThread(ListType.PERSIAN_LIST);
     }
 
     public void listDocumentaries() {
-        List<MediaFile> files = hostService.listDocumentaries();
-        List<XGUI_Item> docs = converter.convertAll(files);
-        updateActiveResultMap(files);
-        notifyObserversWithResults(docs);
+        startListMediaThread(ListType.DOC_LIST);
     }
 
     /**
@@ -194,6 +177,15 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
         }
     }
 
+    private void startListMediaThread(ListType listType){
+        putObserversInProcessState(XProcessType.LIST_MEDIA);
+        stopProcessThread(XProcessType.LIST_MEDIA);
+        stopProcessThread(XProcessType.RETRIEVE_INFO);//we should also kill the info_thread if it's alive
+        removeObserversInProcessState(XProcessType.RETRIEVE_INFO);
+        listMedia_thread = async_listMedia(listType);
+        listMedia_thread.start();
+    }
+
     private void stopProcessThread(XProcessType procType) {
 
         if (procType == XProcessType.RETRIEVE_INFO
@@ -201,11 +193,11 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
             info_thread.interrupt();
             info_thread = null;
         } else if (procType == XProcessType.LIST_MEDIA
-                && results_thread != null) {
-            results_thread.interrupt();
-            results_thread = null;
+                && listMedia_thread != null) {
+            listMedia_thread.interrupt();
+            listMedia_thread = null;
         }
-}
+    }
 
     private List<MediaFile> listHostFiles(ListType type) {
         switch (type) {
@@ -254,11 +246,12 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     }
 
     private Thread async_listMedia(final ListType type) {
+
         Runnable media_th = new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(1000);
                     List<MediaFile> files = listHostFiles(type);
                     List<XGUI_Item> items = converter.convertAll(files);
                     updateActiveResultMap(files);

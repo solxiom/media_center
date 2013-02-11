@@ -68,13 +68,11 @@ public class OmdbDataService implements DataService<OmdbDataObject> {
         String jsonstr = "";
         DataObject dataObject;
         String requestString = Tools.bindUrlwithParameters(serverURL, options, "/");//serverURL + "/" + options;
-        System.out.println("" + requestString);
         jsonstr = server.requestToServer(requestString);
-        System.out.println("str: " + jsonstr);
         try {
 
             server_data = server.jsonToServerObject(jsonstr);
-            System.out.println("object: " + server_data);
+
             return server_data;
         } catch (Exception e) {
             System.out.println("error" + e);

@@ -64,6 +64,7 @@ public class MiddlePanel extends JPanel {
             leftSP_Panel.add(item);
         }
         this.revalidate();
+        this.repaint();
 
     }
 

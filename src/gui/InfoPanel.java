@@ -53,13 +53,21 @@ public class InfoPanel extends JPanel {
         this.removeAll();
         initInProcess();
         this.revalidate();
+        this.repaint();
     }
 
     public void setInfo(DataObject info, XGUI_Info_Parser parser) {
         this.removeAll();
         initCompsWithValues(parser.getValues(info));
         this.revalidate();
+        this.repaint();
 
+    }
+
+    public void clearInfoPanel() {
+        this.removeAll();
+        this.revalidate();
+        this.repaint();
     }
 
     private void initInProcess() {
