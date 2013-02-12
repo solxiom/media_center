@@ -137,8 +137,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
         searchPanel = new SearchPanel(controller);//initSearchPanel();
 
 
-//        setXFrameLayout();
-        setXFrameLayout2();
+        setXFrameLayout();
 
         pack();
 
@@ -178,7 +177,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
             }
         });
     }
-    private void setXFrameLayout2(){
+    private void setXFrameLayout(){
 //        BoxLayout layout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
         BorderLayout layout = new BorderLayout();
 //        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -205,7 +204,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
         this.add(middlePanel, BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
     }
-    private void setXFrameLayout() {
+    private void setXFrameLayout_auto_generated() {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
