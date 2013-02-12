@@ -5,9 +5,12 @@
 package gui;
 
 import gui.logic.XGUI_IconChanger;
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,6 +25,13 @@ public class BottomPanel extends JPanel {
 
     public BottomPanel() {
         initBottomPanel();
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        this.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, Color.DARK_GRAY));
+        this.setLocation(0, this.getParent().getHeight() - this.getHeight());
     }
 
     private void initBottomPanel() {

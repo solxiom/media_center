@@ -40,6 +40,7 @@ public class MiddlePanel extends JPanel {
         itemStyleCach = new HashMap<Integer, Color>();
         initMiddlePanel();
         this.controller = controller;
+        this.setDoubleBuffered(true);
 
     }
 

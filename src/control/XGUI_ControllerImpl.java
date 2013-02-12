@@ -144,7 +144,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     public void findItemInfo(int itemCode) {
         putObserversInProcessState(XProcessType.RETRIEVE_INFO);
         stopProcessThread(XProcessType.RETRIEVE_INFO);
-        info_thread = async_searchInfo(itemCode, 5000);
+        info_thread = async_searchInfo(itemCode, 200000);
         info_thread.start();
 
     }
@@ -227,6 +227,9 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
 
                     Thread.sleep(w);
                     MediaFile item = activeResultMap.get(item_code);
+                    if(item == null){
+                        throw new InterruptedException("MediaItem is no longer exists in ActiveResults list!");
+                    }
                     String itemYear = Tools.getMovieYear(item.getName());
                     if (itemYear.equalsIgnoreCase("Unknown")) {
                         itemYear = "";
@@ -237,6 +240,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
                     notifyObserversWithItemInfo(info);
 
                 } catch (InterruptedException ie) {
+                    System.out.println("Searching for Info INTERRUPTED");
                 }
             }
         };
@@ -251,7 +255,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(0);
                     List<MediaFile> files = listHostFiles(type);
                     List<XGUI_Item> items = converter.convertAll(files);
                     updateActiveResultMap(files);
@@ -261,9 +265,9 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
                 }
             }
         };
+        
 
-
-
+               
         return new Thread(media_th, "list_media_thread");
     }
 }

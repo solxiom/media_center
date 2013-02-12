@@ -2,12 +2,21 @@ package gui;
 
 import gui.logic.XGUI_Info_Parser;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.geom.AffineTransform;
 import java.util.HashMap;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import service.domain.DataObject;
@@ -40,20 +49,38 @@ public class InfoPanel extends JPanel {
     private JPanel plotPanel;
     private JPanel posterPanel;
     private JPanel bottomPanel;
+    private JPanel animePane;
+    private JPanel proc_panel;
     private JLabel processLb;
     private boolean proc_icon_b;
-    // End of variables declaration
+    private String inProcess_msg;
 
+    // End of variables declaration
     public InfoPanel() {
         proc_icon_b = true;
         initComponents();
+        inProcess_msg = "";
+
+
     }
 
-    public void changeInProcessIcon() {
+    public void setInProcessPulse() {
         this.removeAll();
+
         initInProcess();
+
+
         this.revalidate();
         this.repaint();
+
+    }
+
+    public void setInProcessMessage(String msg) {
+        this.inProcess_msg = msg;
+    }
+
+    public String getInProcessMessage() {
+        return this.inProcess_msg;
     }
 
     public void setInfo(DataObject info, XGUI_Info_Parser parser) {
@@ -72,19 +99,39 @@ public class InfoPanel extends JPanel {
 
     private void initInProcess() {
 
+
         String iconStr = "";
         if (proc_icon_b) {
-            iconStr = "/img/process/up.png";
+//            iconStr = "/img/process/up.png";
+            iconStr = "/img/process/pgx1.png";
             proc_icon_b = false;
         } else {
-            iconStr = "/img/process/down.png";
+//            iconStr = "/img/process/down.png";
+            iconStr = "/img/process/pgx2.png";
             proc_icon_b = true;
         }
-        JPanel proc_panel = new JPanel();
+
         processLb = new JLabel();
         ImageIcon icon = new ImageIcon(getClass().getResource(iconStr));
         processLb.setIcon(icon);
-        proc_panel.add(processLb);
+
+
+
+//        proc_panel.setBackground(Color.WHITE);
+//        proc_panel.add(processLb);
+        if (animePane == null || proc_panel == null) {
+            animePane = new AnimePane();
+            proc_panel = new JPanel();
+            BoxLayout layout = new BoxLayout(proc_panel, BoxLayout.Y_AXIS);
+            proc_panel.setLayout(layout);
+            proc_panel.setMinimumSize(new Dimension(500, 500));
+//            proc_panel.add(animePane, BorderLayout.CENTER);
+            proc_panel.add(Box.createRigidArea(new Dimension(600, 250)));
+            proc_panel.add(animePane);
+
+
+        }
+
         this.setLayout(new BorderLayout());
         this.add(proc_panel, BorderLayout.CENTER);
         this.setMinimumSize(new Dimension(600, 600));
@@ -248,5 +295,127 @@ public class InfoPanel extends JPanel {
         bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         bottomPanel.add(toolPanel);
 
+    }
+
+    private int getInfoPanelWidth() {
+        return this.getWidth();
+    }
+
+    private int getInfoPanelHeight() {
+        return this.getHeight();
+    }
+
+    class AnimePane extends JPanel {
+
+        int elements_amount, msg_xpoint,
+                animePane_width, painted_element_width, animePane_height;
+        int[] elements_x_pos;
+        Class elements_class;
+        ImageIcon forwardIcon, filmIcon;
+
+        AnimePane() {
+
+            forwardIcon = new ImageIcon(this.getClass().getResource("/img/process/film_forward_128.png"));
+            filmIcon = new ImageIcon(this.getClass().getResource("/img/process/film_128.png"));
+            painted_element_width = 128;
+            animePane_height = 128 + 52;//it's better to be checked in paintComponent for actual value
+            this.setOpaque(false);
+
+            elements_amount = 6;//amount of elements to be painted
+            setElements(elements_amount);
+            elements_x_pos = new int[this.getComponents().length];
+
+            //initiate xpos
+            for (int i = 0; i < elements_x_pos.length; i++) {
+                if (i == 0) {
+                    elements_x_pos[i] = 0;
+                } else {
+                    elements_x_pos[i] = elements_x_pos[i - 1] + painted_element_width;
+                }
+            }
+
+
+
+
+            this.setDoubleBuffered(true);
+
+
+
+
+        }
+
+        private void setElements(int x) {
+            boolean f = true;
+            for (int i = 0; i < x; i++) {
+                JLabel lb = new JLabel();
+                if (f) {
+                    lb.setIcon(forwardIcon);
+                    f = false;
+                } else {
+                    lb.setIcon(filmIcon);
+                    f = true;
+                }
+                this.add(lb);
+            }
+            this.elements_class = JLabel.class;
+        }
+
+        @Override
+        public void update(Graphics g) {
+            paintComponent(g);
+        }
+
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g;
+
+
+            this.setVisible(true);
+
+            this.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
+
+
+            int i = 0;
+            for (Component c : this.getComponents()) {
+                if (c.getClass() == elements_class) {
+                    // the calue for elements_class must be setted in setElements method
+
+                    if (c.getLocation().getX() > (this.getWidth() + c.getWidth())) {
+                        int newX = -(c.getWidth());
+                        elements_x_pos[i] = newX;
+
+                    } else {
+                        elements_x_pos[i] += 1;
+                    }
+                    painted_element_width = c.getWidth();
+                    c.setLocation(elements_x_pos[i], 0);
+                    i++;
+
+                }
+            }
+            animePane_width = painted_element_width * (elements_amount - 2);
+            animePane_height = painted_element_width + 52;
+
+            this.setPreferredSize(new Dimension(animePane_width, animePane_height));
+            this.setMaximumSize(new Dimension(animePane_width, animePane_height));
+
+            g.setFont(new Font("serif", Font.BOLD, 17));
+
+            msg_xpoint = (animePane_width / 2) - 20;
+
+            if (inProcess_msg.length() > "searching...".length()) {
+                //Don't try to understand this it's not possible :)
+                msg_xpoint = (animePane_width - ((inProcess_msg.length() - "searching...".length()) * 15));
+                msg_xpoint = msg_xpoint / 2;
+                msg_xpoint -= 20;
+            }
+
+
+            g.drawString(inProcess_msg, msg_xpoint, 150);
+
+
+
+        }
     }
 }

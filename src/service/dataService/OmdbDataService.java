@@ -75,7 +75,6 @@ public class OmdbDataService implements DataService<OmdbDataObject> {
 
             return server_data;
         } catch (Exception e) {
-            System.out.println("error" + e);
             return null;
         }
     }

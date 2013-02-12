@@ -30,8 +30,6 @@ public class OmdbSearcher implements JsonSearcher {
     public String findItemId(String title, String year) {
         String url = Tools.bindUrlwithParameters(serverUrl, "?s=" + title.replace(" ", "+") + "&r=json", "/");
         String json_response = server.requestToServer(url);
-        System.out.println("" + url);
-        System.out.println("" + json_response);
         String result = searchWithYear(json_response, title, year);
         /**
          * if still not found try only with the first word of the title
@@ -73,7 +71,6 @@ public class OmdbSearcher implements JsonSearcher {
                     movies = job.get("Search").getAsJsonArray();
                     for (int i = 0; i < movies.size(); i++) {
                         job = movies.get(i).getAsJsonObject();
-                        System.out.println("---" + job.get("Title").getAsString());
                         if (year == null || !job.has("Year")) {
                             if (isSameTitle(title, job.get("Title").getAsString())) {
                                 res_id = job.get("imdbID").getAsString();
