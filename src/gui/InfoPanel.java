@@ -311,12 +311,13 @@ public class InfoPanel extends JPanel {
                 animePane_width, painted_element_width, animePane_height;
         int[] elements_x_pos;
         Class elements_class;
-        ImageIcon forwardIcon, filmIcon;
+        ImageIcon forwardIcon, filmIcon,zoomIcon;
 
         AnimePane() {
 
             forwardIcon = new ImageIcon(this.getClass().getResource("/img/process/film_forward_128.png"));
             filmIcon = new ImageIcon(this.getClass().getResource("/img/process/film_128.png"));
+            zoomIcon = new ImageIcon(this.getClass().getResource("/img/process/zoom.png"));
             painted_element_width = 128;
             animePane_height = 128 + 52;//it's better to be checked in paintComponent for actual value
             this.setOpaque(false);
@@ -378,7 +379,7 @@ public class InfoPanel extends JPanel {
 
             int i = 0;
             for (Component c : this.getComponents()) {
-                if (c.getClass() == elements_class) {
+                if (c.getClass() == elements_class  ) {
                     // the calue for elements_class must be setted in setElements method
 
                     if (c.getLocation().getX() > (this.getWidth() + c.getWidth())) {
@@ -388,6 +389,7 @@ public class InfoPanel extends JPanel {
                     } else {
                         elements_x_pos[i] += 1;
                     }
+                    
                     painted_element_width = c.getWidth();
                     c.setLocation(elements_x_pos[i], 0);
                     i++;
@@ -395,7 +397,7 @@ public class InfoPanel extends JPanel {
                 }
             }
             animePane_width = painted_element_width * (elements_amount - 2);
-            animePane_height = painted_element_width + 52;
+            animePane_height = painted_element_width + 72;
 
             this.setPreferredSize(new Dimension(animePane_width, animePane_height));
             this.setMaximumSize(new Dimension(animePane_width, animePane_height));
@@ -403,6 +405,7 @@ public class InfoPanel extends JPanel {
             g.setFont(new Font("serif", Font.BOLD, 17));
 
             msg_xpoint = (animePane_width / 2) - 20;
+         
 
             if (inProcess_msg.length() > "searching...".length()) {
                 //Don't try to understand this it's not possible :)
@@ -412,8 +415,8 @@ public class InfoPanel extends JPanel {
             }
 
 
-            g.drawString(inProcess_msg, msg_xpoint, 150);
-
+            g.drawString(inProcess_msg, msg_xpoint, 170);
+            g2d.drawImage(zoomIcon.getImage(), (animePane_width/2)-100, 0, this);
 
 
         }

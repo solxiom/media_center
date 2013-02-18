@@ -11,6 +11,7 @@ import control.XGUI_ControllerImpl;
 import gui.beans.XProcessType;
 import gui.logic.XGUI_Observer;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.util.LinkedList;
 import java.util.List;
@@ -181,7 +182,6 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
 //        BoxLayout layout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
         BorderLayout layout = new BorderLayout();
 //        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
-;
         
         JPanel categoryContainer = new JPanel();
         categoryContainer.setLayout(new BorderLayout());
@@ -189,14 +189,16 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
         
         JPanel searchContainer = new JPanel();
         searchContainer.setLayout(new BorderLayout());
+       
         searchContainer.add(Box.createRigidArea(new Dimension(10, 30)), BorderLayout.NORTH);
         searchContainer.add(searchPanel, BorderLayout.WEST);
         
         JPanel topPanel = new JPanel();                
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         topPanel.add(categoryContainer);
-        topPanel.add(Box.createRigidArea(new Dimension(100, 5)));
+        topPanel.add(Box.createRigidArea(new Dimension(100, 5)));       
         topPanel.add(searchContainer);
+       
                 
         this.getContentPane().setLayout(layout);
         this.add(topPanel,BorderLayout.NORTH);

@@ -144,7 +144,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     public void findItemInfo(int itemCode) {
         putObserversInProcessState(XProcessType.RETRIEVE_INFO);
         stopProcessThread(XProcessType.RETRIEVE_INFO);
-        info_thread = async_searchInfo(itemCode, 200000);
+        info_thread = async_searchInfo(itemCode,0);
         info_thread.start();
 
     }
