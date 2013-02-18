@@ -307,11 +307,10 @@ public class InfoPanel extends JPanel {
 
     class AnimePane extends JPanel {
 
-        int elements_amount, msg_xpoint,
-                animePane_width, painted_element_width, animePane_height;
+        int elements_amount, painted_element_width;
         int[] elements_x_pos;
         Class elements_class;
-        ImageIcon forwardIcon, filmIcon,zoomIcon;
+        ImageIcon forwardIcon, filmIcon, zoomIcon;
 
         AnimePane() {
 
@@ -319,30 +318,11 @@ public class InfoPanel extends JPanel {
             filmIcon = new ImageIcon(this.getClass().getResource("/img/process/film_128.png"));
             zoomIcon = new ImageIcon(this.getClass().getResource("/img/process/zoom.png"));
             painted_element_width = 128;
-            animePane_height = 128 + 52;//it's better to be checked in paintComponent for actual value
             this.setOpaque(false);
-
             elements_amount = 6;//amount of elements to be painted
             setElements(elements_amount);
-            elements_x_pos = new int[this.getComponents().length];
-
-            //initiate xpos
-            for (int i = 0; i < elements_x_pos.length; i++) {
-                if (i == 0) {
-                    elements_x_pos[i] = 0;
-                } else {
-                    elements_x_pos[i] = elements_x_pos[i - 1] + painted_element_width;
-                }
-            }
-
-
-
-
+            initElementsXpos();
             this.setDoubleBuffered(true);
-
-
-
-
         }
 
         private void setElements(int x) {
@@ -358,6 +338,7 @@ public class InfoPanel extends JPanel {
                 }
                 this.add(lb);
             }
+
             this.elements_class = JLabel.class;
         }
 
@@ -368,18 +349,26 @@ public class InfoPanel extends JPanel {
 
         @Override
         public void paintComponent(Graphics g) {
+            int animePane_width, animePane_height;
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-
-
             this.setVisible(true);
-
             this.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.BLACK));
+            updateElementsLocations();
+            animePane_width = painted_element_width * (elements_amount - 2);
+            animePane_height = painted_element_width + 72;
+            this.setPreferredSize(new Dimension(animePane_width, animePane_height));
+            this.setMaximumSize(new Dimension(animePane_width, animePane_height));
 
+            g.setFont(new Font("serif", Font.BOLD, 17));
+            g.drawString(inProcess_msg, getMsgXPoint(animePane_width, inProcess_msg), 170);
+            g2d.drawImage(zoomIcon.getImage(), (animePane_width / 2) - 100, 0, this);
+        }
 
+        private void updateElementsLocations() {
             int i = 0;
             for (Component c : this.getComponents()) {
-                if (c.getClass() == elements_class  ) {
+                if (c.getClass() == elements_class) {
                     // the calue for elements_class must be setted in setElements method
 
                     if (c.getLocation().getX() > (this.getWidth() + c.getWidth())) {
@@ -389,36 +378,42 @@ public class InfoPanel extends JPanel {
                     } else {
                         elements_x_pos[i] += 1;
                     }
-                    
+
                     painted_element_width = c.getWidth();
                     c.setLocation(elements_x_pos[i], 0);
                     i++;
 
                 }
             }
-            animePane_width = painted_element_width * (elements_amount - 2);
-            animePane_height = painted_element_width + 72;
+        }
 
-            this.setPreferredSize(new Dimension(animePane_width, animePane_height));
-            this.setMaximumSize(new Dimension(animePane_width, animePane_height));
-
-            g.setFont(new Font("serif", Font.BOLD, 17));
-
-            msg_xpoint = (animePane_width / 2) - 20;
-         
-
-            if (inProcess_msg.length() > "searching...".length()) {
+        /**
+         * calculate and return x point for the incoming progress messages
+         *
+         * @param paneWidth width of the animePanel
+         * @param msg progress message
+         * @return x point of the progress message
+         */
+        private int getMsgXPoint(int paneWidth, String msg) {
+            int msg_xpoint = (paneWidth / 2) - 20;
+            if (msg.length() > "searching...".length()) {
                 //Don't try to understand this it's not possible :)
-                msg_xpoint = (animePane_width - ((inProcess_msg.length() - "searching...".length()) * 15));
+                msg_xpoint = (paneWidth - ((msg.length() - "searching...".length()) * 15));
                 msg_xpoint = msg_xpoint / 2;
                 msg_xpoint -= 20;
             }
+            return msg_xpoint;
+        }
 
-
-            g.drawString(inProcess_msg, msg_xpoint, 170);
-            g2d.drawImage(zoomIcon.getImage(), (animePane_width/2)-100, 0, this);
-
-
+        private void initElementsXpos() {
+            elements_x_pos = new int[this.getComponents().length];
+            for (int i = 0; i < elements_x_pos.length; i++) {
+                if (i == 0) {
+                    elements_x_pos[i] = 0;
+                } else {
+                    elements_x_pos[i] = elements_x_pos[i - 1] + painted_element_width;
+                }
+            }
         }
     }
 }
