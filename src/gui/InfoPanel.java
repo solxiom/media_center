@@ -66,10 +66,7 @@ public class InfoPanel extends JPanel {
 
     public void setInProcessPulse() {
         this.removeAll();
-
         initInProcess();
-
-
         this.revalidate();
         this.repaint();
 
@@ -99,33 +96,12 @@ public class InfoPanel extends JPanel {
 
     private void initInProcess() {
 
-
-        String iconStr = "";
-        if (proc_icon_b) {
-//            iconStr = "/img/process/up.png";
-            iconStr = "/img/process/pgx1.png";
-            proc_icon_b = false;
-        } else {
-//            iconStr = "/img/process/down.png";
-            iconStr = "/img/process/pgx2.png";
-            proc_icon_b = true;
-        }
-
-        processLb = new JLabel();
-        ImageIcon icon = new ImageIcon(getClass().getResource(iconStr));
-        processLb.setIcon(icon);
-
-
-
-//        proc_panel.setBackground(Color.WHITE);
-//        proc_panel.add(processLb);
         if (animePane == null || proc_panel == null) {
             animePane = new AnimePane();
             proc_panel = new JPanel();
             BoxLayout layout = new BoxLayout(proc_panel, BoxLayout.Y_AXIS);
             proc_panel.setLayout(layout);
             proc_panel.setMinimumSize(new Dimension(500, 500));
-//            proc_panel.add(animePane, BorderLayout.CENTER);
             proc_panel.add(Box.createRigidArea(new Dimension(600, 250)));
             proc_panel.add(animePane);
 

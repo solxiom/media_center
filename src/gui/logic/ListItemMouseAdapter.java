@@ -19,14 +19,12 @@ import java.util.HashMap;
 public class ListItemMouseAdapter extends MouseAdapter {
 
     final ListItem item;
-    final HashMap<Integer, Color> colorCache;
+
     private ListItemContainer container;
 
     public ListItemMouseAdapter(ListItemContainer container, ListItem item) {
         this.item = item;
-        this.colorCache = container.getStyleCache();
         this.container = container;
-
 
     }
 
@@ -46,7 +44,7 @@ public class ListItemMouseAdapter extends MouseAdapter {
     public void mouseClicked(MouseEvent evt) {
         container.getController().findItemInfo(item.getXGUI_Item().getKey());
         if (container.getSelectedItem() != null) {
-            container.getSelectedItem().setBackground(colorCache.get(
+            container.getSelectedItem().setBackground(container.getStyleCache().get(
                     container.getSelectedItem().getXGUI_Item().getKey()));
         }
         container.setSelectedItem(item);
@@ -73,7 +71,7 @@ public class ListItemMouseAdapter extends MouseAdapter {
 
             if (container.getSelectedItem() == null 
                     || item != container.getSelectedItem()) {
-                item.setBackground(colorCache.get(item.getXGUI_Item().getKey()));
+                item.setBackground(container.getStyleCache().get(item.getXGUI_Item().getKey()));
             }
       
         item.getNameLabel().setForeground(Color.black);

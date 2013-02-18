@@ -52,16 +52,15 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     private String[] dataApiKey;
     private Thread info_thread, listMedia_thread;
 
-    public XGUI_ControllerImpl(){
+    public XGUI_ControllerImpl() {
         this.observers = new LinkedList<XGUI_Observer>();
-        activeResultMap = new HashMap<Integer, MediaFile>();
         converter = new XGUI_Item_Converter();
         hostService = new FtpService(new FTPFileManager());
 
         setUpAndConfig_omdb();
     }
 
-    private void setUpAndConfig_omdb(){
+    private void setUpAndConfig_omdb() {
 
         dataServiceUrl = "http://omdbapi.com";
         data_converter = new DataObjectConverterImpl();
@@ -144,7 +143,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     public void findItemInfo(int itemCode) {
         putObserversInProcessState(XProcessType.RETRIEVE_INFO);
         stopProcessThread(XProcessType.RETRIEVE_INFO);
-        info_thread = async_searchInfo(itemCode,0);
+        info_thread = async_searchInfo(itemCode, 0);
         info_thread.start();
 
     }
@@ -171,13 +170,13 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
      * @param results
      */
     private void updateActiveResultMap(List<MediaFile> results) {
-        activeResultMap.clear();
+        activeResultMap = new HashMap<Integer, MediaFile>();
         for (MediaFile f : results) {
             activeResultMap.put(new Integer(f.getName().hashCode()), f);
         }
     }
 
-    private void startListMediaThread(ListType listType){
+    private void startListMediaThread(ListType listType) {
         putObserversInProcessState(XProcessType.LIST_MEDIA);
         stopProcessThread(XProcessType.LIST_MEDIA);
         stopProcessThread(XProcessType.RETRIEVE_INFO);//we should also kill the info_thread if it's alive
@@ -187,15 +186,19 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
     }
 
     private void stopProcessThread(XProcessType procType) {
-
+        Thread toStop = null;
         if (procType == XProcessType.RETRIEVE_INFO
                 && info_thread != null) {
-            info_thread.interrupt();
+            toStop = info_thread;
             info_thread = null;
         } else if (procType == XProcessType.LIST_MEDIA
                 && listMedia_thread != null) {
-            listMedia_thread.interrupt();
+
+            toStop = listMedia_thread;
             listMedia_thread = null;
+        }
+        if (toStop != null) {
+            toStop.interrupt();
         }
     }
 
@@ -227,7 +230,7 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
 
                     Thread.sleep(w);
                     MediaFile item = activeResultMap.get(item_code);
-                    if(item == null){
+                    if (item == null) {
                         throw new InterruptedException("MediaItem is no longer exists in ActiveResults list!");
                     }
                     String itemYear = Tools.getMovieYear(item.getName());
@@ -265,9 +268,9 @@ public class XGUI_ControllerImpl implements XGUI_Controller {
                 }
             }
         };
-        
 
-               
+
+
         return new Thread(media_th, "list_media_thread");
     }
 }

@@ -29,7 +29,6 @@ public class ResultPanel extends JScrollPane implements ListItemContainer{
         public ResultPanel(XGUI_Controller controller) {
             super();
             initComponents();
-            itemStyleCache = new HashMap<Integer, Color>();
             this.controller = controller;
             this.selectedItem = null;
         }
@@ -62,6 +61,7 @@ public class ResultPanel extends JScrollPane implements ListItemContainer{
 
         public void setResults(List<ListItem> items) {
             leftSP_Panel.removeAll();
+            itemStyleCache = new HashMap<Integer, Color>();
             boolean binary = true;
             for (ListItem item : items) {
                 item.setOpaque(true);

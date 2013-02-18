@@ -40,12 +40,10 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
         super("Media Center V-1.0");
         controller = new XGUI_ControllerImpl();
         parser = new XGUI_Info_Parser();
-        controller.registerObserver(this);
-        
+        controller.registerObserver(this);       
         initXFrame();
-
     }
-
+    
     public void updateResults(List<XGUI_Item> results) {
         List<ListItem> items = new LinkedList<ListItem>();
         for (XGUI_Item bean : results) {
@@ -53,16 +51,16 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
             items.add(item);
         }
         if (middlePanel != null) {
-            middlePanel.setResults(items);
+            middlePanel.getResultPanel().setResults(items);
         }
     }
-
+    
     public void updateInfo(DataObject info) {
 
         middlePanel.getInfoPanel().setInfo(info, parser);
 
     }
-
+    
     public void startInProcessState(XProcessType type) {
 
         stopInProcessState(type);
@@ -75,8 +73,9 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
     public void stopInProcessState(XProcessType type) {
         if (type == XProcessType.RETRIEVE_INFO
                 && info_inProc != null) {
-            info_inProc.interrupt();
+            Thread toStop = info_inProc;
             info_inProc = null;
+            toStop.interrupt();
         }
     
     }
@@ -94,6 +93,7 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
 
                     } catch (InterruptedException ie) {
                         clearInProcessPulse(proc_type);
+                        
                         break;
                     }
                 }
