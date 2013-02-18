@@ -34,7 +34,8 @@ public class SearchPanel extends JPanel {
     private javax.swing.JLabel categoryLb;
     private javax.swing.JLabel searchBt;
     private javax.swing.JCheckBox searchCheck;
-    private RoundedJTextField searchField;
+//    private RoundedJTextField searchField;//works at least in nimbus look and feel but not in GTK+
+    private JTextField searchField;
     private javax.swing.JComboBox yearCombo;
     private javax.swing.JLabel yearLb;
     private javax.swing.JComboBox genreCombo;
@@ -55,7 +56,8 @@ public class SearchPanel extends JPanel {
     private void initSearchPanel() {
 
 
-        searchField = new RoundedJTextField();
+//        searchField = new RoundedJTextField();
+        searchField = new JTextField();
         searchField.setFont(null);
         searchField.setFont(new Font("Serif", Font.BOLD, 14));
         searchField.setForeground(Color.GRAY);

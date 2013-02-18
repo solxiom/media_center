@@ -155,10 +155,15 @@ public class XGUI_Frame extends JFrame implements XGUI_Observer {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                if ("Nimbus".equals(info.getName())) {
+//                    UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+                if ("GTK+".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
+//                System.out.println("Look and feel: " + info.getName());
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(DesignFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
